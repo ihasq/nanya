@@ -27,7 +27,7 @@ export function AuthCallback() {
         setStatus('success')
         setTimeout(() => navigate('/'), 1500)
       } else {
-        if (result.error === 'verifier_not_found') {
+        if (result.error === 'verifier_not_found' || result.error === 'origin_mismatch') {
           setStatus('context-error')
         } else {
           setStatus('error')

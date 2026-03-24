@@ -25,15 +25,20 @@ export async function startOpenRouterAuth(): Promise<void> {
   const codeVerifier = await generateCodeVerifier()
   const codeChallenge = await generateCodeChallenge(codeVerifier)
 
-  // Store in localStorage for redirect flow
+  const origin = window.location.origin
+  const callbackUrl = `${origin}/auth/callback`
+
+  // Store verifier with the origin for verification
   try {
     localStorage.setItem('nanya_openrouter_code_verifier', codeVerifier)
-    console.log('Code verifier stored in localStorage')
+    localStorage.setItem('nanya_openrouter_origin', origin)
+    console.log('[Auth] Origin:', origin)
+    console.log('[Auth] Callback URL:', callbackUrl)
+    console.log('[Auth] Code verifier stored')
   } catch (e) {
-    console.error('Failed to store code verifier in localStorage:', e)
+    console.error('[Auth] Failed to store in localStorage:', e)
   }
 
-  const callbackUrl = `${window.location.origin}/auth/callback`
   const params = new URLSearchParams({
     callback_url: callbackUrl,
     code_challenge: codeChallenge,
@@ -41,8 +46,8 @@ export async function startOpenRouterAuth(): Promise<void> {
   })
 
   const authUrl = `${OPENROUTER_AUTH_URL}?${params.toString()}`
+  console.log('[Auth] Redirecting to:', authUrl)
 
-  // Use simple redirect flow
   window.location.href = authUrl
 }
 
@@ -53,13 +58,26 @@ export type CallbackResult = {
 }
 
 export async function handleOpenRouterCallback(code: string): Promise<CallbackResult> {
-  // Get code verifier from localStorage
+  const currentOrigin = window.location.origin
+  const storedOrigin = localStorage.getItem('nanya_openrouter_origin')
   const codeVerifier = localStorage.getItem('nanya_openrouter_code_verifier')
 
-  console.log('Looking for code verifier in localStorage:', codeVerifier ? 'found' : 'not found')
+  console.log('[Callback] Current origin:', currentOrigin)
+  console.log('[Callback] Stored origin:', storedOrigin)
+  console.log('[Callback] Code verifier:', codeVerifier ? 'found' : 'not found')
+
+  // Check for origin mismatch
+  if (storedOrigin && storedOrigin !== currentOrigin) {
+    console.error('[Callback] Origin mismatch! Auth started on:', storedOrigin, 'but callback is on:', currentOrigin)
+    return {
+      success: false,
+      error: 'origin_mismatch',
+      details: `認証開始時のドメイン (${storedOrigin}) とコールバックのドメイン (${currentOrigin}) が異なります。同じドメインで認証を完了してください。`
+    }
+  }
 
   if (!codeVerifier) {
-    console.error('Code verifier not found in localStorage')
+    console.error('[Callback] Code verifier not found in localStorage')
     return {
       success: false,
       error: 'verifier_not_found',
@@ -67,8 +85,9 @@ export async function handleOpenRouterCallback(code: string): Promise<CallbackRe
     }
   }
 
-  // Clear stored verifier
+  // Clear stored data
   localStorage.removeItem('nanya_openrouter_code_verifier')
+  localStorage.removeItem('nanya_openrouter_origin')
 
   const { setAuth } = useAuthStore.getState()
 
