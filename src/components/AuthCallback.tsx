@@ -9,7 +9,7 @@ export function AuthCallback() {
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()
   const [status, setStatus] = useState<'loading' | 'success' | 'error' | 'context-error'>('loading')
-  const [error, setError] = useState<string | null>(null)
+  const [errorDetails, setErrorDetails] = useState<string | null>(null)
 
   const code = searchParams.get('code')
 
@@ -17,19 +17,22 @@ export function AuthCallback() {
     const handleCallback = async () => {
       if (!code) {
         setStatus('error')
-        setError('認証コードがありません')
+        setErrorDetails('認証コードがありません')
         return
       }
 
-      const success = await handleOpenRouterCallback(code)
+      const result = await handleOpenRouterCallback(code)
 
-      if (success) {
+      if (result.success) {
         setStatus('success')
         setTimeout(() => navigate('/'), 1500)
       } else {
-        // Check if this might be a context issue (WebView vs original browser)
-        setStatus('context-error')
-        setError('認証の検証に失敗しました')
+        if (result.error === 'verifier_not_found') {
+          setStatus('context-error')
+        } else {
+          setStatus('error')
+        }
+        setErrorDetails(result.details || null)
       }
     }
 
@@ -72,7 +75,9 @@ export function AuthCallback() {
             <>
               <XCircle className="h-12 w-12 text-destructive" />
               <p className="text-lg">認証に失敗しました</p>
-              <p className="text-sm text-muted-foreground">{error}</p>
+              {errorDetails && (
+                <p className="text-sm text-muted-foreground text-center">{errorDetails}</p>
+              )}
               <Button onClick={handleRetryAuth} className="mt-2">
                 ホームに戻る
               </Button>
@@ -83,8 +88,10 @@ export function AuthCallback() {
             <>
               <XCircle className="h-12 w-12 text-destructive" />
               <p className="text-lg font-medium">認証の検証に失敗しました</p>
+              {errorDetails && (
+                <p className="text-sm text-muted-foreground text-center mb-2">{errorDetails}</p>
+              )}
               <div className="text-sm text-muted-foreground text-center space-y-2">
-                <p>別のブラウザやアプリ内ブラウザで開いている可能性があります。</p>
                 <p>以下のいずれかをお試しください：</p>
               </div>
 
@@ -110,8 +117,7 @@ export function AuthCallback() {
 
               <div className="text-xs text-muted-foreground text-center mt-4 p-3 bg-muted/50 rounded-lg">
                 <p className="font-medium mb-1">ヒント:</p>
-                <p>OpenRouterアプリがインストールされている場合、</p>
-                <p>ChromeやSafariで直接 nanya.pages.dev を</p>
+                <p>ChromeやSafariで直接 nanya.ihasq.com を</p>
                 <p>開いてから認証してください。</p>
               </div>
             </>

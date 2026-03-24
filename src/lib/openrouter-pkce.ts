@@ -31,8 +31,24 @@ export async function startOpenRouterAuth(): Promise<void> {
   // Store in memory for popup flow
   pendingVerifier = codeVerifier
 
-  // Also store in localStorage as fallback for redirect flow
-  localStorage.setItem('nanya_openrouter_code_verifier', codeVerifier)
+  // Store in localStorage for redirect flow
+  try {
+    localStorage.setItem('nanya_openrouter_code_verifier', codeVerifier)
+    // Verify the write succeeded
+    const stored = localStorage.getItem('nanya_openrouter_code_verifier')
+    if (stored !== codeVerifier) {
+      console.error('localStorage write verification failed')
+    }
+  } catch (e) {
+    console.error('Failed to store code verifier in localStorage:', e)
+  }
+
+  // Also store in sessionStorage as additional fallback
+  try {
+    sessionStorage.setItem('nanya_openrouter_code_verifier', codeVerifier)
+  } catch (e) {
+    console.error('Failed to store code verifier in sessionStorage:', e)
+  }
 
   const callbackUrl = `${window.location.origin}/auth/callback`
   const params = new URLSearchParams({
@@ -109,21 +125,42 @@ export async function startOpenRouterAuth(): Promise<void> {
   })
 }
 
-export async function handleOpenRouterCallback(code: string): Promise<boolean> {
-  // Try memory first (popup flow), then localStorage (redirect flow)
+export type CallbackResult = {
+  success: boolean
+  error?: string
+  details?: string
+}
+
+export async function handleOpenRouterCallback(code: string): Promise<CallbackResult> {
+  // Try memory first (popup flow), then localStorage, then sessionStorage
   let codeVerifier = pendingVerifier
+  let source = 'memory'
+
   if (!codeVerifier) {
     codeVerifier = localStorage.getItem('nanya_openrouter_code_verifier')
+    source = 'localStorage'
   }
 
   if (!codeVerifier) {
-    console.error('Code verifier not found')
-    return false
+    codeVerifier = sessionStorage.getItem('nanya_openrouter_code_verifier')
+    source = 'sessionStorage'
   }
 
-  // Clear stored verifier
+  if (!codeVerifier) {
+    console.error('Code verifier not found in memory, localStorage, or sessionStorage')
+    return {
+      success: false,
+      error: 'verifier_not_found',
+      details: 'コード検証子が見つかりません。ブラウザのプライベートモードを使用している場合は、通常モードでお試しください。'
+    }
+  }
+
+  console.log('Code verifier found in:', source)
+
+  // Clear stored verifier from all locations
   pendingVerifier = null
-  localStorage.removeItem('nanya_openrouter_code_verifier')
+  try { localStorage.removeItem('nanya_openrouter_code_verifier') } catch {}
+  try { sessionStorage.removeItem('nanya_openrouter_code_verifier') } catch {}
 
   const { setAuth } = useAuthStore.getState()
 
@@ -136,21 +173,28 @@ export async function handleOpenRouterCallback(code: string): Promise<boolean> {
       body: JSON.stringify({
         code,
         code_verifier: codeVerifier,
-        code_challenge_method: 'S256',
       }),
     })
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
       console.error('Token exchange failed:', errorData)
-      throw new Error('Token exchange failed')
+      return {
+        success: false,
+        error: 'token_exchange_failed',
+        details: `トークン交換に失敗しました: ${errorData.error || errorData.message || response.status}`
+      }
     }
 
     const data = await response.json()
     setAuth(data.key)
-    return true
+    return { success: true }
   } catch (error) {
     console.error('OpenRouter OAuth error:', error)
-    return false
+    return {
+      success: false,
+      error: 'network_error',
+      details: `ネットワークエラー: ${error instanceof Error ? error.message : 'Unknown error'}`
+    }
   }
 }
