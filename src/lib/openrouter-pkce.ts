@@ -32,11 +32,25 @@ export async function startOpenRouterAuth(): Promise<void> {
   try {
     localStorage.setItem('nanya_openrouter_code_verifier', codeVerifier)
     localStorage.setItem('nanya_openrouter_origin', origin)
+
+    // Verify the write succeeded
+    const storedVerifier = localStorage.getItem('nanya_openrouter_code_verifier')
+    const storedOrigin = localStorage.getItem('nanya_openrouter_origin')
+
     console.log('[Auth] Origin:', origin)
     console.log('[Auth] Callback URL:', callbackUrl)
-    console.log('[Auth] Code verifier stored')
+    console.log('[Auth] Stored verifier:', storedVerifier ? 'OK' : 'FAILED')
+    console.log('[Auth] Stored origin:', storedOrigin ? 'OK' : 'FAILED')
+
+    if (!storedVerifier || !storedOrigin) {
+      console.error('[Auth] localStorage write verification failed!')
+      alert('認証データの保存に失敗しました。ブラウザの設定を確認してください。')
+      return
+    }
   } catch (e) {
     console.error('[Auth] Failed to store in localStorage:', e)
+    alert('認証データの保存に失敗しました: ' + e)
+    return
   }
 
   const params = new URLSearchParams({
@@ -48,7 +62,10 @@ export async function startOpenRouterAuth(): Promise<void> {
   const authUrl = `${OPENROUTER_AUTH_URL}?${params.toString()}`
   console.log('[Auth] Redirecting to:', authUrl)
 
-  window.location.href = authUrl
+  // Use setTimeout to ensure localStorage is committed before redirect
+  setTimeout(() => {
+    window.location.href = authUrl
+  }, 100)
 }
 
 export type CallbackResult = {
