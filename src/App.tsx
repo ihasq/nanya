@@ -1,5 +1,5 @@
-import { useCallback } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useCallback, useEffect } from 'react'
+import { BrowserRouter, Routes, Route, useSearchParams } from 'react-router-dom'
 import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/AppSidebar'
 import { InputPanel } from '@/components/InputPanel'
@@ -15,6 +15,7 @@ function HomePage() {
   const {
     inputText,
     variants,
+    setInputText,
     setVariants,
     setIsTranslating,
     setError,
@@ -22,6 +23,25 @@ function HomePage() {
   } = useTranslationStore()
   const { targetLanguage, writingStyle, enableHistory } = useSettingsStore()
   const { entries, refresh: refreshHistory } = useHistory()
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  // Handle Web Share Target API
+  useEffect(() => {
+    const sharedText = searchParams.get('text')
+    const sharedTitle = searchParams.get('title')
+    const sharedUrl = searchParams.get('url')
+
+    if (sharedText || sharedTitle || sharedUrl) {
+      const parts = [sharedTitle, sharedText, sharedUrl].filter(Boolean)
+      const combinedText = parts.join('\n\n')
+
+      if (combinedText) {
+        setInputText(combinedText)
+        // Clear URL params after processing
+        setSearchParams({}, { replace: true })
+      }
+    }
+  }, [searchParams, setSearchParams, setInputText])
 
   const handleTranslate = useCallback(async () => {
     if (!inputText.trim()) return

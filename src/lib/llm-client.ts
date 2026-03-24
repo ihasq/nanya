@@ -83,35 +83,42 @@ function buildAdjustmentMessages(
   modelId: string
 ): Array<{ role: 'system' | 'user' | 'assistant'; content: string }> {
   const adjustmentInstructions: Record<string, string> = {
-    'casual': 'よりカジュアルで親しみやすい表現に調整してください。',
-    'polite': 'より丁寧でフォーマルな表現に調整してください。',
-    'neutral': '中立的で標準的な表現に調整してください。',
-    'concise': 'より短く簡潔な表現に調整してください。',
-    'detailed': 'より詳しく丁寧な表現に調整してください。',
-    'catchy': 'よりキャッチーで印象的な表現に調整してください。',
-    'natural': 'よりネイティブらしく自然な表現に調整してください。',
-    'less-ai': 'AIっぽさを消して、より人間らしい表現に調整してください。',
-    'alternative': '別の言い方を提案してください。',
+    'casual': 'Make it more casual and friendly.',
+    'polite': 'Make it more polite and formal.',
+    'neutral': 'Make it neutral and standard.',
+    'concise': 'Make it shorter and more concise.',
+    'detailed': 'Make it more detailed and elaborate.',
+    'catchy': 'Make it more catchy and memorable.',
+    'natural': 'Make it sound more natural and native.',
+    'less-ai': 'Make it sound less AI-generated and more human.',
+    'alternative': 'Suggest an alternative way to say this.',
   }
 
   const instruction = adjustmentInstructions[adjustmentType] || adjustmentInstructions['alternative']
 
-  let systemPrompt = `You are a translation adjustment assistant.
+  let systemPrompt = `You are a style adjustment assistant. You adjust the TONE and STYLE of text, NOT the language.
 
-TASK: Adjust the given translation based on the user's request.
+TASK: Adjust the style of the "Current translation" text.
 
-Original text: ${originalText}
-Current translation: ${currentTranslation}
+Original text (for context only): ${originalText}
+Current translation (adjust THIS): ${currentTranslation}
 Adjustment request: ${instruction}
+
+CRITICAL RULES:
+- KEEP THE SAME LANGUAGE as "Current translation"
+- Do NOT translate back to the original language
+- Only adjust tone/style, not the language
+- If Current translation is in English, output MUST be in English
+- If Current translation is in Japanese, output MUST be in Japanese
 
 OUTPUT FORMAT: Return a valid JSON object:
 {
   "variants": [
     {
-      "style": "調整後のスタイル名",
-      "emoji": "絵文字",
-      "text": "調整後の翻訳",
-      "explanation": ["この調整のポイント1", "ポイント2"]
+      "style": "Style name",
+      "emoji": "emoji",
+      "text": "Adjusted text IN THE SAME LANGUAGE as Current translation",
+      "explanation": ["What was changed", "Why"]
     }
   ]
 }
@@ -119,7 +126,7 @@ OUTPUT FORMAT: Return a valid JSON object:
 RULES:
 - Output ONLY valid JSON
 - Generate 1-2 adjusted variants
-- Explain what was changed and why`
+- The "text" field MUST be in the same language as Current translation`
 
   if (isQwenModel(modelId)) {
     systemPrompt = `\\no_think\n${systemPrompt}`

@@ -31,5 +31,14 @@
       "description": "新しい翻訳を開始",
       "url": "/"
     }
-  ]
+  ],
+  "share_target": {
+    "action": "/",
+    "method": "GET",
+    "params": {
+      "text": "text",
+      "title": "title",
+      "url": "url"
+    }
+  }
 }
