@@ -2,7 +2,6 @@ import { useAuthStore } from '@/stores/auth-store'
 
 const OPENROUTER_AUTH_URL = 'https://openrouter.ai/auth'
 const OPENROUTER_TOKEN_URL = 'https://openrouter.ai/api/v1/auth/keys'
-const CODE_VERIFIER_KEY = 'nanya_openrouter_code_verifier'
 
 async function generateCodeVerifier(): Promise<string> {
   const array = new Uint8Array(32)
@@ -22,12 +21,18 @@ function base64UrlEncode(buffer: Uint8Array): string {
   return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
 }
 
-export async function startOpenRouterAuth() {
+// Store verifier in memory for popup flow
+let pendingVerifier: string | null = null
+
+export async function startOpenRouterAuth(): Promise<void> {
   const codeVerifier = await generateCodeVerifier()
   const codeChallenge = await generateCodeChallenge(codeVerifier)
 
-  // Use localStorage instead of sessionStorage for cross-context persistence
-  localStorage.setItem(CODE_VERIFIER_KEY, codeVerifier)
+  // Store in memory for popup flow
+  pendingVerifier = codeVerifier
+
+  // Also store in localStorage as fallback for redirect flow
+  localStorage.setItem('nanya_openrouter_code_verifier', codeVerifier)
 
   const callbackUrl = `${window.location.origin}/auth/callback`
   const params = new URLSearchParams({
@@ -36,19 +41,89 @@ export async function startOpenRouterAuth() {
     code_challenge_method: 'S256',
   })
 
-  window.location.href = `${OPENROUTER_AUTH_URL}?${params.toString()}`
+  const authUrl = `${OPENROUTER_AUTH_URL}?${params.toString()}`
+
+  // Try popup first (works better on mobile with PWAs)
+  const width = 500
+  const height = 700
+  const left = window.screenX + (window.outerWidth - width) / 2
+  const top = window.screenY + (window.outerHeight - height) / 2
+
+  const popup = window.open(
+    authUrl,
+    'openrouter_auth',
+    `width=${width},height=${height},left=${left},top=${top},popup=yes`
+  )
+
+  // If popup was blocked or failed, fall back to redirect
+  if (!popup || popup.closed) {
+    window.location.href = authUrl
+    return
+  }
+
+  // Poll for the popup to return to our callback URL
+  return new Promise((resolve) => {
+    const pollInterval = setInterval(() => {
+      try {
+        if (popup.closed) {
+          clearInterval(pollInterval)
+          resolve()
+          return
+        }
+
+        // Check if popup navigated to our callback
+        const popupUrl = popup.location.href
+        if (popupUrl.startsWith(window.location.origin + '/auth/callback')) {
+          clearInterval(pollInterval)
+
+          // Extract code from URL
+          const url = new URL(popupUrl)
+          const code = url.searchParams.get('code')
+
+          popup.close()
+
+          if (code) {
+            // Handle the callback directly
+            handleOpenRouterCallback(code).then(() => {
+              // Refresh the page to update UI
+              window.location.reload()
+            })
+          }
+
+          resolve()
+        }
+      } catch {
+        // Cross-origin error - popup is still on OpenRouter's domain
+        // Continue polling
+      }
+    }, 500)
+
+    // Timeout after 5 minutes
+    setTimeout(() => {
+      clearInterval(pollInterval)
+      if (!popup.closed) {
+        popup.close()
+      }
+      resolve()
+    }, 5 * 60 * 1000)
+  })
 }
 
 export async function handleOpenRouterCallback(code: string): Promise<boolean> {
-  const codeVerifier = localStorage.getItem(CODE_VERIFIER_KEY)
+  // Try memory first (popup flow), then localStorage (redirect flow)
+  let codeVerifier = pendingVerifier
+  if (!codeVerifier) {
+    codeVerifier = localStorage.getItem('nanya_openrouter_code_verifier')
+  }
 
   if (!codeVerifier) {
-    console.error('Code verifier not found in localStorage')
+    console.error('Code verifier not found')
     return false
   }
 
-  // Remove the verifier after reading
-  localStorage.removeItem(CODE_VERIFIER_KEY)
+  // Clear stored verifier
+  pendingVerifier = null
+  localStorage.removeItem('nanya_openrouter_code_verifier')
 
   const { setAuth } = useAuthStore.getState()
 
