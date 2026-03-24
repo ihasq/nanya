@@ -2,6 +2,7 @@ import { useAuthStore } from '@/stores/auth-store'
 
 const OPENROUTER_AUTH_URL = 'https://openrouter.ai/auth'
 const OPENROUTER_TOKEN_URL = 'https://openrouter.ai/api/v1/auth/keys'
+const CODE_VERIFIER_KEY = 'nanya_openrouter_code_verifier'
 
 async function generateCodeVerifier(): Promise<string> {
   const array = new Uint8Array(32)
@@ -25,7 +26,8 @@ export async function startOpenRouterAuth() {
   const codeVerifier = await generateCodeVerifier()
   const codeChallenge = await generateCodeChallenge(codeVerifier)
 
-  sessionStorage.setItem('openrouter_code_verifier', codeVerifier)
+  // Use localStorage instead of sessionStorage for cross-context persistence
+  localStorage.setItem(CODE_VERIFIER_KEY, codeVerifier)
 
   const callbackUrl = `${window.location.origin}/auth/callback`
   const params = new URLSearchParams({
@@ -38,14 +40,15 @@ export async function startOpenRouterAuth() {
 }
 
 export async function handleOpenRouterCallback(code: string): Promise<boolean> {
-  const codeVerifier = sessionStorage.getItem('openrouter_code_verifier')
+  const codeVerifier = localStorage.getItem(CODE_VERIFIER_KEY)
 
   if (!codeVerifier) {
-    console.error('Code verifier not found')
+    console.error('Code verifier not found in localStorage')
     return false
   }
 
-  sessionStorage.removeItem('openrouter_code_verifier')
+  // Remove the verifier after reading
+  localStorage.removeItem(CODE_VERIFIER_KEY)
 
   const { setAuth } = useAuthStore.getState()
 
