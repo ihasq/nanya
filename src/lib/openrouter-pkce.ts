@@ -22,10 +22,12 @@ function base64UrlEncode(buffer: Uint8Array): string {
 }
 
 export async function startOpenRouterAuth(): Promise<void> {
-  console.log('[Auth] === startOpenRouterAuth called ===')
-  console.log('[Auth] Current localStorage test:', localStorage.getItem('test_key'))
-  localStorage.setItem('test_key', 'test_value_' + Date.now())
-  console.log('[Auth] After set localStorage test:', localStorage.getItem('test_key'))
+  // Debug: Show alert to confirm function is called
+  const debugMode = true
+
+  if (debugMode) {
+    alert('認証開始: startOpenRouterAuth が呼ばれました')
+  }
 
   const codeVerifier = await generateCodeVerifier()
   const codeChallenge = await generateCodeChallenge(codeVerifier)
@@ -33,30 +35,20 @@ export async function startOpenRouterAuth(): Promise<void> {
   const origin = window.location.origin
   const callbackUrl = `${origin}/auth/callback`
 
-  console.log('[Auth] Origin:', origin)
-  console.log('[Auth] Callback URL:', callbackUrl)
-  console.log('[Auth] Code verifier length:', codeVerifier.length)
+  // Store verifier
+  localStorage.setItem('nanya_openrouter_code_verifier', codeVerifier)
+  localStorage.setItem('nanya_openrouter_origin', origin)
 
-  // Store verifier with the origin for verification
-  try {
-    localStorage.setItem('nanya_openrouter_code_verifier', codeVerifier)
-    localStorage.setItem('nanya_openrouter_origin', origin)
+  // Verify the write succeeded
+  const storedVerifier = localStorage.getItem('nanya_openrouter_code_verifier')
+  const storedOrigin = localStorage.getItem('nanya_openrouter_origin')
 
-    // Verify the write succeeded
-    const storedVerifier = localStorage.getItem('nanya_openrouter_code_verifier')
-    const storedOrigin = localStorage.getItem('nanya_openrouter_origin')
+  if (debugMode) {
+    alert(`localStorage確認:\nverifier: ${storedVerifier ? 'OK' : 'FAILED'}\norigin: ${storedOrigin || 'FAILED'}`)
+  }
 
-    console.log('[Auth] Stored verifier:', storedVerifier ? `OK (${storedVerifier.substring(0, 10)}...)` : 'FAILED')
-    console.log('[Auth] Stored origin:', storedOrigin || 'FAILED')
-
-    if (!storedVerifier || !storedOrigin) {
-      console.error('[Auth] localStorage write verification failed!')
-      alert('認証データの保存に失敗しました。ブラウザの設定を確認してください。')
-      return
-    }
-  } catch (e) {
-    console.error('[Auth] Failed to store in localStorage:', e)
-    alert('認証データの保存に失敗しました: ' + e)
+  if (!storedVerifier || !storedOrigin) {
+    alert('認証データの保存に失敗しました')
     return
   }
 
@@ -67,14 +59,12 @@ export async function startOpenRouterAuth(): Promise<void> {
   })
 
   const authUrl = `${OPENROUTER_AUTH_URL}?${params.toString()}`
-  console.log('[Auth] Will redirect to:', authUrl)
-  console.log('[Auth] Waiting 100ms before redirect...')
 
-  // Use setTimeout to ensure localStorage is committed before redirect
-  setTimeout(() => {
-    console.log('[Auth] Redirecting now!')
-    window.location.href = authUrl
-  }, 100)
+  if (debugMode) {
+    alert(`リダイレクト先: ${authUrl.substring(0, 50)}...`)
+  }
+
+  window.location.href = authUrl
 }
 
 export type CallbackResult = {
