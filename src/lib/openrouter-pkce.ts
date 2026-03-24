@@ -22,11 +22,20 @@ function base64UrlEncode(buffer: Uint8Array): string {
 }
 
 export async function startOpenRouterAuth(): Promise<void> {
+  console.log('[Auth] === startOpenRouterAuth called ===')
+  console.log('[Auth] Current localStorage test:', localStorage.getItem('test_key'))
+  localStorage.setItem('test_key', 'test_value_' + Date.now())
+  console.log('[Auth] After set localStorage test:', localStorage.getItem('test_key'))
+
   const codeVerifier = await generateCodeVerifier()
   const codeChallenge = await generateCodeChallenge(codeVerifier)
 
   const origin = window.location.origin
   const callbackUrl = `${origin}/auth/callback`
+
+  console.log('[Auth] Origin:', origin)
+  console.log('[Auth] Callback URL:', callbackUrl)
+  console.log('[Auth] Code verifier length:', codeVerifier.length)
 
   // Store verifier with the origin for verification
   try {
@@ -37,10 +46,8 @@ export async function startOpenRouterAuth(): Promise<void> {
     const storedVerifier = localStorage.getItem('nanya_openrouter_code_verifier')
     const storedOrigin = localStorage.getItem('nanya_openrouter_origin')
 
-    console.log('[Auth] Origin:', origin)
-    console.log('[Auth] Callback URL:', callbackUrl)
-    console.log('[Auth] Stored verifier:', storedVerifier ? 'OK' : 'FAILED')
-    console.log('[Auth] Stored origin:', storedOrigin ? 'OK' : 'FAILED')
+    console.log('[Auth] Stored verifier:', storedVerifier ? `OK (${storedVerifier.substring(0, 10)}...)` : 'FAILED')
+    console.log('[Auth] Stored origin:', storedOrigin || 'FAILED')
 
     if (!storedVerifier || !storedOrigin) {
       console.error('[Auth] localStorage write verification failed!')
@@ -60,10 +67,12 @@ export async function startOpenRouterAuth(): Promise<void> {
   })
 
   const authUrl = `${OPENROUTER_AUTH_URL}?${params.toString()}`
-  console.log('[Auth] Redirecting to:', authUrl)
+  console.log('[Auth] Will redirect to:', authUrl)
+  console.log('[Auth] Waiting 100ms before redirect...')
 
   // Use setTimeout to ensure localStorage is committed before redirect
   setTimeout(() => {
+    console.log('[Auth] Redirecting now!')
     window.location.href = authUrl
   }, 100)
 }
