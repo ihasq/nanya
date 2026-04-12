@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Card } from '@/components/ui/card'
@@ -18,6 +18,9 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated())
   const t = useT()
 
+  // Independent local state for compact mode input
+  const [compactInput, setCompactInput] = useState('')
+
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
@@ -30,21 +33,44 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
     [onTranslate, isAuthenticated]
   )
 
+  const handleCompactKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault()
+        if (isAuthenticated && compactInput.trim()) {
+          setInputText(compactInput)
+          setCompactInput('')
+          // Use setTimeout to ensure state is updated before translation
+          setTimeout(() => onTranslate(), 0)
+        }
+      }
+    },
+    [onTranslate, isAuthenticated, compactInput, setInputText]
+  )
+
+  const handleCompactTranslate = useCallback(() => {
+    if (compactInput.trim()) {
+      setInputText(compactInput)
+      setCompactInput('')
+      setTimeout(() => onTranslate(), 0)
+    }
+  }, [compactInput, setInputText, onTranslate])
+
   if (showCompact) {
     return (
       <div className="h-full flex flex-col p-6">
         <div className="text-muted-foreground mb-2">{t('input.translateOther')}</div>
         <Textarea
           placeholder={t('input.placeholder')}
-          value={inputText}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInputText(e.target.value)}
-          onKeyDown={handleKeyDown}
+          value={compactInput}
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setCompactInput(e.target.value)}
+          onKeyDown={handleCompactKeyDown}
           className="flex-1 resize-none border bg-background text-sm focus-visible:ring-1"
           disabled={isTranslating}
         />
         <Button
-          onClick={onTranslate}
-          disabled={!inputText.trim() || isTranslating || !isAuthenticated}
+          onClick={handleCompactTranslate}
+          disabled={!compactInput.trim() || isTranslating || !isAuthenticated}
           size="sm"
           className="mt-3 w-full gap-1.5"
         >
