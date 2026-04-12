@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, useSearchParams } from 'react-router-dom'
 import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
 import { AppSidebar } from '@/components/AppSidebar'
@@ -11,12 +11,16 @@ import { useHistory } from '@/hooks/useHistory'
 import { translate } from '@/lib/llm-client'
 import { saveHistoryEntry } from '@/lib/history-storage'
 
+// Lazy load test page (dev only)
+const StreamingTestPage = lazy(() => import('@/test-streaming'))
+
 function HomePage() {
   const {
     inputText,
     variants,
     setInputText,
     setVariants,
+    setStreamingVariant,
     setIsTranslating,
     setError,
     reset,
@@ -49,9 +53,15 @@ function HomePage() {
     setIsTranslating(true)
     setError(null)
     setVariants([])
+    setStreamingVariant(null)
 
     try {
-      const result = await translate({ text: inputText })
+      const result = await translate({
+        text: inputText,
+        onPartialResult: (partial) => {
+          setStreamingVariant(partial)
+        }
+      })
       setVariants(result.variants)
 
       if (enableHistory && result.variants.length > 0) {
@@ -68,8 +78,9 @@ function HomePage() {
       setError(err instanceof Error ? err.message : 'Translation failed')
     } finally {
       setIsTranslating(false)
+      setStreamingVariant(null)
     }
-  }, [inputText, systemLanguage, writingStyle, enableHistory, setVariants, setIsTranslating, setError, refreshHistory])
+  }, [inputText, systemLanguage, writingStyle, enableHistory, setVariants, setStreamingVariant, setIsTranslating, setError, refreshHistory])
 
   const handleNewTranslation = useCallback(() => {
     reset()
@@ -119,6 +130,11 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
+        <Route path="/test/streaming" element={
+          <Suspense fallback={<div className="p-6">Loading test page...</div>}>
+            <StreamingTestPage />
+          </Suspense>
+        } />
       </Routes>
     </BrowserRouter>
   )

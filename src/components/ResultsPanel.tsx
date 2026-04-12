@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useTranslationStore } from '@/stores/translation-store'
 import { useT } from '@/stores/settings-store'
-import { adjustTranslation, simpleTranslate, type TranslationVariant } from '@/lib/llm-client'
+import { adjustTranslation, simpleTranslate, type TranslationVariant, type PartialVariant } from '@/lib/llm-client'
 import { Copy, Check, Volume2, ChevronDown, RotateCcw, Loader2 } from 'lucide-react'
 
 type AdjustmentOption = {
@@ -29,6 +29,41 @@ const ADJUSTMENT_OPTIONS: AdjustmentOption[] = [
   { type: 'less-ai', labelKey: 'results.lessAI', emoji: '🧑' },
   { type: 'alternative', labelKey: 'results.alternative', emoji: '💬' },
 ]
+
+// Streaming variant card - shows partial results as they arrive
+function StreamingVariantCard({ variant, isAdjustment }: { variant: PartialVariant; isAdjustment?: boolean }) {
+  return (
+    <Card className={`mb-4 ${isAdjustment ? 'border-dashed border-primary/50' : ''}`}>
+      <CardContent className="pt-4">
+        {/* Style Label */}
+        <div className="flex items-center gap-2 mb-3">
+          <span className="text-lg">{variant.emoji || '📝'}</span>
+          <span className="text-sm font-medium bg-muted px-2 py-0.5 rounded">
+            {variant.style || 'Translation'}
+          </span>
+          <Loader2 className="h-3 w-3 animate-spin text-muted-foreground ml-auto" />
+        </div>
+
+        {/* Translation Text */}
+        {variant.text && (
+          <p className="text-lg mb-4 animate-in fade-in duration-300">{variant.text}</p>
+        )}
+
+        {/* Explanations (streaming) */}
+        {variant.explanation && variant.explanation.length > 0 && (
+          <ul className="space-y-1 mb-4">
+            {variant.explanation.map((exp, i) => (
+              <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground animate-in fade-in slide-in-from-bottom-1 duration-300">
+                <span className="text-primary mt-1.5">•</span>
+                <span>{exp}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </CardContent>
+    </Card>
+  )
+}
 
 interface VariantCardProps {
   variant: TranslationVariant
@@ -190,8 +225,12 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
   const {
     inputText,
     variants,
+    streamingVariant,
+    streamingAdjustment,
+    isTranslating,
     isAdjusting,
     setIsAdjusting,
+    setStreamingAdjustment,
     addVariants,
     error
   } = useTranslationStore()
@@ -200,17 +239,22 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
 
   const handleAdjust = async (type: string, currentText: string) => {
     setIsAdjusting(true)
+    setStreamingAdjustment(null)
     try {
       const result = await adjustTranslation({
         originalText: inputText,
         currentTranslation: currentText,
         adjustmentType: type,
+        onPartialResult: (partial) => {
+          setStreamingAdjustment(partial)
+        }
       })
       addVariants(result.variants)
     } catch (err) {
       console.error('Adjustment failed:', err)
     } finally {
       setIsAdjusting(false)
+      setStreamingAdjustment(null)
     }
   }
 
@@ -226,7 +270,12 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
     )
   }
 
-  if (variants.length === 0) {
+  // Show streaming variant during initial translation
+  const showStreamingCard = isTranslating && streamingVariant && streamingVariant.text
+  // Show streaming adjustment card
+  const showStreamingAdjustment = isAdjusting && streamingAdjustment && streamingAdjustment.text
+
+  if (variants.length === 0 && !showStreamingCard) {
     return null
   }
 
@@ -245,11 +294,18 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
           <span className="text-white text-xs">N</span>
         </div>
         <span className="text-sm text-muted-foreground">
-          {variants.length === 1
-            ? t('results.translatedOne')
-            : t('results.translatedMany').replace('{count}', String(variants.length))}
+          {isTranslating && !variants.length
+            ? t('input.translating')
+            : variants.length === 1
+              ? t('results.translatedOne')
+              : t('results.translatedMany').replace('{count}', String(variants.length))}
         </span>
       </div>
+
+      {/* Streaming Card (during initial translation) */}
+      {showStreamingCard && variants.length === 0 && (
+        <StreamingVariantCard variant={streamingVariant} />
+      )}
 
       {/* Variant Cards */}
       {variants.map((variant, index) => (
@@ -261,8 +317,13 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
         />
       ))}
 
-      {/* Adjustment Loading */}
-      {isAdjusting && (
+      {/* Streaming Adjustment Card */}
+      {showStreamingAdjustment && (
+        <StreamingVariantCard variant={streamingAdjustment} isAdjustment />
+      )}
+
+      {/* Adjustment Loading (only show if no streaming content) */}
+      {isAdjusting && !showStreamingAdjustment && (
         <Card className="mb-4 border-dashed">
           <CardContent className="pt-6 flex items-center justify-center gap-2">
             <Loader2 className="h-4 w-4 animate-spin" />

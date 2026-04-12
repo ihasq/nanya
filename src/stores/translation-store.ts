@@ -1,9 +1,11 @@
 import { create } from 'zustand'
-import type { TranslationVariant } from '@/lib/llm-client'
+import type { TranslationVariant, PartialVariant } from '@/lib/llm-client'
 
 interface TranslationState {
   inputText: string
   variants: TranslationVariant[]
+  streamingVariant: PartialVariant | null  // Currently streaming variant
+  streamingAdjustment: PartialVariant | null  // Currently streaming adjustment
   backTranslation: string | null
   isTranslating: boolean
   isAdjusting: boolean
@@ -13,6 +15,8 @@ interface TranslationState {
   setInputText: (text: string) => void
   setVariants: (variants: TranslationVariant[]) => void
   addVariants: (variants: TranslationVariant[]) => void
+  setStreamingVariant: (variant: PartialVariant | null) => void
+  setStreamingAdjustment: (variant: PartialVariant | null) => void
   setBackTranslation: (text: string | null) => void
   setIsTranslating: (isTranslating: boolean) => void
   setIsAdjusting: (isAdjusting: boolean) => void
@@ -24,6 +28,8 @@ interface TranslationState {
 export const useTranslationStore = create<TranslationState>((set) => ({
   inputText: '',
   variants: [],
+  streamingVariant: null,
+  streamingAdjustment: null,
   backTranslation: null,
   isTranslating: false,
   isAdjusting: false,
@@ -31,10 +37,13 @@ export const useTranslationStore = create<TranslationState>((set) => ({
   error: null,
 
   setInputText: (text) => set({ inputText: text }),
-  setVariants: (variants) => set({ variants, backTranslation: null }),
+  setVariants: (variants) => set({ variants, backTranslation: null, streamingVariant: null }),
   addVariants: (newVariants) => set((state) => ({
-    variants: [...state.variants, ...newVariants]
+    variants: [...state.variants, ...newVariants],
+    streamingAdjustment: null
   })),
+  setStreamingVariant: (variant) => set({ streamingVariant: variant }),
+  setStreamingAdjustment: (variant) => set({ streamingAdjustment: variant }),
   setBackTranslation: (text) => set({ backTranslation: text }),
   setIsTranslating: (isTranslating) => set({ isTranslating }),
   setIsAdjusting: (isAdjusting) => set({ isAdjusting }),
@@ -43,6 +52,8 @@ export const useTranslationStore = create<TranslationState>((set) => ({
   reset: () => set({
     inputText: '',
     variants: [],
+    streamingVariant: null,
+    streamingAdjustment: null,
     backTranslation: null,
     isTranslating: false,
     isAdjusting: false,

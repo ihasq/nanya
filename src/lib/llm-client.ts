@@ -162,15 +162,25 @@ RULES:
   ]
 }
 
+// Partial variant for streaming - fields may be incomplete
+export interface PartialVariant {
+  style?: string
+  emoji?: string
+  text?: string
+  explanation?: string[]
+  isComplete?: boolean
+}
+
 export interface TranslateOptions {
   text: string
-  onStream?: (chunk: string) => void
+  onPartialResult?: (variant: PartialVariant) => void
 }
 
 export interface AdjustOptions {
   originalText: string
   currentTranslation: string
   adjustmentType: string
+  onPartialResult?: (variant: PartialVariant) => void
 }
 
 async function callLLM(
@@ -200,6 +210,143 @@ async function callLLM(
 
   const data = await response.json()
   return data.choices?.[0]?.message?.content || ''
+}
+
+// Streaming LLM call with partial JSON parsing
+async function callLLMStreaming(
+  messages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }>,
+  model: string,
+  accessToken: string,
+  onPartialResult?: (variant: PartialVariant) => void
+): Promise<string> {
+  const response = await fetch(OPENROUTER_API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`,
+      'HTTP-Referer': window.location.origin,
+      'X-Title': 'Nanya Translate',
+    },
+    body: JSON.stringify({
+      model,
+      messages,
+      temperature: 0.4,
+      stream: true,
+    }),
+  })
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({}))
+    throw new Error(error.error?.message || error.message || 'Translation failed')
+  }
+
+  const reader = response.body?.getReader()
+  if (!reader) {
+    throw new Error('No response body')
+  }
+
+  const decoder = new TextDecoder()
+  let fullContent = ''
+  let lastParsedState: PartialVariant = {}
+
+  while (true) {
+    const { done, value } = await reader.read()
+    if (done) break
+
+    const chunk = decoder.decode(value, { stream: true })
+    const lines = chunk.split('\n')
+
+    for (const line of lines) {
+      if (line.startsWith('data: ')) {
+        const data = line.slice(6)
+        if (data === '[DONE]') continue
+
+        try {
+          const parsed = JSON.parse(data)
+          const delta = parsed.choices?.[0]?.delta?.content || ''
+          fullContent += delta
+
+          // Parse partial JSON and emit updates
+          if (onPartialResult) {
+            const newState = parsePartialJSON(fullContent)
+            if (hasNewContent(lastParsedState, newState)) {
+              onPartialResult(newState)
+              lastParsedState = { ...newState }
+            }
+          }
+        } catch {
+          // Skip invalid JSON chunks
+        }
+      }
+    }
+  }
+
+  return fullContent
+}
+
+// Parse partial JSON to extract completed fields
+function parsePartialJSON(content: string): PartialVariant {
+  const result: PartialVariant = {}
+
+  // Clean up markdown code blocks
+  let cleaned = content.trim()
+  cleaned = cleaned.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '')
+
+  // Extract style field
+  const styleMatch = cleaned.match(/"style"\s*:\s*"([^"]*)"/)
+  if (styleMatch) {
+    result.style = styleMatch[1]
+  }
+
+  // Extract emoji field
+  const emojiMatch = cleaned.match(/"emoji"\s*:\s*"([^"]*)"/)
+  if (emojiMatch) {
+    result.emoji = emojiMatch[1]
+  }
+
+  // Extract text field (must be complete - ends with closing quote not followed by incomplete escape)
+  const textMatch = cleaned.match(/"text"\s*:\s*"((?:[^"\\]|\\.)*)"\s*[,\}]/)
+  if (textMatch) {
+    result.text = textMatch[1].replace(/\\"/g, '"').replace(/\\n/g, '\n').replace(/\\\\/g, '\\')
+  }
+
+  // Extract explanation array - parse completed items
+  const explanationMatch = cleaned.match(/"explanation"\s*:\s*\[([\s\S]*?)(?:\]|$)/)
+  if (explanationMatch) {
+    const arrayContent = explanationMatch[0]
+    const items: string[] = []
+
+    // Find all complete string items in the array
+    const itemRegex = /"((?:[^"\\]|\\.)*)"/g
+    let match
+    // Skip first match if it's the key "explanation"
+    const afterKey = arrayContent.replace(/"explanation"\s*:\s*\[/, '')
+
+    while ((match = itemRegex.exec(afterKey)) !== null) {
+      items.push(match[1].replace(/\\"/g, '"').replace(/\\n/g, '\n').replace(/\\\\/g, '\\'))
+    }
+
+    if (items.length > 0) {
+      result.explanation = items
+    }
+
+    // Check if array is complete
+    if (arrayContent.includes(']')) {
+      result.isComplete = true
+    }
+  }
+
+  return result
+}
+
+// Check if there's new content worth emitting
+function hasNewContent(prev: PartialVariant, next: PartialVariant): boolean {
+  if (next.text && next.text !== prev.text) return true
+  if (next.style && next.style !== prev.style) return true
+  if (next.emoji && next.emoji !== prev.emoji) return true
+  if (next.explanation && next.explanation.length !== (prev.explanation?.length || 0)) return true
+  if (next.isComplete && !prev.isComplete) return true
+  return false
 }
 
 function parseTranslationResult(content: string): TranslationResult {
@@ -288,6 +435,12 @@ export async function translate(options: TranslateOptions): Promise<TranslationR
     settings.defaultTargetLanguage
   )
 
+  // Use streaming if callback provided
+  if (options.onPartialResult) {
+    const content = await callLLMStreaming(messages, model, accessToken, options.onPartialResult)
+    return parseTranslationResult(content)
+  }
+
   const content = await callLLM(messages, model, accessToken)
   return parseTranslationResult(content)
 }
@@ -307,6 +460,12 @@ export async function adjustTranslation(options: AdjustOptions): Promise<Transla
     options.adjustmentType,
     model
   )
+
+  // Use streaming if callback provided
+  if (options.onPartialResult) {
+    const content = await callLLMStreaming(messages, model, accessToken, options.onPartialResult)
+    return parseTranslationResult(content)
+  }
 
   const content = await callLLM(messages, model, accessToken)
   return parseTranslationResult(content)
