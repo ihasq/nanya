@@ -211,55 +211,7 @@ input, textarea, select {
   }
 }
 
-/* Dialog overlay */
-[data-state="open"][data-slot="dialog-overlay"] {
-  animation: fadeIn var(--transition-normal) forwards;
-}
-
-[data-state="closed"][data-slot="dialog-overlay"] {
-  animation: fadeOut var(--transition-fast) forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-/* Dialog content */
-[data-state="open"][data-slot="dialog-content"] {
-  animation: dialogIn var(--transition-normal) forwards;
-}
-
-[data-state="closed"][data-slot="dialog-content"] {
-  animation: dialogOut var(--transition-fast) forwards;
-}
-
-@keyframes dialogIn {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -48%) scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-}
-
-@keyframes dialogOut {
-  from {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: translate(-50%, -48%) scale(0.96);
-  }
-}
+/* Dialog uses built-in Radix animations, no custom animations needed */
 
 /* Writing style tags transition */
 .writing-style-tag {
