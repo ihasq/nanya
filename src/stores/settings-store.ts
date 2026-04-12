@@ -33,6 +33,11 @@ export function getLanguageLabel(code: LanguageCode): string {
   return SUPPORTED_LANGUAGES[code]?.name || code
 }
 
+// Helper to get language English name
+export function getLanguageEnglishName(code: LanguageCode): string {
+  return SUPPORTED_LANGUAGES[code]?.englishName || code
+}
+
 // Helper to get language flag
 export function getLanguageFlag(code: LanguageCode): string {
   return SUPPORTED_LANGUAGES[code]?.flag || '🏳️'
@@ -50,12 +55,14 @@ export const LANGUAGE_FLAGS: Record<string, string> = Object.fromEntries(
 export const DEFAULT_MODEL = 'google/gemini-2.5-flash-lite'
 
 const detectedLanguage = detectBrowserLanguage()
+// Pick sensible default target: Japanese for English users, English for others
+const defaultTarget: LanguageCode = detectedLanguage === 'en' ? 'ja' : 'en'
 
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
       systemLanguage: detectedLanguage,
-      defaultTargetLanguage: 'en', // Default: translate to English when input matches system language
+      defaultTargetLanguage: defaultTarget, // When input matches system language, translate to this
       writingStyle: 'neutral',
       selectedModel: DEFAULT_MODEL,
       enableShortcuts: true,

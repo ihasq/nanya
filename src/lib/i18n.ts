@@ -76,10 +76,13 @@ export type LanguageCode = keyof typeof SUPPORTED_LANGUAGES
 // UI translation keys
 type UITextKey =
   | 'app.name'
+  | 'app.tagline'
   | 'app.newTranslation'
   | 'sidebar.quickSelect'
   | 'sidebar.connected'
   | 'sidebar.notConnected'
+  | 'sidebar.privacyNotice'
+  | 'sidebar.noAITraining'
   | 'settings.title'
   | 'settings.description'
   | 'settings.systemLanguage'
@@ -109,6 +112,8 @@ type UITextKey =
   | 'input.autoDetect'
   | 'input.translateOther'
   | 'input.aiHelper'
+  | 'input.writingStyle'
+  | 'input.translateWithoutLogin'
   | 'results.copied'
   | 'results.copy'
   | 'results.speak'
@@ -142,10 +147,13 @@ type TranslationDict = Record<UITextKey, string>
 // English translations (base)
 const en: TranslationDict = {
   'app.name': 'Nanya',
+  'app.tagline': 'Instant AI translation, with clear explanations.',
   'app.newTranslation': 'New Translation',
   'sidebar.quickSelect': 'Quick Select',
   'sidebar.connected': 'OpenRouter',
   'sidebar.notConnected': 'Not Connected',
+  'sidebar.privacyNotice': 'Translation data is stored on your device, not on our servers.',
+  'sidebar.noAITraining': "It's never used to train AI models.",
   'settings.title': 'Settings',
   'settings.description': 'Customize translation settings',
   'settings.systemLanguage': 'System Language',
@@ -165,7 +173,7 @@ const en: TranslationDict = {
   'settings.fast': 'Fast',
   'settings.balanced': 'Balanced',
   'settings.advanced': 'Advanced',
-  'input.placeholder': 'Enter text to translate...',
+  'input.placeholder': 'Type in any language...',
   'input.translate': 'Translate',
   'input.translating': 'Translating...',
   'input.retranslate': 'Retranslate',
@@ -174,7 +182,9 @@ const en: TranslationDict = {
   'input.inputLabel': 'Enter text to translate',
   'input.autoDetect': 'Auto-detect',
   'input.translateOther': 'Translate other text',
-  'input.aiHelper': 'AI will detect the language and suggest translations in multiple styles',
+  'input.aiHelper': '{source} will be translated into {target}, other languages into {source}.',
+  'input.writingStyle': 'Writing style',
+  'input.translateWithoutLogin': 'Translate without signing in',
   'results.copied': 'Copied!',
   'results.copy': 'Copy',
   'results.speak': 'Speak',
@@ -206,10 +216,13 @@ const en: TranslationDict = {
 // Japanese translations
 const ja: TranslationDict = {
   'app.name': 'Nanya',
+  'app.tagline': 'わかりやすい解説つきの、AI翻訳。',
   'app.newTranslation': 'あたらしく翻訳',
   'sidebar.quickSelect': 'クイック選択',
   'sidebar.connected': 'OpenRouter',
   'sidebar.notConnected': '未接続',
+  'sidebar.privacyNotice': '翻訳データはあなたのデバイスに保存され、サーバーには送信されません。',
+  'sidebar.noAITraining': 'AIの学習に使用されることはありません。',
   'settings.title': '設定',
   'settings.description': '翻訳の設定をカスタマイズ',
   'settings.systemLanguage': 'システム言語',
@@ -229,7 +242,7 @@ const ja: TranslationDict = {
   'settings.fast': '高速',
   'settings.balanced': 'バランス',
   'settings.advanced': '高性能',
-  'input.placeholder': '翻訳するテキストを入力...',
+  'input.placeholder': '何語でも入力できます...',
   'input.translate': '翻訳する',
   'input.translating': '翻訳中...',
   'input.retranslate': '再翻訳',
@@ -238,7 +251,9 @@ const ja: TranslationDict = {
   'input.inputLabel': '翻訳テキストを入力',
   'input.autoDetect': '自動検出',
   'input.translateOther': '別のテキストを翻訳',
-  'input.aiHelper': 'AIが言語を検出し、複数のスタイルで翻訳を提案します',
+  'input.aiHelper': '{source}は{target}に、その他の言語は{source}に翻訳されます。',
+  'input.writingStyle': '文体',
+  'input.translateWithoutLogin': '接続せずに翻訳',
   'results.copied': 'コピーしました！',
   'results.copy': 'コピー',
   'results.speak': '読み上げ',
@@ -270,10 +285,13 @@ const ja: TranslationDict = {
 // Chinese Simplified translations
 const zhCN: TranslationDict = {
   'app.name': 'Nanya',
+  'app.tagline': '带有清晰解释的即时AI翻译。',
   'app.newTranslation': '新建翻译',
   'sidebar.quickSelect': '快速选择',
   'sidebar.connected': 'OpenRouter',
   'sidebar.notConnected': '未连接',
+  'sidebar.privacyNotice': '翻译数据存储在您的设备上，不会上传到服务器。',
+  'sidebar.noAITraining': '不会用于训练AI模型。',
   'settings.title': '设置',
   'settings.description': '自定义翻译设置',
   'settings.systemLanguage': '系统语言',
@@ -293,7 +311,7 @@ const zhCN: TranslationDict = {
   'settings.fast': '快速',
   'settings.balanced': '平衡',
   'settings.advanced': '高级',
-  'input.placeholder': '输入要翻译的文本...',
+  'input.placeholder': '输入任何语言...',
   'input.translate': '翻译',
   'input.translating': '翻译中...',
   'input.retranslate': '重新翻译',
@@ -302,7 +320,9 @@ const zhCN: TranslationDict = {
   'input.inputLabel': '输入翻译文本',
   'input.autoDetect': '自动检测',
   'input.translateOther': '翻译其他文本',
-  'input.aiHelper': 'AI将检测语言并以多种风格建议翻译',
+  'input.aiHelper': '{source}将被翻译成{target}，其他语言将被翻译成{source}。',
+  'input.writingStyle': '文体',
+  'input.translateWithoutLogin': '无需登录即可翻译',
   'results.copied': '已复制！',
   'results.copy': '复制',
   'results.speak': '朗读',
@@ -334,10 +354,13 @@ const zhCN: TranslationDict = {
 // Korean translations
 const ko: TranslationDict = {
   'app.name': 'Nanya',
+  'app.tagline': '명확한 설명과 함께하는 즉시 AI 번역.',
   'app.newTranslation': '새 번역',
   'sidebar.quickSelect': '빠른 선택',
   'sidebar.connected': 'OpenRouter',
   'sidebar.notConnected': '연결 안 됨',
+  'sidebar.privacyNotice': '번역 데이터는 기기에 저장되며 서버로 전송되지 않습니다.',
+  'sidebar.noAITraining': 'AI 학습에 사용되지 않습니다.',
   'settings.title': '설정',
   'settings.description': '번역 설정 사용자 정의',
   'settings.systemLanguage': '시스템 언어',
@@ -357,7 +380,7 @@ const ko: TranslationDict = {
   'settings.fast': '빠름',
   'settings.balanced': '균형',
   'settings.advanced': '고급',
-  'input.placeholder': '번역할 텍스트 입력...',
+  'input.placeholder': '어떤 언어든 입력하세요...',
   'input.translate': '번역',
   'input.translating': '번역 중...',
   'input.retranslate': '다시 번역',
@@ -366,7 +389,9 @@ const ko: TranslationDict = {
   'input.inputLabel': '번역할 텍스트 입력',
   'input.autoDetect': '자동 감지',
   'input.translateOther': '다른 텍스트 번역',
-  'input.aiHelper': 'AI가 언어를 감지하고 여러 스타일로 번역을 제안합니다',
+  'input.aiHelper': '{source}은 {target}로, 다른 언어는 {source}로 번역됩니다.',
+  'input.writingStyle': '문체',
+  'input.translateWithoutLogin': '로그인 없이 번역',
   'results.copied': '복사됨!',
   'results.copy': '복사',
   'results.speak': '읽기',
@@ -398,10 +423,13 @@ const ko: TranslationDict = {
 // Spanish translations
 const es: TranslationDict = {
   'app.name': 'Nanya',
+  'app.tagline': 'Traducción instantánea con IA, con explicaciones claras.',
   'app.newTranslation': 'Nueva traducción',
   'sidebar.quickSelect': 'Selección rápida',
   'sidebar.connected': 'OpenRouter',
   'sidebar.notConnected': 'No conectado',
+  'sidebar.privacyNotice': 'Los datos de traducción se almacenan en tu dispositivo, no en nuestros servidores.',
+  'sidebar.noAITraining': 'Nunca se usa para entrenar modelos de IA.',
   'settings.title': 'Configuración',
   'settings.description': 'Personalizar ajustes de traducción',
   'settings.systemLanguage': 'Idioma del sistema',
@@ -421,7 +449,7 @@ const es: TranslationDict = {
   'settings.fast': 'Rápido',
   'settings.balanced': 'Equilibrado',
   'settings.advanced': 'Avanzado',
-  'input.placeholder': 'Ingrese texto para traducir...',
+  'input.placeholder': 'Escribe en cualquier idioma...',
   'input.translate': 'Traducir',
   'input.translating': 'Traduciendo...',
   'input.retranslate': 'Retraducir',
@@ -430,7 +458,9 @@ const es: TranslationDict = {
   'input.inputLabel': 'Ingrese texto para traducir',
   'input.autoDetect': 'Detectar automáticamente',
   'input.translateOther': 'Traducir otro texto',
-  'input.aiHelper': 'La IA detectará el idioma y sugerirá traducciones en múltiples estilos',
+  'input.aiHelper': '{source} se traducirá a {target}, otros idiomas se traducirán a {source}.',
+  'input.writingStyle': 'Estilo de escritura',
+  'input.translateWithoutLogin': 'Traducir sin iniciar sesión',
   'results.copied': '¡Copiado!',
   'results.copy': 'Copiar',
   'results.speak': 'Leer',
@@ -462,10 +492,13 @@ const es: TranslationDict = {
 // French translations
 const fr: TranslationDict = {
   'app.name': 'Nanya',
+  'app.tagline': 'Traduction IA instantanée, avec des explications claires.',
   'app.newTranslation': 'Nouvelle traduction',
   'sidebar.quickSelect': 'Sélection rapide',
   'sidebar.connected': 'OpenRouter',
   'sidebar.notConnected': 'Non connecté',
+  'sidebar.privacyNotice': 'Les données de traduction sont stockées sur votre appareil, pas sur nos serveurs.',
+  'sidebar.noAITraining': 'Jamais utilisé pour entraîner des modèles IA.',
   'settings.title': 'Paramètres',
   'settings.description': 'Personnaliser les paramètres de traduction',
   'settings.systemLanguage': 'Langue du système',
@@ -485,7 +518,7 @@ const fr: TranslationDict = {
   'settings.fast': 'Rapide',
   'settings.balanced': 'Équilibré',
   'settings.advanced': 'Avancé',
-  'input.placeholder': 'Entrez le texte à traduire...',
+  'input.placeholder': 'Tapez dans n\'importe quelle langue...',
   'input.translate': 'Traduire',
   'input.translating': 'Traduction...',
   'input.retranslate': 'Retraduire',
@@ -494,7 +527,9 @@ const fr: TranslationDict = {
   'input.inputLabel': 'Entrez le texte à traduire',
   'input.autoDetect': 'Détection automatique',
   'input.translateOther': 'Traduire un autre texte',
-  'input.aiHelper': 'L\'IA détectera la langue et proposera des traductions dans plusieurs styles',
+  'input.aiHelper': '{source} sera traduit en {target}, les autres langues seront traduites en {source}.',
+  'input.writingStyle': 'Style d\'écriture',
+  'input.translateWithoutLogin': 'Traduire sans connexion',
   'results.copied': 'Copié !',
   'results.copy': 'Copier',
   'results.speak': 'Lire',
@@ -526,10 +561,13 @@ const fr: TranslationDict = {
 // German translations
 const de: TranslationDict = {
   'app.name': 'Nanya',
+  'app.tagline': 'Sofortige KI-Übersetzung mit klaren Erklärungen.',
   'app.newTranslation': 'Neue Übersetzung',
   'sidebar.quickSelect': 'Schnellauswahl',
   'sidebar.connected': 'OpenRouter',
   'sidebar.notConnected': 'Nicht verbunden',
+  'sidebar.privacyNotice': 'Übersetzungsdaten werden auf Ihrem Gerät gespeichert, nicht auf unseren Servern.',
+  'sidebar.noAITraining': 'Wird nie zum Trainieren von KI-Modellen verwendet.',
   'settings.title': 'Einstellungen',
   'settings.description': 'Übersetzungseinstellungen anpassen',
   'settings.systemLanguage': 'Systemsprache',
@@ -549,7 +587,7 @@ const de: TranslationDict = {
   'settings.fast': 'Schnell',
   'settings.balanced': 'Ausgewogen',
   'settings.advanced': 'Erweitert',
-  'input.placeholder': 'Text zum Übersetzen eingeben...',
+  'input.placeholder': 'In beliebiger Sprache eingeben...',
   'input.translate': 'Übersetzen',
   'input.translating': 'Übersetze...',
   'input.retranslate': 'Neu übersetzen',
@@ -558,7 +596,9 @@ const de: TranslationDict = {
   'input.inputLabel': 'Text zum Übersetzen eingeben',
   'input.autoDetect': 'Automatische Erkennung',
   'input.translateOther': 'Anderen Text übersetzen',
-  'input.aiHelper': 'KI erkennt die Sprache und schlägt Übersetzungen in mehreren Stilen vor',
+  'input.aiHelper': '{source} wird in {target} übersetzt, andere Sprachen werden in {source} übersetzt.',
+  'input.writingStyle': 'Schreibstil',
+  'input.translateWithoutLogin': 'Ohne Anmeldung übersetzen',
   'results.copied': 'Kopiert!',
   'results.copy': 'Kopieren',
   'results.speak': 'Vorlesen',

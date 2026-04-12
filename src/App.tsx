@@ -1,15 +1,18 @@
 import { useCallback, useEffect, lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, useSearchParams } from 'react-router-dom'
 import { SidebarProvider, SidebarInset, SidebarTrigger } from '@/components/ui/sidebar'
+import { Button } from '@/components/ui/button'
 import { AppSidebar } from '@/components/AppSidebar'
 import { InputPanel } from '@/components/InputPanel'
 import { ResultsPanel } from '@/components/ResultsPanel'
 import { AuthCallback } from '@/components/AuthCallback'
 import { useTranslationStore } from '@/stores/translation-store'
-import { useSettingsStore } from '@/stores/settings-store'
+import { useSettingsStore, useT } from '@/stores/settings-store'
+import { useAuthStore } from '@/stores/auth-store'
 import { useHistory } from '@/hooks/useHistory'
 import { translate } from '@/lib/llm-client'
 import { saveHistoryEntry } from '@/lib/history-storage'
+import { startOpenRouterAuth } from '@/lib/openrouter-pkce'
 
 // Lazy load test page (dev only)
 const StreamingTestPage = lazy(() => import('@/test-streaming'))
@@ -26,6 +29,8 @@ function HomePage() {
     reset,
   } = useTranslationStore()
   const { systemLanguage, writingStyle, enableHistory } = useSettingsStore()
+  const isAuthenticated = useAuthStore((s) => s.isAuthenticated())
+  const t = useT()
   const { entries, refresh: refreshHistory } = useHistory()
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -95,19 +100,39 @@ function HomePage() {
 
         <SidebarInset className="flex flex-col">
           {/* Mobile Header */}
-          <header className="flex h-12 items-center gap-2 border-b px-4 md:hidden">
+          <header className="flex h-12 items-center justify-between border-b px-4 md:hidden">
             <SidebarTrigger className="-ml-2" />
-            <div className="flex items-center gap-2">
-              <div className="w-6 h-6 rounded-md bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center">
-                <span className="text-white text-xs font-bold">N</span>
-              </div>
-              <span className="font-medium text-sm">Nanya</span>
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center">
+              <span className="text-white text-sm font-bold">N</span>
             </div>
+            {!isAuthenticated ? (
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-xs h-7"
+                onClick={() => startOpenRouterAuth()}
+              >
+                {t('auth.connect')}
+              </Button>
+            ) : (
+              <div className="w-16" /> // Spacer for alignment
+            )}
           </header>
 
           <div className="flex-1 flex overflow-hidden">
-            {/* Input Panel */}
+            {/* Input Panel with Hero */}
             <div className={`${hasResults ? 'hidden md:block md:w-[320px] md:border-r' : 'flex-1'} bg-card transition-all duration-300`}>
+              {/* Tagline - Only show when no results */}
+              {!hasResults && (
+                <div className="text-center pt-10 pb-4 px-4">
+                  <h1 className="text-3xl font-bold italic text-foreground mb-3">
+                    {t('app.name')} <span className="text-sky-500">!?</span>
+                  </h1>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {t('app.tagline')}
+                  </p>
+                </div>
+              )}
               <InputPanel onTranslate={handleTranslate} showCompact={hasResults} />
             </div>
 

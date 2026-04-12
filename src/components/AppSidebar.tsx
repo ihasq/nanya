@@ -93,6 +93,12 @@ export function AppSidebar({ entries, onNewTranslation }: AppSidebarProps) {
               <PenLine className="h-4 w-4" />
               {t('app.newTranslation')}
             </Button>
+
+            {/* Privacy Notice */}
+            <div className="mt-4 space-y-1 text-xs text-muted-foreground/70">
+              <p>{t('sidebar.privacyNotice')}</p>
+              <p>{t('sidebar.noAITraining')}</p>
+            </div>
           </SidebarGroupContent>
         </SidebarGroup>
 
