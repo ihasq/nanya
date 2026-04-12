@@ -60,6 +60,7 @@ function HomePage() {
           outputText: result.variants[0].text,
           targetLanguage,
           writingStyle,
+          variants: result.variants,
         })
         refreshHistory()
       }

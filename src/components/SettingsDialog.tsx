@@ -20,21 +20,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useSettingsStore, LANGUAGE_LABELS, type Language } from '@/stores/settings-store'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { useSettingsStore, useT, getLanguageLabel, getLanguageFlag } from '@/stores/settings-store'
 import { clearAllHistory } from '@/lib/history-storage'
 import {
   fetchAvailableModels,
   getDefaultModels,
   formatPrice,
-  getCategoryLabel,
   type ModelOption,
 } from '@/lib/models'
 import { Settings, Trash2, RefreshCw, Loader2 } from 'lucide-react'
+import { getAllLanguageCodes, type LanguageCode } from '@/lib/i18n'
 
-const LANGUAGES: Language[] = ['en', 'ja', 'es', 'ko', 'zh-CN', 'zh-TW']
+const ALL_LANGUAGES = getAllLanguageCodes()
 
 export function SettingsDialog() {
   const settings = useSettingsStore()
+  const t = useT()
   const [models, setModels] = useState<ModelOption[]>(getDefaultModels())
   const [isLoadingModels, setIsLoadingModels] = useState(false)
 
@@ -55,7 +57,7 @@ export function SettingsDialog() {
   }, [])
 
   const handleClearHistory = async () => {
-    if (confirm('翻訳履歴をすべて削除しますか？')) {
+    if (confirm(t('settings.clearHistoryConfirm'))) {
       await clearAllHistory()
     }
   }
@@ -74,166 +76,211 @@ export function SettingsDialog() {
           <Settings className="h-5 w-5" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] max-h-[85vh] flex flex-col">
         <DialogHeader>
-          <DialogTitle>設定</DialogTitle>
-          <DialogDescription>翻訳の設定をカスタマイズ</DialogDescription>
+          <DialogTitle>{t('settings.title')}</DialogTitle>
+          <DialogDescription>{t('settings.description')}</DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6 mt-4">
-          {/* Model Selection */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between">
-              <Label>翻訳モデル</Label>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-6 px-2 text-xs"
-                onClick={loadModels}
-                disabled={isLoadingModels}
+        <ScrollArea className="flex-1 pr-4">
+          <div className="space-y-6 mt-4">
+            {/* System Language Selection */}
+            <div className="space-y-2">
+              <Label>{t('settings.systemLanguage')}</Label>
+              <p className="text-xs text-muted-foreground">{t('settings.systemLanguageDesc')}</p>
+              <Select
+                value={settings.systemLanguage}
+                onValueChange={(v: string) => settings.setSystemLanguage(v as LanguageCode)}
               >
-                {isLoadingModels ? (
-                  <Loader2 className="h-3 w-3 animate-spin" />
-                ) : (
-                  <RefreshCw className="h-3 w-3" />
-                )}
+                <SelectTrigger>
+                  <SelectValue>
+                    <span className="flex items-center gap-2">
+                      <span>{getLanguageFlag(settings.systemLanguage)}</span>
+                      <span>{getLanguageLabel(settings.systemLanguage)}</span>
+                    </span>
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <ScrollArea className="h-[300px]">
+                    {ALL_LANGUAGES.map((lang) => (
+                      <SelectItem key={lang} value={lang}>
+                        <span className="flex items-center gap-2">
+                          <span>{getLanguageFlag(lang)}</span>
+                          <span>{getLanguageLabel(lang)}</span>
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </ScrollArea>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <Separator />
+
+            {/* Model Selection */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <Label>{t('settings.translationModel')}</Label>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-6 px-2 text-xs"
+                  onClick={loadModels}
+                  disabled={isLoadingModels}
+                >
+                  {isLoadingModels ? (
+                    <Loader2 className="h-3 w-3 animate-spin" />
+                  ) : (
+                    <RefreshCw className="h-3 w-3" />
+                  )}
+                </Button>
+              </div>
+              <Select
+                value={settings.selectedModel}
+                onValueChange={(v: string) => settings.setSelectedModel(v)}
+              >
+                <SelectTrigger>
+                  <SelectValue>
+                    {selectedModelInfo ? (
+                      <span className="flex items-center gap-2">
+                        <span>{selectedModelInfo.name}</span>
+                        <span className="text-xs text-muted-foreground">
+                          {formatPrice(selectedModelInfo.pricePerMillion)}
+                        </span>
+                      </span>
+                    ) : (
+                      settings.selectedModel
+                    )}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {fastModels.length > 0 && (
+                    <SelectGroup>
+                      <SelectLabel className="text-green-600">
+                        ⚡ {t('settings.fast')}
+                      </SelectLabel>
+                      {fastModels.map((model) => (
+                        <SelectItem key={model.id} value={model.id}>
+                          <span className="flex items-center justify-between w-full gap-4">
+                            <span>{model.name}</span>
+                            <span className="text-xs text-muted-foreground">
+                              {formatPrice(model.pricePerMillion)}
+                            </span>
+                          </span>
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  )}
+                  {balancedModels.length > 0 && (
+                    <SelectGroup>
+                      <SelectLabel className="text-blue-600">
+                        ⚖️ {t('settings.balanced')}
+                      </SelectLabel>
+                      {balancedModels.map((model) => (
+                        <SelectItem key={model.id} value={model.id}>
+                          <span className="flex items-center justify-between w-full gap-4">
+                            <span>{model.name}</span>
+                            <span className="text-xs text-muted-foreground">
+                              {formatPrice(model.pricePerMillion)}
+                            </span>
+                          </span>
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  )}
+                  {advancedModels.length > 0 && (
+                    <SelectGroup>
+                      <SelectLabel className="text-purple-600">
+                        🚀 {t('settings.advanced')}
+                      </SelectLabel>
+                      {advancedModels.map((model) => (
+                        <SelectItem key={model.id} value={model.id}>
+                          <span className="flex items-center justify-between w-full gap-4">
+                            <span>{model.name}</span>
+                            <span className="text-xs text-muted-foreground">
+                              {formatPrice(model.pricePerMillion)}
+                            </span>
+                          </span>
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  )}
+                </SelectContent>
+              </Select>
+              {selectedModelInfo && (
+                <p className="text-xs text-muted-foreground">
+                  {t('settings.contextTokens')}: {(selectedModelInfo.contextLength / 1000).toFixed(0)}K tokens
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label>{t('settings.nativeLanguage')}</Label>
+              <Select
+                value={settings.nativeLanguage}
+                onValueChange={(v: string) => settings.setNativeLanguage(v as LanguageCode)}
+              >
+                <SelectTrigger>
+                  <SelectValue>
+                    <span className="flex items-center gap-2">
+                      <span>{getLanguageFlag(settings.nativeLanguage)}</span>
+                      <span>{getLanguageLabel(settings.nativeLanguage)}</span>
+                    </span>
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <ScrollArea className="h-[300px]">
+                    {ALL_LANGUAGES.map((lang) => (
+                      <SelectItem key={lang} value={lang}>
+                        <span className="flex items-center gap-2">
+                          <span>{getLanguageFlag(lang)}</span>
+                          <span>{getLanguageLabel(lang)}</span>
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </ScrollArea>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <Separator />
+
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label>{t('settings.keyboardShortcuts')}</Label>
+                <p className="text-sm text-muted-foreground">{t('settings.keyboardShortcutsDesc')}</p>
+              </div>
+              <Switch
+                checked={settings.enableShortcuts}
+                onCheckedChange={settings.setEnableShortcuts}
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="space-y-0.5">
+                <Label>{t('settings.saveHistory')}</Label>
+                <p className="text-sm text-muted-foreground">{t('settings.saveHistoryDesc')}</p>
+              </div>
+              <Switch
+                checked={settings.enableHistory}
+                onCheckedChange={settings.setEnableHistory}
+              />
+            </div>
+
+            <Separator />
+
+            <div className="space-y-2">
+              <Label>{t('settings.translationHistory')}</Label>
+              <p className="text-sm text-muted-foreground">
+                {t('settings.historyStorageDesc')}
+              </p>
+              <Button variant="destructive" onClick={handleClearHistory} className="w-full gap-2">
+                <Trash2 className="h-4 w-4" />
+                {t('settings.clearAllHistory')}
               </Button>
             </div>
-            <Select
-              value={settings.selectedModel}
-              onValueChange={(v: string) => settings.setSelectedModel(v)}
-            >
-              <SelectTrigger>
-                <SelectValue>
-                  {selectedModelInfo ? (
-                    <span className="flex items-center gap-2">
-                      <span>{selectedModelInfo.name}</span>
-                      <span className="text-xs text-muted-foreground">
-                        {formatPrice(selectedModelInfo.pricePerMillion)}
-                      </span>
-                    </span>
-                  ) : (
-                    settings.selectedModel
-                  )}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {fastModels.length > 0 && (
-                  <SelectGroup>
-                    <SelectLabel className="text-green-600">
-                      ⚡ {getCategoryLabel('fast')}
-                    </SelectLabel>
-                    {fastModels.map((model) => (
-                      <SelectItem key={model.id} value={model.id}>
-                        <span className="flex items-center justify-between w-full gap-4">
-                          <span>{model.name}</span>
-                          <span className="text-xs text-muted-foreground">
-                            {formatPrice(model.pricePerMillion)}
-                          </span>
-                        </span>
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                )}
-                {balancedModels.length > 0 && (
-                  <SelectGroup>
-                    <SelectLabel className="text-blue-600">
-                      ⚖️ {getCategoryLabel('balanced')}
-                    </SelectLabel>
-                    {balancedModels.map((model) => (
-                      <SelectItem key={model.id} value={model.id}>
-                        <span className="flex items-center justify-between w-full gap-4">
-                          <span>{model.name}</span>
-                          <span className="text-xs text-muted-foreground">
-                            {formatPrice(model.pricePerMillion)}
-                          </span>
-                        </span>
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                )}
-                {advancedModels.length > 0 && (
-                  <SelectGroup>
-                    <SelectLabel className="text-purple-600">
-                      🚀 {getCategoryLabel('advanced')}
-                    </SelectLabel>
-                    {advancedModels.map((model) => (
-                      <SelectItem key={model.id} value={model.id}>
-                        <span className="flex items-center justify-between w-full gap-4">
-                          <span>{model.name}</span>
-                          <span className="text-xs text-muted-foreground">
-                            {formatPrice(model.pricePerMillion)}
-                          </span>
-                        </span>
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                )}
-              </SelectContent>
-            </Select>
-            {selectedModelInfo && (
-              <p className="text-xs text-muted-foreground">
-                コンテキスト: {(selectedModelInfo.contextLength / 1000).toFixed(0)}K トークン
-              </p>
-            )}
           </div>
-
-          <div className="space-y-2">
-            <Label>母国語</Label>
-            <Select
-              value={settings.nativeLanguage}
-              onValueChange={(v: string) => settings.setNativeLanguage(v as Language)}
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {LANGUAGES.map((lang) => (
-                  <SelectItem key={lang} value={lang}>
-                    {LANGUAGE_LABELS[lang]}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-
-          <Separator />
-
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label>キーボードショートカット</Label>
-              <p className="text-sm text-muted-foreground">Cmd/Ctrl + Enter で翻訳</p>
-            </div>
-            <Switch
-              checked={settings.enableShortcuts}
-              onCheckedChange={settings.setEnableShortcuts}
-            />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="space-y-0.5">
-              <Label>履歴を保存</Label>
-              <p className="text-sm text-muted-foreground">翻訳をローカルに保存</p>
-            </div>
-            <Switch
-              checked={settings.enableHistory}
-              onCheckedChange={settings.setEnableHistory}
-            />
-          </div>
-
-          <Separator />
-
-          <div className="space-y-2">
-            <Label>翻訳履歴</Label>
-            <p className="text-sm text-muted-foreground">
-              IndexedDBにgzip圧縮で保存されています
-            </p>
-            <Button variant="destructive" onClick={handleClearHistory} className="w-full gap-2">
-              <Trash2 className="h-4 w-4" />
-              履歴をすべて削除
-            </Button>
-          </div>
-        </div>
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   )

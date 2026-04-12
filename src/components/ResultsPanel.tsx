@@ -8,19 +8,26 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { useTranslationStore } from '@/stores/translation-store'
+import { useT } from '@/stores/settings-store'
 import { adjustTranslation, simpleTranslate, type TranslationVariant } from '@/lib/llm-client'
 import { Copy, Check, Volume2, ChevronDown, RotateCcw, Loader2 } from 'lucide-react'
 
-const ADJUSTMENT_OPTIONS = [
-  { type: 'casual', label: 'カジュアルに', emoji: '😎' },
-  { type: 'polite', label: 'ていねいに', emoji: '🤓' },
-  { type: 'neutral', label: '淡々と', emoji: '😶' },
-  { type: 'catchy', label: 'キャッチーに', emoji: '🤩' },
-  { type: 'concise', label: 'もう少し短く', emoji: '✂️' },
-  { type: 'detailed', label: 'より詳しく', emoji: '📝' },
-  { type: 'natural', label: 'ネイティブらしく自然に', emoji: '🗣️' },
-  { type: 'less-ai', label: 'AIっぽさを消して', emoji: '🧑' },
-  { type: 'alternative', label: '他の言い方は？', emoji: '💬' },
+type AdjustmentOption = {
+  type: string
+  labelKey: 'results.casual' | 'results.polite' | 'results.neutral' | 'results.catchy' | 'results.concise' | 'results.detailed' | 'results.natural' | 'results.lessAI' | 'results.alternative'
+  emoji: string
+}
+
+const ADJUSTMENT_OPTIONS: AdjustmentOption[] = [
+  { type: 'casual', labelKey: 'results.casual', emoji: '😎' },
+  { type: 'polite', labelKey: 'results.polite', emoji: '🤓' },
+  { type: 'neutral', labelKey: 'results.neutral', emoji: '😶' },
+  { type: 'catchy', labelKey: 'results.catchy', emoji: '🤩' },
+  { type: 'concise', labelKey: 'results.concise', emoji: '✂️' },
+  { type: 'detailed', labelKey: 'results.detailed', emoji: '📝' },
+  { type: 'natural', labelKey: 'results.natural', emoji: '🗣️' },
+  { type: 'less-ai', labelKey: 'results.lessAI', emoji: '🧑' },
+  { type: 'alternative', labelKey: 'results.alternative', emoji: '💬' },
 ]
 
 interface VariantCardProps {
@@ -34,6 +41,7 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
   const [isSpeaking, setIsSpeaking] = useState(false)
   const [backTranslation, setBackTranslation] = useState<string | null>(null)
   const [isBackTranslating, setIsBackTranslating] = useState(false)
+  const t = useT()
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(variant.text)
@@ -99,7 +107,7 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="hover:text-foreground transition-colors flex items-center gap-1">
-                  調整 <ChevronDown className="h-3 w-3" />
+                  {t('results.adjust')} <ChevronDown className="h-3 w-3" />
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -110,7 +118,7 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
                     disabled={isAdjusting}
                   >
                     <span className="mr-2">{opt.emoji}</span>
-                    {opt.label}
+                    {t(opt.labelKey)}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -126,7 +134,7 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
               ) : (
                 <RotateCcw className="h-3 w-3" />
               )}
-              戻して確認
+              {t('results.backTranslate')}
             </button>
           </div>
         </div>
@@ -136,10 +144,10 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
           <div className="bg-muted/30 rounded-lg p-3 mb-4">
             <div className="flex items-center gap-2 mb-1">
               <RotateCcw className="h-3 w-3 text-muted-foreground" />
-              <span className="text-xs text-muted-foreground">戻すと...</span>
+              <span className="text-xs text-muted-foreground">{t('results.backTo')}</span>
             </div>
             <p className="text-sm">
-              {backTranslation || '翻訳中...'}
+              {backTranslation || t('results.backTranslating')}
             </p>
           </div>
         )}
@@ -159,7 +167,7 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
         {/* Example */}
         {variant.example && (
           <div className="bg-muted/20 rounded-lg p-3 text-sm">
-            <div className="text-xs text-muted-foreground mb-2">例文</div>
+            <div className="text-xs text-muted-foreground mb-2">{t('results.example')}</div>
             <div className="flex items-start gap-2 mb-1">
               <p>{variant.example.original}</p>
               <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0">
@@ -188,6 +196,7 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
     error
   } = useTranslationStore()
   const [showAllOptions, setShowAllOptions] = useState(false)
+  const t = useT()
 
   const handleAdjust = async (type: string, currentText: string) => {
     setIsAdjusting(true)
@@ -236,7 +245,9 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
           <span className="text-white text-xs">N</span>
         </div>
         <span className="text-sm text-muted-foreground">
-          {variants.length === 1 ? '翻訳しました' : `${variants.length}パターンの翻訳を考えました`}
+          {variants.length === 1
+            ? t('results.translatedOne')
+            : t('results.translatedMany').replace('{count}', String(variants.length))}
         </span>
       </div>
 
@@ -255,7 +266,7 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
         <Card className="mb-4 border-dashed">
           <CardContent className="pt-6 flex items-center justify-center gap-2">
             <Loader2 className="h-4 w-4 animate-spin" />
-            <span className="text-muted-foreground">調整中...</span>
+            <span className="text-muted-foreground">{t('results.adjusting')}</span>
           </CardContent>
         </Card>
       )}
@@ -273,7 +284,7 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
               disabled={isAdjusting || variants.length === 0}
             >
               <span>{opt.emoji}</span>
-              {opt.label}
+              {t(opt.labelKey)}
             </Button>
           ))}
         </div>
@@ -284,7 +295,7 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
             className="w-full mt-2 text-muted-foreground"
             onClick={() => setShowAllOptions(true)}
           >
-            もっと見る...
+            {t('results.showMore')}
           </Button>
         )}
       </div>

@@ -10,6 +10,7 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarRail,
+  useSidebar,
 } from '@/components/ui/sidebar'
 import { Button } from '@/components/ui/button'
 import {
@@ -22,7 +23,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { type HistoryEntry } from '@/lib/history-storage'
 import { useTranslationStore } from '@/stores/translation-store'
-import { useSettingsStore } from '@/stores/settings-store'
+import { useSettingsStore, useT } from '@/stores/settings-store'
 import { useAuthStore } from '@/stores/auth-store'
 import {
   fetchAvailableModels,
@@ -39,11 +40,13 @@ interface AppSidebarProps {
 }
 
 export function AppSidebar({ entries, onNewTranslation }: AppSidebarProps) {
-  const { inputText, setInputText } = useTranslationStore()
+  const { inputText, setInputText, setVariants } = useTranslationStore()
   const { selectedModel, setSelectedModel } = useSettingsStore()
   const { clearAuth } = useAuthStore()
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated())
   const [models, setModels] = useState<ModelOption[]>(getDefaultModels())
+  const t = useT()
+  const { isMobile, setOpenMobile } = useSidebar()
 
   useEffect(() => {
     fetchAvailableModels().then(setModels).catch(() => {})
@@ -51,7 +54,13 @@ export function AppSidebar({ entries, onNewTranslation }: AppSidebarProps) {
 
   const handleSelectEntry = (entry: HistoryEntry) => {
     setInputText(entry.inputText)
-    // Re-translate when selecting from history
+    if (entry.variants && entry.variants.length > 0) {
+      setVariants(entry.variants)
+    }
+    // Close sidebar on mobile after selecting
+    if (isMobile) {
+      setOpenMobile(false)
+    }
   }
 
   const currentModel = models.find((m) => m.id === selectedModel)
@@ -74,10 +83,15 @@ export function AppSidebar({ entries, onNewTranslation }: AppSidebarProps) {
             <Button
               variant="outline"
               className="w-full justify-start gap-2 font-normal h-9"
-              onClick={onNewTranslation}
+              onClick={() => {
+                onNewTranslation()
+                if (isMobile) {
+                  setOpenMobile(false)
+                }
+              }}
             >
               <PenLine className="h-4 w-4" />
-              あたらしく翻訳
+              {t('app.newTranslation')}
             </Button>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -123,7 +137,7 @@ export function AppSidebar({ entries, onNewTranslation }: AppSidebarProps) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start" className="w-[200px]">
-            <DropdownMenuLabel className="text-xs">クイック選択</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-xs">{t('sidebar.quickSelect')}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {quickModels.map((model) => (
               <DropdownMenuItem
@@ -156,7 +170,7 @@ export function AppSidebar({ entries, onNewTranslation }: AppSidebarProps) {
               <LogOut className="h-3 w-3" />
             </Button>
           ) : (
-            <span className="text-xs text-muted-foreground">未接続</span>
+            <span className="text-xs text-muted-foreground">{t('sidebar.notConnected')}</span>
           )}
           <SettingsDialog />
         </div>

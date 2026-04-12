@@ -4,6 +4,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Card } from '@/components/ui/card'
 import { useTranslationStore } from '@/stores/translation-store'
 import { useAuthStore } from '@/stores/auth-store'
+import { useT } from '@/stores/settings-store'
 import { startOpenRouterAuth } from '@/lib/openrouter-pkce'
 import { Paperclip, ArrowUpRight, Loader2 } from 'lucide-react'
 
@@ -15,6 +16,7 @@ interface InputPanelProps {
 export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
   const { inputText, setInputText, isTranslating } = useTranslationStore()
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated())
+  const t = useT()
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -31,9 +33,9 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
   if (showCompact) {
     return (
       <div className="h-full flex flex-col p-6">
-        <div className="text-muted-foreground mb-2">別のテキストを翻訳</div>
+        <div className="text-muted-foreground mb-2">{t('input.translateOther')}</div>
         <Textarea
-          placeholder="新しいテキストを入力..."
+          placeholder={t('input.placeholder')}
           value={inputText}
           onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInputText(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -50,7 +52,7 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
             <>
-              翻訳する
+              {t('input.translate')}
               <ArrowUpRight className="h-4 w-4" />
             </>
           )}
@@ -66,12 +68,12 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
         {!isAuthenticated && (
           <Card className="p-3 bg-muted/30 border-dashed">
             <p className="text-sm text-muted-foreground mb-2 text-center">
-              翻訳するにはLLMプロバイダーを接続してください
+              {t('input.connectProvider')}
             </p>
             <div className="flex justify-center">
               <Button onClick={() => startOpenRouterAuth()} variant="outline" size="sm" className="gap-2">
                 <div className="w-3 h-3 rounded-sm bg-gradient-to-br from-purple-500 to-pink-500" />
-                OpenRouter を接続
+                {t('auth.connect')}
               </Button>
             </div>
           </Card>
@@ -82,16 +84,16 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
           {/* Header */}
           <div className="flex items-center justify-between px-4 py-2 border-b">
             <div className="text-sm text-muted-foreground">
-              翻訳テキストを入力
+              {t('input.inputLabel')}
             </div>
             <div className="text-xs text-muted-foreground">
-              自動検出 ⇄ 翻訳
+              {t('input.autoDetect')} ⇄ {t('input.translate')}
             </div>
           </div>
 
           {/* Input Area */}
           <Textarea
-            placeholder="好きな言語で入力..."
+            placeholder={t('input.placeholder')}
             value={inputText}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInputText(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -116,7 +118,7 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
                 <Loader2 className="h-4 w-4 animate-spin" />
               ) : (
                 <>
-                  翻訳する
+                  {t('input.translate')}
                   <ArrowUpRight className="h-4 w-4" />
                 </>
               )}
@@ -126,7 +128,7 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
 
         {/* Helper Text */}
         <p className="text-xs text-muted-foreground text-center">
-          AIが言語を検出し、複数のスタイルで翻訳を提案します
+          {t('input.aiHelper')}
         </p>
       </div>
     </div>

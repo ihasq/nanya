@@ -1,5 +1,6 @@
 import { get, set, del, keys } from 'idb-keyval'
 import pako from 'pako'
+import type { TranslationVariant } from '@/lib/llm-client'
 
 export interface HistoryEntry {
   id: string
@@ -8,6 +9,7 @@ export interface HistoryEntry {
   targetLanguage: string
   writingStyle: string
   timestamp: number
+  variants?: TranslationVariant[]
 }
 
 const HISTORY_PREFIX = 'history:'
