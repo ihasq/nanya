@@ -121,26 +121,32 @@ Return ONLY this JSON structure:
         }]
       }
 
-  // Example 2: Straightforward translation (empty explanation)
+  // Example 2: Translating TO system language (other direction, with explanations)
   const exampleInput2 = systemLanguage === 'ja'
-    ? '東京は日本の首都です。'
-    : 'Tokyo is the capital of Japan.'
+    ? "I can't wrap my head around this concept."
+    : '頭では分かっているんだけど、腑に落ちない。'
 
   const exampleOutput2 = systemLanguage === 'ja'
     ? {
         variants: [{
           style: "翻訳",
           emoji: "📝",
-          text: "Tokyo is the capital of Japan.",
-          explanation: []
+          text: "この概念がどうしても理解できない。",
+          explanation: [
+            "'wrap my head around'は「頭で理解する」のイディオムで、「理解できない」と訳出",
+            "'can't'の強調ニュアンスを「どうしても〜ない」で表現"
+          ]
         }]
       }
     : {
         variants: [{
           style: "Translation",
           emoji: "📝",
-          text: "東京は日本の首都です。",
-          explanation: []
+          text: "I understand it logically, but it doesn't sit right with me.",
+          explanation: [
+            "「頭では分かっている」= understand intellectually, translated as 'understand it logically'",
+            "「腑に落ちない」= doesn't feel convincing, rendered as 'doesn't sit right' (idiom)"
+          ]
         }]
       }
 
