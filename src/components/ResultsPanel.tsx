@@ -69,8 +69,8 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
     setBackTranslation(null)
 
     try {
-      const isJapanese = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/.test(variant.text)
-      const result = await simpleTranslate(variant.text, isJapanese ? 'en' : 'ja')
+      // Back-translate to user's system language
+      const result = await simpleTranslate(variant.text)
       setBackTranslation(result)
     } catch (err) {
       console.error('Back translation failed:', err)
