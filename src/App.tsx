@@ -126,7 +126,7 @@ function HomePage() {
               {!hasResults && (
                 <div className="text-center pt-10 pb-4 px-4">
                   <h1 className="text-3xl font-bold italic text-foreground mb-3">
-                    {t('app.name')} <span className="text-sky-500">!?</span>
+                    {t('app.name')}
                   </h1>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {t('app.tagline')}
