@@ -85,7 +85,8 @@ type UITextKey =
   | 'settings.systemLanguage'
   | 'settings.systemLanguageDesc'
   | 'settings.translationModel'
-  | 'settings.nativeLanguage'
+  | 'settings.defaultTargetLanguage'
+  | 'settings.defaultTargetLanguageDesc'
   | 'settings.keyboardShortcuts'
   | 'settings.keyboardShortcutsDesc'
   | 'settings.saveHistory'
@@ -150,7 +151,8 @@ const en: TranslationDict = {
   'settings.systemLanguage': 'System Language',
   'settings.systemLanguageDesc': 'UI language and default translation target',
   'settings.translationModel': 'Translation Model',
-  'settings.nativeLanguage': 'Native Language',
+  'settings.defaultTargetLanguage': 'Default Target Language',
+  'settings.defaultTargetLanguageDesc': 'When input matches system language, translate to this',
   'settings.keyboardShortcuts': 'Keyboard Shortcuts',
   'settings.keyboardShortcutsDesc': 'Cmd/Ctrl + Enter to translate',
   'settings.saveHistory': 'Save History',
@@ -213,7 +215,8 @@ const ja: TranslationDict = {
   'settings.systemLanguage': 'システム言語',
   'settings.systemLanguageDesc': 'UIの言語と翻訳のデフォルト対象言語',
   'settings.translationModel': '翻訳モデル',
-  'settings.nativeLanguage': '母国語',
+  'settings.defaultTargetLanguage': 'デフォルト翻訳先',
+  'settings.defaultTargetLanguageDesc': 'システム言語と同じ言語が入力されたときの翻訳先',
   'settings.keyboardShortcuts': 'キーボードショートカット',
   'settings.keyboardShortcutsDesc': 'Cmd/Ctrl + Enter で翻訳',
   'settings.saveHistory': '履歴を保存',
@@ -276,7 +279,8 @@ const zhCN: TranslationDict = {
   'settings.systemLanguage': '系统语言',
   'settings.systemLanguageDesc': 'UI语言和默认翻译目标',
   'settings.translationModel': '翻译模型',
-  'settings.nativeLanguage': '母语',
+  'settings.defaultTargetLanguage': '默认翻译目标',
+  'settings.defaultTargetLanguageDesc': '当输入与系统语言相同时，翻译为此语言',
   'settings.keyboardShortcuts': '键盘快捷键',
   'settings.keyboardShortcutsDesc': 'Cmd/Ctrl + Enter 翻译',
   'settings.saveHistory': '保存历史',
@@ -339,7 +343,8 @@ const ko: TranslationDict = {
   'settings.systemLanguage': '시스템 언어',
   'settings.systemLanguageDesc': 'UI 언어 및 기본 번역 대상',
   'settings.translationModel': '번역 모델',
-  'settings.nativeLanguage': '모국어',
+  'settings.defaultTargetLanguage': '기본 번역 대상',
+  'settings.defaultTargetLanguageDesc': '입력이 시스템 언어와 같을 때 번역할 언어',
   'settings.keyboardShortcuts': '키보드 단축키',
   'settings.keyboardShortcutsDesc': 'Cmd/Ctrl + Enter로 번역',
   'settings.saveHistory': '기록 저장',
@@ -402,7 +407,8 @@ const es: TranslationDict = {
   'settings.systemLanguage': 'Idioma del sistema',
   'settings.systemLanguageDesc': 'Idioma de la UI y objetivo de traducción predeterminado',
   'settings.translationModel': 'Modelo de traducción',
-  'settings.nativeLanguage': 'Idioma nativo',
+  'settings.defaultTargetLanguage': 'Idioma de destino predeterminado',
+  'settings.defaultTargetLanguageDesc': 'Cuando la entrada coincide con el idioma del sistema, traducir a este',
   'settings.keyboardShortcuts': 'Atajos de teclado',
   'settings.keyboardShortcutsDesc': 'Cmd/Ctrl + Enter para traducir',
   'settings.saveHistory': 'Guardar historial',
@@ -465,7 +471,8 @@ const fr: TranslationDict = {
   'settings.systemLanguage': 'Langue du système',
   'settings.systemLanguageDesc': 'Langue de l\'interface et cible de traduction par défaut',
   'settings.translationModel': 'Modèle de traduction',
-  'settings.nativeLanguage': 'Langue maternelle',
+  'settings.defaultTargetLanguage': 'Langue cible par défaut',
+  'settings.defaultTargetLanguageDesc': 'Quand l\'entrée correspond à la langue système, traduire vers cette langue',
   'settings.keyboardShortcuts': 'Raccourcis clavier',
   'settings.keyboardShortcutsDesc': 'Cmd/Ctrl + Entrée pour traduire',
   'settings.saveHistory': 'Sauvegarder l\'historique',
@@ -528,7 +535,8 @@ const de: TranslationDict = {
   'settings.systemLanguage': 'Systemsprache',
   'settings.systemLanguageDesc': 'UI-Sprache und Standard-Übersetzungsziel',
   'settings.translationModel': 'Übersetzungsmodell',
-  'settings.nativeLanguage': 'Muttersprache',
+  'settings.defaultTargetLanguage': 'Standard-Zielsprache',
+  'settings.defaultTargetLanguageDesc': 'Wenn die Eingabe mit der Systemsprache übereinstimmt, in diese übersetzen',
   'settings.keyboardShortcuts': 'Tastenkürzel',
   'settings.keyboardShortcutsDesc': 'Cmd/Ctrl + Enter zum Übersetzen',
   'settings.saveHistory': 'Verlauf speichern',

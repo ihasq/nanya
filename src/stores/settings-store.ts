@@ -14,16 +14,14 @@ export type Language = LanguageCode
 
 interface SettingsState {
   systemLanguage: LanguageCode
-  targetLanguage: LanguageCode
-  nativeLanguage: LanguageCode
+  defaultTargetLanguage: LanguageCode // When input matches system language, translate to this
   writingStyle: WritingStyle
   selectedModel: string
   enableShortcuts: boolean
   enableHistory: boolean
   // Actions
   setSystemLanguage: (lang: LanguageCode) => void
-  setTargetLanguage: (lang: LanguageCode) => void
-  setNativeLanguage: (lang: LanguageCode) => void
+  setDefaultTargetLanguage: (lang: LanguageCode) => void
   setWritingStyle: (style: WritingStyle) => void
   setSelectedModel: (modelId: string) => void
   setEnableShortcuts: (enabled: boolean) => void
@@ -57,16 +55,14 @@ export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
       systemLanguage: detectedLanguage,
-      targetLanguage: detectedLanguage,
-      nativeLanguage: detectedLanguage === 'en' ? 'ja' : 'en',
+      defaultTargetLanguage: 'en', // Default: translate to English when input matches system language
       writingStyle: 'neutral',
       selectedModel: DEFAULT_MODEL,
       enableShortcuts: true,
       enableHistory: true,
 
-      setSystemLanguage: (lang) => set({ systemLanguage: lang, targetLanguage: lang }),
-      setTargetLanguage: (lang) => set({ targetLanguage: lang }),
-      setNativeLanguage: (lang) => set({ nativeLanguage: lang }),
+      setSystemLanguage: (lang) => set({ systemLanguage: lang }),
+      setDefaultTargetLanguage: (lang) => set({ defaultTargetLanguage: lang }),
       setWritingStyle: (style) => set({ writingStyle: style }),
       setSelectedModel: (modelId) => set({ selectedModel: modelId }),
       setEnableShortcuts: (enabled) => set({ enableShortcuts: enabled }),

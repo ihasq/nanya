@@ -215,16 +215,17 @@ export function SettingsDialog() {
             </div>
 
             <div className="space-y-2">
-              <Label>{t('settings.nativeLanguage')}</Label>
+              <Label>{t('settings.defaultTargetLanguage')}</Label>
+              <p className="text-xs text-muted-foreground">{t('settings.defaultTargetLanguageDesc')}</p>
               <Select
-                value={settings.nativeLanguage}
-                onValueChange={(v: string) => settings.setNativeLanguage(v as LanguageCode)}
+                value={settings.defaultTargetLanguage}
+                onValueChange={(v: string) => settings.setDefaultTargetLanguage(v as LanguageCode)}
               >
                 <SelectTrigger>
                   <SelectValue>
                     <span className="flex items-center gap-2">
-                      <span>{getLanguageFlag(settings.nativeLanguage)}</span>
-                      <span>{getLanguageLabel(settings.nativeLanguage)}</span>
+                      <span>{getLanguageFlag(settings.defaultTargetLanguage)}</span>
+                      <span>{getLanguageLabel(settings.defaultTargetLanguage)}</span>
                     </span>
                   </SelectValue>
                 </SelectTrigger>

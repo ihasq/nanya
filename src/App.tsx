@@ -21,7 +21,7 @@ function HomePage() {
     setError,
     reset,
   } = useTranslationStore()
-  const { targetLanguage, writingStyle, enableHistory } = useSettingsStore()
+  const { systemLanguage, writingStyle, enableHistory } = useSettingsStore()
   const { entries, refresh: refreshHistory } = useHistory()
   const [searchParams, setSearchParams] = useSearchParams()
 
@@ -58,7 +58,7 @@ function HomePage() {
         await saveHistoryEntry({
           inputText,
           outputText: result.variants[0].text,
-          targetLanguage,
+          targetLanguage: systemLanguage,
           writingStyle,
           variants: result.variants,
         })
@@ -69,7 +69,7 @@ function HomePage() {
     } finally {
       setIsTranslating(false)
     }
-  }, [inputText, targetLanguage, writingStyle, enableHistory, setVariants, setIsTranslating, setError, refreshHistory])
+  }, [inputText, systemLanguage, writingStyle, enableHistory, setVariants, setIsTranslating, setError, refreshHistory])
 
   const handleNewTranslation = useCallback(() => {
     reset()
