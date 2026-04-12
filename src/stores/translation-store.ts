@@ -1,8 +1,15 @@
 import { create } from 'zustand'
 import type { TranslationVariant, PartialVariant } from '@/lib/llm-client'
 
+export interface Attachment {
+  name: string
+  type: string
+  content: string // Base64 for images, text content for text files
+}
+
 interface TranslationState {
   inputText: string
+  attachments: Attachment[]
   variants: TranslationVariant[]
   streamingVariant: PartialVariant | null  // Currently streaming variant
   streamingAdjustment: PartialVariant | null  // Currently streaming adjustment
@@ -13,6 +20,10 @@ interface TranslationState {
   error: string | null
   // Actions
   setInputText: (text: string) => void
+  setAttachments: (attachments: Attachment[]) => void
+  addAttachment: (attachment: Attachment) => void
+  removeAttachment: (name: string) => void
+  clearAttachments: () => void
   setVariants: (variants: TranslationVariant[]) => void
   addVariants: (variants: TranslationVariant[]) => void
   setStreamingVariant: (variant: PartialVariant | null) => void
@@ -27,6 +38,7 @@ interface TranslationState {
 
 export const useTranslationStore = create<TranslationState>((set) => ({
   inputText: '',
+  attachments: [],
   variants: [],
   streamingVariant: null,
   streamingAdjustment: null,
@@ -37,6 +49,14 @@ export const useTranslationStore = create<TranslationState>((set) => ({
   error: null,
 
   setInputText: (text) => set({ inputText: text }),
+  setAttachments: (attachments) => set({ attachments }),
+  addAttachment: (attachment) => set((state) => ({
+    attachments: [...state.attachments, attachment]
+  })),
+  removeAttachment: (name) => set((state) => ({
+    attachments: state.attachments.filter((a) => a.name !== name)
+  })),
+  clearAttachments: () => set({ attachments: [] }),
   setVariants: (variants) => set({ variants, backTranslation: null, streamingVariant: null }),
   addVariants: (newVariants) => set((state) => ({
     variants: [...state.variants, ...newVariants],
@@ -51,6 +71,7 @@ export const useTranslationStore = create<TranslationState>((set) => ({
   setError: (error) => set({ error }),
   reset: () => set({
     inputText: '',
+    attachments: [],
     variants: [],
     streamingVariant: null,
     streamingAdjustment: null,

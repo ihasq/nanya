@@ -20,6 +20,7 @@ const StreamingTestPage = lazy(() => import('@/test-streaming'))
 function HomePage() {
   const {
     inputText,
+    attachments,
     variants,
     setInputText,
     setVariants,
@@ -63,6 +64,11 @@ function HomePage() {
     try {
       const result = await translate({
         text: inputText,
+        attachments: attachments.map((a) => ({
+          name: a.name,
+          type: a.type,
+          content: a.content,
+        })),
         onPartialResult: (partial) => {
           setStreamingVariant(partial)
         }
@@ -85,7 +91,7 @@ function HomePage() {
       setIsTranslating(false)
       setStreamingVariant(null)
     }
-  }, [inputText, systemLanguage, writingStyle, enableHistory, setVariants, setStreamingVariant, setIsTranslating, setError, refreshHistory])
+  }, [inputText, attachments, systemLanguage, writingStyle, enableHistory, setVariants, setStreamingVariant, setIsTranslating, setError, refreshHistory])
 
   const handleNewTranslation = useCallback(() => {
     reset()

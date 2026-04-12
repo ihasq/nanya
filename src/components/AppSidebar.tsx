@@ -64,7 +64,8 @@ export function AppSidebar({ entries, onNewTranslation }: AppSidebarProps) {
   }
 
   const currentModel = models.find((m) => m.id === selectedModel)
-  const quickModels = models.filter((m) => m.category === 'fast').slice(0, 5)
+  // Show top models sorted by price (cheapest first)
+  const quickModels = [...models].sort((a, b) => a.pricePerMillion - b.pricePerMillion).slice(0, 5)
 
   return (
     <Sidebar collapsible="offcanvas">

@@ -76,14 +76,14 @@ export function SettingsDialog() {
           <Settings className="h-5 w-5" />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] max-h-[85vh] flex flex-col">
+      <DialogContent className="sm:max-w-[425px] max-h-[85vh] min-h-[300px] flex flex-col overflow-hidden">
         <DialogHeader>
           <DialogTitle>{t('settings.title')}</DialogTitle>
           <DialogDescription>{t('settings.description')}</DialogDescription>
         </DialogHeader>
 
-        <ScrollArea className="flex-1 pr-4">
-          <div className="space-y-6 mt-4">
+        <ScrollArea className="flex-1 pr-4 overflow-auto">
+          <div className="space-y-6 mt-4 pb-4">
             {/* System Language Selection */}
             <div className="space-y-2">
               <Label>{t('settings.systemLanguage')}</Label>

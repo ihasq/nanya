@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Card } from '@/components/ui/card'
@@ -8,26 +8,25 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { useTranslationStore } from '@/stores/translation-store'
+import { useTranslationStore, type Attachment } from '@/stores/translation-store'
 import { useAuthStore } from '@/stores/auth-store'
 import { useSettingsStore, useT, getLanguageEnglishName } from '@/stores/settings-store'
 import { startOpenRouterAuth } from '@/lib/openrouter-pkce'
-import { Paperclip, Loader2, SlidersHorizontal, Share2, Check } from 'lucide-react'
+import { Paperclip, Loader2, SlidersHorizontal, Share2, Check, X } from 'lucide-react'
 
-// Writing style options matching nani.now
-const WRITING_STYLES = [
-  { id: 'polite', label: 'Polite' },
-  { id: 'casual', label: 'Casual' },
-  { id: 'formal-pol', label: 'Formal' },
-  { id: 'for-2', label: 'For 2' },
-  { id: 'formal-imper', label: 'Formal/Imper' },
-  { id: 'child-friendly', label: 'Child-friendly' },
-  { id: 'business-email', label: 'Business email' },
-  { id: 'customer-support', label: 'Customer Support' },
-  { id: 'official-forms', label: 'Official forms' },
-  { id: 'social-post', label: 'Everyday Social Post' },
-  { id: 'messages', label: 'Messages' },
-]
+// Writing style options - keys map to i18n
+const WRITING_STYLE_IDS = [
+  'polite',
+  'casual',
+  'formal',
+  'formalImper',
+  'childFriendly',
+  'businessEmail',
+  'customerSupport',
+  'officialForms',
+  'socialPost',
+  'messages',
+] as const
 
 interface InputPanelProps {
   onTranslate: () => void
@@ -35,20 +34,63 @@ interface InputPanelProps {
 }
 
 export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
-  const { inputText, setInputText, isTranslating } = useTranslationStore()
+  const { inputText, setInputText, isTranslating, attachments, addAttachment, removeAttachment } = useTranslationStore()
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated())
   const { systemLanguage, defaultTargetLanguage } = useSettingsStore()
   const t = useT()
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   // Independent local state for compact mode input
   const [compactInput, setCompactInput] = useState('')
   const [writingStyleEnabled, setWritingStyleEnabled] = useState(false)
   const [selectedStyle, setSelectedStyle] = useState<string | null>(null)
   const [preferencesOpen, setPreferencesOpen] = useState(false)
-  const [aiModel, setAiModel] = useState<'fast' | 'advanced'>('fast')
   const [translationStyle, setTranslationStyle] = useState<'literal' | 'natural'>('natural')
   const [showRomaji, setShowRomaji] = useState(false)
   const [sendWithEnter, setSendWithEnter] = useState(false)
+
+  // File attachment handler
+  const handleFileSelect = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files
+    if (!files) return
+
+    for (const file of Array.from(files)) {
+      // Limit file size to 1MB for text, 5MB for images
+      const maxSize = file.type.startsWith('image/') ? 5 * 1024 * 1024 : 1024 * 1024
+      if (file.size > maxSize) {
+        console.warn(`File ${file.name} is too large`)
+        continue
+      }
+
+      const attachment: Attachment = {
+        name: file.name,
+        type: file.type,
+        content: '',
+      }
+
+      if (file.type.startsWith('text/') || file.type === 'application/json') {
+        // Read as text
+        attachment.content = await file.text()
+      } else if (file.type.startsWith('image/')) {
+        // Read as base64 for images
+        const reader = new FileReader()
+        attachment.content = await new Promise((resolve) => {
+          reader.onload = () => resolve(reader.result as string)
+          reader.readAsDataURL(file)
+        })
+      } else {
+        // Skip unsupported types
+        continue
+      }
+
+      addAttachment(attachment)
+    }
+
+    // Reset input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''
+    }
+  }, [addAttachment])
 
   const handleKeyDown = useCallback(
     (e: React.KeyboardEvent) => {
@@ -168,22 +210,46 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
           {writingStyleEnabled && (
             <div className="px-4 pb-3 border-b border-border/50">
               <div className="flex flex-wrap gap-2">
-                {WRITING_STYLES.map((style) => (
+                {WRITING_STYLE_IDS.map((styleId) => (
                   <button
-                    key={style.id}
-                    onClick={() => handleStyleSelect(style.id)}
+                    key={styleId}
+                    onClick={() => handleStyleSelect(styleId)}
                     className={`
                       inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm
                       transition-colors border
-                      ${selectedStyle === style.id
+                      ${selectedStyle === styleId
                         ? 'bg-sky-100 border-sky-300 text-sky-700 dark:bg-sky-900/30 dark:border-sky-700 dark:text-sky-300'
                         : 'bg-muted/50 border-transparent text-muted-foreground hover:bg-muted hover:text-foreground'
                       }
                     `}
                   >
-                    {selectedStyle === style.id && <Check className="h-3 w-3" />}
-                    {style.label}
+                    {selectedStyle === styleId && <Check className="h-3 w-3" />}
+                    {t(`style.${styleId}` as const)}
                   </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Attached Files */}
+          {attachments.length > 0 && (
+            <div className="px-4 py-2 border-b border-border/50">
+              <div className="flex flex-wrap gap-2">
+                {attachments.map((att) => (
+                  <div
+                    key={att.name}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-muted/50 text-xs"
+                  >
+                    <Paperclip className="h-3 w-3 text-muted-foreground" />
+                    <span className="max-w-[120px] truncate">{att.name}</span>
+                    <button
+                      onClick={() => removeAttachment(att.name)}
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      aria-label={`Remove ${att.name}`}
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
                 ))}
               </div>
             </div>
@@ -211,36 +277,9 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
                 </PopoverTrigger>
                 <PopoverContent className="w-56 p-3" align="start">
                   <div className="space-y-3">
-                    {/* AI Model */}
-                    <div className="space-y-1.5">
-                      <div className="text-xs font-medium text-muted-foreground">AI Model</div>
-                      <div className="flex gap-1 p-0.5 bg-muted rounded-lg">
-                        <button
-                          onClick={() => setAiModel('fast')}
-                          className={`flex-1 py-1 px-2 rounded-md text-xs font-medium transition-colors ${
-                            aiModel === 'fast'
-                              ? 'bg-background text-foreground shadow-sm'
-                              : 'text-muted-foreground hover:text-foreground'
-                          }`}
-                        >
-                          Fast
-                        </button>
-                        <button
-                          onClick={() => setAiModel('advanced')}
-                          className={`flex-1 py-1 px-2 rounded-md text-xs font-medium transition-colors ${
-                            aiModel === 'advanced'
-                              ? 'bg-background text-foreground shadow-sm'
-                              : 'text-muted-foreground hover:text-foreground'
-                          }`}
-                        >
-                          Advanced
-                        </button>
-                      </div>
-                    </div>
-
                     {/* Translation Style */}
                     <div className="space-y-1.5">
-                      <div className="text-xs font-medium text-muted-foreground">Translation Style</div>
+                      <div className="text-xs font-medium text-muted-foreground">{t('quickSettings.translationStyle')}</div>
                       <div className="flex gap-1 p-0.5 bg-muted rounded-lg">
                         <button
                           onClick={() => setTranslationStyle('literal')}
@@ -250,7 +289,7 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
                               : 'text-muted-foreground hover:text-foreground'
                           }`}
                         >
-                          Literal
+                          {t('quickSettings.literal')}
                         </button>
                         <button
                           onClick={() => setTranslationStyle('natural')}
@@ -260,14 +299,14 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
                               : 'text-muted-foreground hover:text-foreground'
                           }`}
                         >
-                          Natural
+                          {t('quickSettings.natural')}
                         </button>
                       </div>
                     </div>
 
                     {/* Romaji */}
                     <div className="flex items-center justify-between">
-                      <span className="text-sm">Romaji</span>
+                      <span className="text-sm">{t('quickSettings.romaji')}</span>
                       <Switch
                         checked={showRomaji}
                         onCheckedChange={setShowRomaji}
@@ -277,7 +316,7 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
 
                     {/* Send with Enter */}
                     <div className="flex items-center justify-between">
-                      <span className="text-sm">Send with 'Enter'</span>
+                      <span className="text-sm">{t('quickSettings.sendWithEnter')}</span>
                       <Switch
                         checked={sendWithEnter}
                         onCheckedChange={setSendWithEnter}
@@ -287,15 +326,29 @@ export function InputPanel({ onTranslate, showCompact }: InputPanelProps) {
 
                     {/* More Settings Link */}
                     <button className="text-xs text-sky-500 hover:text-sky-600 transition-colors">
-                      More settings
+                      {t('quickSettings.moreSettings')}
                     </button>
                   </div>
                 </PopoverContent>
               </Popover>
 
-              <Button variant="ghost" size="icon" className="h-9 w-9 rounded-lg" aria-label="Drop or paste an image">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-9 w-9 rounded-lg"
+                aria-label="Attach file"
+                onClick={() => fileInputRef.current?.click()}
+              >
                 <Paperclip className="h-4 w-4 text-muted-foreground" />
               </Button>
+              <input
+                ref={fileInputRef}
+                type="file"
+                className="hidden"
+                accept="text/*,application/json,image/*"
+                multiple
+                onChange={handleFileSelect}
+              />
             </div>
             <Button
               onClick={onTranslate}

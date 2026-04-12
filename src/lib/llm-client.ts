@@ -33,7 +33,8 @@ function buildTranslationMessages(
   text: string,
   modelId: string,
   systemLanguage: LanguageCode,
-  defaultTargetLanguage: LanguageCode
+  defaultTargetLanguage: LanguageCode,
+  attachments?: AttachmentContext[]
 ): Array<{ role: 'system' | 'user' | 'assistant'; content: string }> {
   const systemLangName = getLanguageName(systemLanguage)
   const defaultTargetLangName = getLanguageName(defaultTargetLanguage)
@@ -152,13 +153,27 @@ Return ONLY this JSON structure:
         }]
       }
 
+  // Build the final user message with optional attachment context
+  let userMessage = `<translate>${text}</translate>`
+
+  if (attachments && attachments.length > 0) {
+    const contextParts = attachments.map((att) => {
+      if (att.type.startsWith('text/') || att.type === 'application/json') {
+        return `<context file="${att.name}">\n${att.content}\n</context>`
+      }
+      // For images, include as description (actual image handling would need multimodal API)
+      return `<context file="${att.name}" type="${att.type}">[Attached file]</context>`
+    })
+    userMessage = `${contextParts.join('\n\n')}\n\n${userMessage}`
+  }
+
   return [
     { role: 'system', content: systemPrompt },
     { role: 'user', content: `<translate>${exampleInput1}</translate>` },
     { role: 'assistant', content: JSON.stringify(exampleOutput1) },
     { role: 'user', content: `<translate>${exampleInput2}</translate>` },
     { role: 'assistant', content: JSON.stringify(exampleOutput2) },
-    { role: 'user', content: `<translate>${text}</translate>` }
+    { role: 'user', content: userMessage }
   ]
 }
 
@@ -275,8 +290,15 @@ export interface PartialVariant {
   isComplete?: boolean
 }
 
+export interface AttachmentContext {
+  name: string
+  type: string
+  content: string
+}
+
 export interface TranslateOptions {
   text: string
+  attachments?: AttachmentContext[]
   onPartialResult?: (variant: PartialVariant) => void
 }
 
@@ -536,7 +558,8 @@ export async function translate(options: TranslateOptions): Promise<TranslationR
     options.text,
     model,
     settings.systemLanguage,
-    settings.defaultTargetLanguage
+    settings.defaultTargetLanguage,
+    options.attachments
   )
 
   // Use streaming if callback provided

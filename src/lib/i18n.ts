@@ -140,6 +140,24 @@ type UITextKey =
   | 'auth.success'
   | 'auth.redirecting'
   | 'auth.error'
+  // Writing styles
+  | 'style.polite'
+  | 'style.casual'
+  | 'style.formal'
+  | 'style.formalImper'
+  | 'style.childFriendly'
+  | 'style.businessEmail'
+  | 'style.customerSupport'
+  | 'style.officialForms'
+  | 'style.socialPost'
+  | 'style.messages'
+  // Quick settings popover
+  | 'quickSettings.translationStyle'
+  | 'quickSettings.literal'
+  | 'quickSettings.natural'
+  | 'quickSettings.romaji'
+  | 'quickSettings.sendWithEnter'
+  | 'quickSettings.moreSettings'
 
 // Translation dictionary type
 type TranslationDict = Record<UITextKey, string>
@@ -211,6 +229,24 @@ const en: TranslationDict = {
   'auth.success': 'Successfully connected!',
   'auth.redirecting': 'Redirecting...',
   'auth.error': 'Authentication failed',
+  // Writing styles
+  'style.polite': 'Polite',
+  'style.casual': 'Casual',
+  'style.formal': 'Formal',
+  'style.formalImper': 'Formal/Imperative',
+  'style.childFriendly': 'Child-friendly',
+  'style.businessEmail': 'Business email',
+  'style.customerSupport': 'Customer support',
+  'style.officialForms': 'Official forms',
+  'style.socialPost': 'Social post',
+  'style.messages': 'Messages',
+  // Quick settings
+  'quickSettings.translationStyle': 'Translation Style',
+  'quickSettings.literal': 'Literal',
+  'quickSettings.natural': 'Natural',
+  'quickSettings.romaji': 'Romaji',
+  'quickSettings.sendWithEnter': "Send with 'Enter'",
+  'quickSettings.moreSettings': 'More settings',
 }
 
 // Japanese translations
@@ -280,6 +316,24 @@ const ja: TranslationDict = {
   'auth.success': '接続に成功しました！',
   'auth.redirecting': 'リダイレクト中...',
   'auth.error': '認証に失敗しました',
+  // Writing styles
+  'style.polite': 'ていねい',
+  'style.casual': 'カジュアル',
+  'style.formal': 'フォーマル',
+  'style.formalImper': '敬語/命令形',
+  'style.childFriendly': '子供向け',
+  'style.businessEmail': 'ビジネスメール',
+  'style.customerSupport': 'カスタマーサポート',
+  'style.officialForms': '公式書類',
+  'style.socialPost': 'SNS投稿',
+  'style.messages': 'メッセージ',
+  // Quick settings
+  'quickSettings.translationStyle': '翻訳スタイル',
+  'quickSettings.literal': '直訳',
+  'quickSettings.natural': '自然',
+  'quickSettings.romaji': 'ローマ字',
+  'quickSettings.sendWithEnter': 'Enterで送信',
+  'quickSettings.moreSettings': '詳細設定',
 }
 
 // Chinese Simplified translations
@@ -349,6 +403,24 @@ const zhCN: TranslationDict = {
   'auth.success': '连接成功！',
   'auth.redirecting': '重定向中...',
   'auth.error': '认证失败',
+  // Writing styles
+  'style.polite': '礼貌',
+  'style.casual': '随意',
+  'style.formal': '正式',
+  'style.formalImper': '正式/命令式',
+  'style.childFriendly': '儿童友好',
+  'style.businessEmail': '商务邮件',
+  'style.customerSupport': '客服',
+  'style.officialForms': '官方文件',
+  'style.socialPost': '社交帖子',
+  'style.messages': '消息',
+  // Quick settings
+  'quickSettings.translationStyle': '翻译风格',
+  'quickSettings.literal': '直译',
+  'quickSettings.natural': '自然',
+  'quickSettings.romaji': '罗马字',
+  'quickSettings.sendWithEnter': '按Enter发送',
+  'quickSettings.moreSettings': '更多设置',
 }
 
 // Korean translations
@@ -418,6 +490,24 @@ const ko: TranslationDict = {
   'auth.success': '연결 성공!',
   'auth.redirecting': '리디렉션 중...',
   'auth.error': '인증 실패',
+  // Writing styles
+  'style.polite': '정중한',
+  'style.casual': '캐주얼',
+  'style.formal': '공식적',
+  'style.formalImper': '공식/명령형',
+  'style.childFriendly': '아이 친화적',
+  'style.businessEmail': '비즈니스 이메일',
+  'style.customerSupport': '고객 지원',
+  'style.officialForms': '공식 서류',
+  'style.socialPost': 'SNS 게시물',
+  'style.messages': '메시지',
+  // Quick settings
+  'quickSettings.translationStyle': '번역 스타일',
+  'quickSettings.literal': '직역',
+  'quickSettings.natural': '자연스러운',
+  'quickSettings.romaji': '로마자',
+  'quickSettings.sendWithEnter': 'Enter로 전송',
+  'quickSettings.moreSettings': '더 많은 설정',
 }
 
 // Spanish translations
@@ -487,6 +577,24 @@ const es: TranslationDict = {
   'auth.success': '¡Conectado exitosamente!',
   'auth.redirecting': 'Redirigiendo...',
   'auth.error': 'Autenticación fallida',
+  // Writing styles
+  'style.polite': 'Formal',
+  'style.casual': 'Casual',
+  'style.formal': 'Formal',
+  'style.formalImper': 'Formal/Imperativo',
+  'style.childFriendly': 'Para niños',
+  'style.businessEmail': 'Email de negocios',
+  'style.customerSupport': 'Atención al cliente',
+  'style.officialForms': 'Documentos oficiales',
+  'style.socialPost': 'Publicación social',
+  'style.messages': 'Mensajes',
+  // Quick settings
+  'quickSettings.translationStyle': 'Estilo de traducción',
+  'quickSettings.literal': 'Literal',
+  'quickSettings.natural': 'Natural',
+  'quickSettings.romaji': 'Romaji',
+  'quickSettings.sendWithEnter': 'Enviar con Enter',
+  'quickSettings.moreSettings': 'Más ajustes',
 }
 
 // French translations
@@ -556,6 +664,24 @@ const fr: TranslationDict = {
   'auth.success': 'Connecté avec succès !',
   'auth.redirecting': 'Redirection...',
   'auth.error': 'Échec de l\'authentification',
+  // Writing styles
+  'style.polite': 'Poli',
+  'style.casual': 'Décontracté',
+  'style.formal': 'Formel',
+  'style.formalImper': 'Formel/Impératif',
+  'style.childFriendly': 'Pour enfants',
+  'style.businessEmail': 'Email professionnel',
+  'style.customerSupport': 'Service client',
+  'style.officialForms': 'Documents officiels',
+  'style.socialPost': 'Publication sociale',
+  'style.messages': 'Messages',
+  // Quick settings
+  'quickSettings.translationStyle': 'Style de traduction',
+  'quickSettings.literal': 'Littéral',
+  'quickSettings.natural': 'Naturel',
+  'quickSettings.romaji': 'Romaji',
+  'quickSettings.sendWithEnter': 'Envoyer avec Entrée',
+  'quickSettings.moreSettings': 'Plus de paramètres',
 }
 
 // German translations
@@ -625,6 +751,24 @@ const de: TranslationDict = {
   'auth.success': 'Erfolgreich verbunden!',
   'auth.redirecting': 'Weiterleitung...',
   'auth.error': 'Authentifizierung fehlgeschlagen',
+  // Writing styles
+  'style.polite': 'Höflich',
+  'style.casual': 'Locker',
+  'style.formal': 'Formell',
+  'style.formalImper': 'Formell/Imperativ',
+  'style.childFriendly': 'Kinderfreundlich',
+  'style.businessEmail': 'Geschäfts-E-Mail',
+  'style.customerSupport': 'Kundenservice',
+  'style.officialForms': 'Offizielle Dokumente',
+  'style.socialPost': 'Social-Media-Post',
+  'style.messages': 'Nachrichten',
+  // Quick settings
+  'quickSettings.translationStyle': 'Übersetzungsstil',
+  'quickSettings.literal': 'Wörtlich',
+  'quickSettings.natural': 'Natürlich',
+  'quickSettings.romaji': 'Romaji',
+  'quickSettings.sendWithEnter': 'Mit Enter senden',
+  'quickSettings.moreSettings': 'Weitere Einstellungen',
 }
 
 // All translations
