@@ -153,14 +153,15 @@ interface VariantCardProps {
   variant: TranslationVariant
   onAdjust: (type: string, currentText: string) => void
   isAdjusting: boolean
-  skipAnimation?: boolean
 }
 
-function VariantCard({ variant, onAdjust, isAdjusting, skipAnimation }: VariantCardProps) {
+function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
   const [copied, setCopied] = useState(false)
   const [isSpeaking, setIsSpeaking] = useState(false)
   const [backTranslation, setBackTranslation] = useState<string | null>(null)
   const [isBackTranslating, setIsBackTranslating] = useState(false)
+  // Track animation completion to prevent re-animation on parent re-renders
+  const [hasAnimated, setHasAnimated] = useState(false)
   const t = useT()
 
   const handleCopy = async () => {
@@ -200,7 +201,10 @@ function VariantCard({ variant, onAdjust, isAdjusting, skipAnimation }: VariantC
   }
 
   return (
-    <Card className={`mb-4 ${skipAnimation ? '' : 'stream-fade-in'}`}>
+    <Card
+      className={`mb-4 ${hasAnimated ? '' : 'stream-fade-in'}`}
+      onAnimationEnd={() => setHasAnimated(true)}
+    >
       <CardContent className="pt-4">
         {/* Style Label */}
         <div className="flex items-center gap-2 mb-3">
@@ -278,8 +282,8 @@ function VariantCard({ variant, onAdjust, isAdjusting, skipAnimation }: VariantC
             {variant.explanation.map((exp, i) => (
               <li
                 key={`${i}-${exp.slice(0, 10)}`}
-                className={`flex items-start gap-2 text-sm text-muted-foreground ${skipAnimation ? '' : 'stream-fade-in'}`}
-                style={skipAnimation ? undefined : { animationDelay: `${100 + i * 50}ms` }}
+                className={`flex items-start gap-2 text-sm text-muted-foreground ${hasAnimated ? '' : 'stream-fade-in'}`}
+                style={hasAnimated ? undefined : { animationDelay: `${100 + i * 50}ms` }}
               >
                 <span className="text-primary mt-1.5">•</span>
                 <span>{exp}</span>
@@ -291,8 +295,8 @@ function VariantCard({ variant, onAdjust, isAdjusting, skipAnimation }: VariantC
         {/* Example */}
         {variant.example && (
           <div
-            className={`bg-muted/20 rounded-lg p-3 text-sm ${skipAnimation ? '' : 'stream-fade-in'}`}
-            style={skipAnimation ? undefined : { animationDelay: '200ms' }}
+            className={`bg-muted/20 rounded-lg p-3 text-sm ${hasAnimated ? '' : 'stream-fade-in'}`}
+            style={hasAnimated ? undefined : { animationDelay: '200ms' }}
           >
             <div className="text-xs text-muted-foreground mb-2">{t('results.example')}</div>
             <div className="flex items-start gap-2 mb-1">
@@ -329,17 +333,6 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
   const [showAllOptions, setShowAllOptions] = useState(false)
   const t = useT()
 
-  // Skip animation on first variant if it matches the streamed content
-  // This comparison works because streamingVariant is preserved until next translation
-  const shouldSkipFirstAnimation = variants.length > 0 &&
-    streamingVariant?.text &&
-    variants[0]?.text === streamingVariant.text
-
-  // Skip animation on last variant if it matches streaming adjustment (prevents double fade-in)
-  const shouldSkipLastAnimation = variants.length > 1 &&
-    streamingAdjustment?.text &&
-    variants[variants.length - 1]?.text === streamingAdjustment.text
-
   const handleAdjust = async (type: string, currentText: string) => {
     setIsAdjusting(true)
     setStreamingAdjustment(null)
@@ -357,8 +350,6 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
       console.error('Adjustment failed:', err)
     } finally {
       setIsAdjusting(false)
-      // Don't clear streamingAdjustment here - it's used for skipAnimation comparison
-      // It will be cleared at the start of the next adjustment (line 345)
     }
   }
 
@@ -438,10 +429,6 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
           variant={variant}
           onAdjust={handleAdjust}
           isAdjusting={isAdjusting}
-          skipAnimation={
-            (index === 0 && !!shouldSkipFirstAnimation) ||
-            (index === variants.length - 1 && !!shouldSkipLastAnimation)
-          }
         />
       ))}
 
