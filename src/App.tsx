@@ -20,6 +20,7 @@ function HomePage() {
     inputText,
     attachments,
     variants,
+    isTranslating,
     setInputText,
     setVariants,
     setStreamingVariant,
@@ -94,7 +95,8 @@ function HomePage() {
     reset()
   }, [reset])
 
-  const hasResults = variants.length > 0
+  // Show results panel when translating OR when we have results
+  const showResultsView = isTranslating || variants.length > 0
 
   return (
     <SidebarProvider defaultOpen={true}>
@@ -107,9 +109,9 @@ function HomePage() {
 
           <div className="flex-1 flex overflow-hidden">
             {/* Input Panel with Hero */}
-            <div className={`${hasResults ? 'hidden md:block md:w-[320px] md:border-r' : 'flex-1'} bg-card transition-all duration-300`}>
+            <div className={`${showResultsView ? 'hidden md:block md:w-[320px] md:border-r' : 'flex-1'} bg-card transition-all duration-300`}>
               {/* Tagline - Only show when no results */}
-              {!hasResults && (
+              {!showResultsView && (
                 <div className="text-center pt-10 pb-4 px-4">
                   <h1 className="text-3xl font-bold italic text-foreground mb-3">
                     {t('app.name')}
@@ -119,11 +121,11 @@ function HomePage() {
                   </p>
                 </div>
               )}
-              <InputPanel onTranslate={handleTranslate} showCompact={hasResults} />
+              <InputPanel onTranslate={handleTranslate} showCompact={showResultsView} />
             </div>
 
             {/* Results Panel */}
-            {hasResults && (
+            {showResultsView && (
               <div className="flex-1 bg-background overflow-hidden">
                 <ResultsPanel onRetranslate={handleTranslate} />
               </div>

@@ -296,22 +296,24 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
   const showStreamingCard = isTranslating && streamingVariant && streamingVariant.text
   // Show streaming adjustment card
   const showStreamingAdjustment = isAdjusting && streamingAdjustment && streamingAdjustment.text
+  // Show initial loading state (translating but no streaming content yet)
+  const showInitialLoading = isTranslating && !showStreamingCard && variants.length === 0
 
-  if (variants.length === 0 && !showStreamingCard) {
+  if (variants.length === 0 && !showStreamingCard && !isTranslating) {
     return null
   }
 
   return (
     <div className="h-full overflow-y-auto p-6">
       {/* Original Text */}
-      <div className="mb-6">
+      <div className="mb-6 animate-in fade-in slide-in-from-bottom-2 duration-300">
         <div className="bg-muted/30 rounded-xl p-4 mb-3">
           <p className="text-foreground">{inputText}</p>
         </div>
       </div>
 
       {/* Header */}
-      <div className="flex items-center gap-2 mb-4">
+      <div className="flex items-center gap-2 mb-4 animate-in fade-in slide-in-from-bottom-2 duration-300" style={{ animationDelay: '50ms' }}>
         <div className="w-6 h-6 rounded-full bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center">
           <span className="text-white text-xs">N</span>
         </div>
@@ -322,7 +324,25 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
               ? t('results.translatedOne')
               : t('results.translatedMany').replace('{count}', String(variants.length))}
         </span>
+        {isTranslating && (
+          <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
+        )}
       </div>
+
+      {/* Initial Loading State */}
+      {showInitialLoading && (
+        <Card className="mb-4 animate-in fade-in slide-in-from-bottom-2 duration-300" style={{ animationDelay: '100ms' }}>
+          <CardContent className="pt-6 pb-6">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-lg bg-muted animate-pulse" />
+              <div className="flex-1 space-y-2">
+                <div className="h-4 w-24 bg-muted rounded animate-pulse" />
+                <div className="h-3 w-48 bg-muted rounded animate-pulse" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Streaming Card (during initial translation) */}
       {showStreamingCard && variants.length === 0 && (

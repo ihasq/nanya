@@ -82,3 +82,9 @@ export const useTranslationStore = create<TranslationState>((set) => ({
     error: null
   }),
 }))
+
+// Expose store on window for testing in development
+if (import.meta.env.DEV) {
+  (window as unknown as { __TRANSLATION_STORE__: typeof useTranslationStore }).
+    __TRANSLATION_STORE__ = useTranslationStore
+}
