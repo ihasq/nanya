@@ -37,10 +37,11 @@ import { PenLine, Zap, ChevronDown, LogOut, Check } from 'lucide-react'
 interface AppSidebarProps {
   entries: HistoryEntry[]
   onNewTranslation: () => void
+  onLoadConversation: (id: string) => void
 }
 
-export function AppSidebar({ entries, onNewTranslation }: AppSidebarProps) {
-  const { inputText, setInputText, setVariants } = useTranslationStore()
+export function AppSidebar({ entries, onNewTranslation, onLoadConversation }: AppSidebarProps) {
+  const { conversationId } = useTranslationStore()
   const { selectedModel, setSelectedModel } = useSettingsStore()
   const { clearAuth } = useAuthStore()
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated())
@@ -53,10 +54,7 @@ export function AppSidebar({ entries, onNewTranslation }: AppSidebarProps) {
   }, [])
 
   const handleSelectEntry = (entry: HistoryEntry) => {
-    setInputText(entry.inputText)
-    if (entry.variants && entry.variants.length > 0) {
-      setVariants(entry.variants)
-    }
+    onLoadConversation(entry.id)
     // Close sidebar on mobile after selecting
     if (isMobile) {
       setOpenMobile(false)
@@ -105,7 +103,7 @@ export function AppSidebar({ entries, onNewTranslation }: AppSidebarProps) {
                 <SidebarMenuItem key={entry.id}>
                   <SidebarMenuButton
                     onClick={() => handleSelectEntry(entry)}
-                    isActive={inputText === entry.inputText}
+                    isActive={conversationId === entry.id}
                     className="truncate"
                   >
                     <span className="truncate">{entry.inputText}</span>

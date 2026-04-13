@@ -1,9 +1,10 @@
 import { get, set, del, keys } from 'idb-keyval'
 import pako from 'pako'
 import type { TranslationVariant } from '@/lib/llm-client'
+import { generateShortId } from '@/lib/url-hash'
 
 export interface HistoryEntry {
-  id: string
+  id: string  // Short ID used in URL hash
   inputText: string
   outputText: string
   targetLanguage: string
@@ -23,14 +24,13 @@ function decompress(data: Uint8Array): string {
   return pako.ungzip(data, { to: 'string' })
 }
 
-function generateId(): string {
-  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`
-}
-
-export async function saveHistoryEntry(entry: Omit<HistoryEntry, 'id' | 'timestamp'>): Promise<HistoryEntry> {
+export async function saveHistoryEntry(
+  entry: Omit<HistoryEntry, 'id' | 'timestamp'>,
+  existingId?: string
+): Promise<HistoryEntry> {
   const fullEntry: HistoryEntry = {
     ...entry,
-    id: generateId(),
+    id: existingId || generateShortId(),
     timestamp: Date.now(),
   }
 

@@ -8,6 +8,7 @@ export interface Attachment {
 }
 
 interface TranslationState {
+  conversationId: string | null  // Current conversation ID for URL hash
   inputText: string
   attachments: Attachment[]
   variants: TranslationVariant[]
@@ -19,6 +20,7 @@ interface TranslationState {
   isBackTranslating: boolean
   error: string | null
   // Actions
+  setConversationId: (id: string | null) => void
   setInputText: (text: string) => void
   setAttachments: (attachments: Attachment[]) => void
   addAttachment: (attachment: Attachment) => void
@@ -37,6 +39,7 @@ interface TranslationState {
 }
 
 export const useTranslationStore = create<TranslationState>((set) => ({
+  conversationId: null,
   inputText: '',
   attachments: [],
   variants: [],
@@ -48,6 +51,7 @@ export const useTranslationStore = create<TranslationState>((set) => ({
   isBackTranslating: false,
   error: null,
 
+  setConversationId: (id) => set({ conversationId: id }),
   setInputText: (text) => set({ inputText: text }),
   setAttachments: (attachments) => set({ attachments }),
   addAttachment: (attachment) => set((state) => ({
@@ -70,6 +74,7 @@ export const useTranslationStore = create<TranslationState>((set) => ({
   setIsBackTranslating: (isBackTranslating) => set({ isBackTranslating }),
   setError: (error) => set({ error }),
   reset: () => set({
+    conversationId: null,
     inputText: '',
     attachments: [],
     variants: [],

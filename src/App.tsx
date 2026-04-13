@@ -9,7 +9,15 @@ import { useTranslationStore } from '@/stores/translation-store'
 import { useSettingsStore, useT } from '@/stores/settings-store'
 import { useHistory } from '@/hooks/useHistory'
 import { translate } from '@/lib/llm-client'
-import { saveHistoryEntry } from '@/lib/history-storage'
+import { saveHistoryEntry, getHistoryEntry } from '@/lib/history-storage'
+import {
+  generateShortId,
+  createConversationHash,
+  parseConversationHash,
+  setUrlHash,
+  clearUrlHash,
+  getUrlHash,
+} from '@/lib/url-hash'
 
 // Lazy load test pages (dev only)
 const StreamingTestPage = lazy(() => import('@/test-streaming'))
@@ -17,10 +25,12 @@ const StreamingDemo = lazy(() => import('@/streaming-demo'))
 
 function HomePage() {
   const {
+    conversationId,
     inputText,
     attachments,
     variants,
     isTranslating,
+    setConversationId,
     setInputText,
     setVariants,
     setStreamingVariant,
@@ -33,6 +43,32 @@ function HomePage() {
   const { entries, refresh: refreshHistory } = useHistory()
   const [searchParams, setSearchParams] = useSearchParams()
 
+  // Handle URL hash on mount - load existing conversation
+  useEffect(() => {
+    const loadFromHash = async () => {
+      const hash = getUrlHash()
+      if (!hash) return
+
+      const parsed = parseConversationHash(hash)
+      if (!parsed) return
+
+      // Try to load from history
+      const entry = await getHistoryEntry(parsed.id)
+      if (entry) {
+        setConversationId(entry.id)
+        setInputText(entry.inputText)
+        setVariants(entry.variants || [])
+      } else {
+        // Backward compatibility: entry not in storage but hash exists
+        // Create a new entry with the text from the hash
+        setConversationId(parsed.id)
+        setInputText(parsed.text)
+      }
+    }
+    loadFromHash()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // Only run on mount
+
   // Handle Web Share Target API
   useEffect(() => {
     const sharedText = searchParams.get('text')
@@ -44,12 +80,15 @@ function HomePage() {
       const combinedText = parts.join('\n\n')
 
       if (combinedText) {
+        // Start a new conversation for shared content
+        reset()
+        clearUrlHash()
         setInputText(combinedText)
         // Clear URL params after processing
         setSearchParams({}, { replace: true })
       }
     }
-  }, [searchParams, setSearchParams, setInputText])
+  }, [searchParams, setSearchParams, setInputText, reset])
 
   const handleTranslate = useCallback(async () => {
     if (!inputText.trim()) return
@@ -58,6 +97,17 @@ function HomePage() {
     setError(null)
     setVariants([])
     setStreamingVariant(null)
+
+    // Generate new conversation ID if this is a new conversation
+    const isNewConversation = !conversationId
+    const currentId = conversationId || generateShortId()
+
+    if (isNewConversation) {
+      setConversationId(currentId)
+      // Update URL hash immediately
+      const hash = createConversationHash(inputText, currentId)
+      setUrlHash(hash)
+    }
 
     try {
       const result = await translate({
@@ -80,7 +130,7 @@ function HomePage() {
           targetLanguage: systemLanguage,
           writingStyle,
           variants: result.variants,
-        })
+        }, currentId)
         refreshHistory()
       }
     } catch (err) {
@@ -90,11 +140,25 @@ function HomePage() {
       // Don't clear streamingVariant here - keep it for transition detection
       // It will be cleared at the start of next translation
     }
-  }, [inputText, attachments, systemLanguage, writingStyle, enableHistory, setVariants, setStreamingVariant, setIsTranslating, setError, refreshHistory])
+  }, [inputText, attachments, conversationId, systemLanguage, writingStyle, enableHistory, setConversationId, setVariants, setStreamingVariant, setIsTranslating, setError, refreshHistory])
 
   const handleNewTranslation = useCallback(() => {
     reset()
+    clearUrlHash()
   }, [reset])
+
+  // Handle loading a conversation from history (sidebar click)
+  const handleLoadConversation = useCallback(async (id: string) => {
+    const entry = await getHistoryEntry(id)
+    if (entry) {
+      setConversationId(entry.id)
+      setInputText(entry.inputText)
+      setVariants(entry.variants || [])
+      // Update URL hash
+      const hash = createConversationHash(entry.inputText, entry.id)
+      setUrlHash(hash)
+    }
+  }, [setConversationId, setInputText, setVariants])
 
   // Show results panel when translating OR when we have results
   const showResultsView = isTranslating || variants.length > 0
@@ -102,7 +166,7 @@ function HomePage() {
   return (
     <SidebarProvider defaultOpen={true}>
       <div className="flex h-screen w-full bg-gradient-to-br from-sky-50 via-background to-sky-50/50 dark:from-sky-950/20 dark:via-background dark:to-sky-950/10">
-        <AppSidebar entries={entries} onNewTranslation={handleNewTranslation} />
+        <AppSidebar entries={entries} onNewTranslation={handleNewTranslation} onLoadConversation={handleLoadConversation} />
 
         <SidebarInset className="flex flex-col relative">
           {/* Floating Sidebar Trigger */}
