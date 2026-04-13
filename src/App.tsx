@@ -14,7 +14,7 @@ import {
   generateShortId,
   createConversationHash,
   parseConversationHash,
-  setUrlHash,
+  pushUrlHash,
   clearUrlHash,
   getUrlHash,
 } from '@/lib/url-hash'
@@ -43,31 +43,47 @@ function HomePage() {
   const { entries, refresh: refreshHistory } = useHistory()
   const [searchParams, setSearchParams] = useSearchParams()
 
-  // Handle URL hash on mount - load existing conversation
-  useEffect(() => {
-    const loadFromHash = async () => {
-      const hash = getUrlHash()
-      if (!hash) return
-
-      const parsed = parseConversationHash(hash)
-      if (!parsed) return
-
-      // Try to load from history
-      const entry = await getHistoryEntry(parsed.id)
-      if (entry) {
-        setConversationId(entry.id)
-        setInputText(entry.inputText)
-        setVariants(entry.variants || [])
-      } else {
-        // Backward compatibility: entry not in storage but hash exists
-        // Create a new entry with the text from the hash
-        setConversationId(parsed.id)
-        setInputText(parsed.text)
-      }
+  // Load conversation from URL hash
+  const loadConversationFromHash = useCallback(async (hash: string) => {
+    if (!hash) {
+      // No hash = new conversation
+      reset()
+      return
     }
-    loadFromHash()
+
+    const parsed = parseConversationHash(hash)
+    if (!parsed) return
+
+    // Try to load from history
+    const entry = await getHistoryEntry(parsed.id)
+    if (entry) {
+      setConversationId(entry.id)
+      setInputText(entry.inputText)
+      setVariants(entry.variants || [])
+    } else {
+      // Backward compatibility: entry not in storage but hash exists
+      // Create a new entry with the text from the hash
+      reset()
+      setConversationId(parsed.id)
+      setInputText(parsed.text)
+    }
+  }, [reset, setConversationId, setInputText, setVariants])
+
+  // Handle URL hash on mount
+  useEffect(() => {
+    loadConversationFromHash(getUrlHash())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []) // Only run on mount
+
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      loadConversationFromHash(getUrlHash())
+    }
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [loadConversationFromHash])
 
   // Handle Web Share Target API
   useEffect(() => {
@@ -104,9 +120,9 @@ function HomePage() {
 
     if (isNewConversation) {
       setConversationId(currentId)
-      // Update URL hash immediately
+      // Push to browser history
       const hash = createConversationHash(inputText, currentId)
-      setUrlHash(hash)
+      pushUrlHash(hash)
     }
 
     try {
@@ -154,9 +170,9 @@ function HomePage() {
       setConversationId(entry.id)
       setInputText(entry.inputText)
       setVariants(entry.variants || [])
-      // Update URL hash
+      // Push to browser history
       const hash = createConversationHash(entry.inputText, entry.id)
-      setUrlHash(hash)
+      pushUrlHash(hash)
     }
   }, [setConversationId, setInputText, setVariants])
 

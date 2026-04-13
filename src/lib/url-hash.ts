@@ -68,19 +68,35 @@ export function parseConversationHash(hash: string): { text: string; id: string 
 }
 
 /**
- * Set the URL hash without triggering a page reload.
+ * Set the URL hash and push to browser history.
  */
-export function setUrlHash(hash: string): void {
+export function pushUrlHash(hash: string): void {
   const newUrl = `${window.location.pathname}${window.location.search}#${hash}`
-  window.history.replaceState(null, '', newUrl)
+  window.history.pushState({ hash }, '', newUrl)
 }
 
 /**
- * Clear the URL hash.
+ * Replace the current URL hash without adding to history.
+ */
+export function replaceUrlHash(hash: string): void {
+  const newUrl = `${window.location.pathname}${window.location.search}#${hash}`
+  window.history.replaceState({ hash }, '', newUrl)
+}
+
+/**
+ * Clear the URL hash and push to browser history.
  */
 export function clearUrlHash(): void {
   const newUrl = `${window.location.pathname}${window.location.search}`
-  window.history.replaceState(null, '', newUrl)
+  window.history.pushState({ hash: '' }, '', newUrl)
+}
+
+/**
+ * Replace current URL with no hash (no history entry).
+ */
+export function replaceUrlHashClear(): void {
+  const newUrl = `${window.location.pathname}${window.location.search}`
+  window.history.replaceState({ hash: '' }, '', newUrl)
 }
 
 /**
