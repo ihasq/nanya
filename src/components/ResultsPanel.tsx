@@ -30,33 +30,51 @@ const ADJUSTMENT_OPTIONS: AdjustmentOption[] = [
   { type: 'alternative', labelKey: 'results.alternative', emoji: '💬' },
 ]
 
+// Animated entry wrapper for streaming parts
+function AnimatedEntry({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  return (
+    <div
+      className="animate-in fade-in slide-in-from-bottom-1 duration-200"
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  )
+}
+
 // Streaming variant card - shows partial results as they arrive
 function StreamingVariantCard({ variant, isAdjustment }: { variant: PartialVariant; isAdjustment?: boolean }) {
   return (
-    <Card className={`mb-4 ${isAdjustment ? 'border-dashed border-primary/50' : ''}`}>
+    <Card className={`mb-4 animate-in fade-in slide-in-from-bottom-2 duration-200 ${isAdjustment ? 'border-dashed border-primary/50' : ''}`}>
       <CardContent className="pt-4">
         {/* Style Label */}
-        <div className="flex items-center gap-2 mb-3">
-          <span className="text-lg">{variant.emoji || '📝'}</span>
-          <span className="text-sm font-medium bg-muted px-2 py-0.5 rounded">
-            {variant.style || 'Translation'}
-          </span>
-          <Loader2 className="h-3 w-3 animate-spin text-muted-foreground ml-auto" />
-        </div>
+        <AnimatedEntry delay={0}>
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-lg">{variant.emoji || '📝'}</span>
+            <span className="text-sm font-medium bg-muted px-2 py-0.5 rounded">
+              {variant.style || 'Translation'}
+            </span>
+            <Loader2 className="h-3 w-3 animate-spin text-muted-foreground ml-auto" />
+          </div>
+        </AnimatedEntry>
 
         {/* Translation Text */}
         {variant.text && (
-          <p className="text-lg mb-4 animate-in fade-in duration-300">{variant.text}</p>
+          <AnimatedEntry delay={30}>
+            <p className="text-lg mb-4">{variant.text}</p>
+          </AnimatedEntry>
         )}
 
         {/* Explanations (streaming) */}
         {variant.explanation && variant.explanation.length > 0 && (
           <ul className="space-y-1 mb-4">
             {variant.explanation.map((exp, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground animate-in fade-in slide-in-from-bottom-1 duration-300">
-                <span className="text-primary mt-1.5">•</span>
-                <span>{exp}</span>
-              </li>
+              <AnimatedEntry key={i} delay={60 + i * 30}>
+                <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                  <span className="text-primary mt-1.5">•</span>
+                  <span>{exp}</span>
+                </li>
+              </AnimatedEntry>
             ))}
           </ul>
         )}
@@ -115,7 +133,7 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
   }
 
   return (
-    <Card className="mb-4">
+    <Card className="mb-4 animate-in fade-in slide-in-from-bottom-2 duration-200">
       <CardContent className="pt-4">
         {/* Style Label */}
         <div className="flex items-center gap-2 mb-3">
@@ -191,26 +209,30 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
         {variant.explanation && variant.explanation.length > 0 && (
           <ul className="space-y-1 mb-4">
             {variant.explanation.map((exp, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                <span className="text-primary mt-1.5">•</span>
-                <span>{exp}</span>
-              </li>
+              <AnimatedEntry key={i} delay={100 + i * 30}>
+                <li className="flex items-start gap-2 text-sm text-muted-foreground">
+                  <span className="text-primary mt-1.5">•</span>
+                  <span>{exp}</span>
+                </li>
+              </AnimatedEntry>
             ))}
           </ul>
         )}
 
         {/* Example */}
         {variant.example && (
-          <div className="bg-muted/20 rounded-lg p-3 text-sm">
-            <div className="text-xs text-muted-foreground mb-2">{t('results.example')}</div>
-            <div className="flex items-start gap-2 mb-1">
-              <p>{variant.example.original}</p>
-              <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0">
-                <Volume2 className="h-3 w-3" />
-              </Button>
+          <AnimatedEntry delay={200}>
+            <div className="bg-muted/20 rounded-lg p-3 text-sm">
+              <div className="text-xs text-muted-foreground mb-2">{t('results.example')}</div>
+              <div className="flex items-start gap-2 mb-1">
+                <p>{variant.example.original}</p>
+                <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0">
+                  <Volume2 className="h-3 w-3" />
+                </Button>
+              </div>
+              <p className="text-muted-foreground">{variant.example.translated}</p>
             </div>
-            <p className="text-muted-foreground">{variant.example.translated}</p>
-          </div>
+          </AnimatedEntry>
         )}
       </CardContent>
     </Card>

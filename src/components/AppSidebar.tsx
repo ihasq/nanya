@@ -70,12 +70,7 @@ export function AppSidebar({ entries, onNewTranslation }: AppSidebarProps) {
   return (
     <Sidebar collapsible="offcanvas">
       <SidebarHeader className="p-3">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center">
-            <span className="text-white text-sm font-bold">N</span>
-          </div>
-          <span className="font-semibold">Nanya</span>
-        </div>
+        <span className="font-semibold text-lg italic">Nanya</span>
       </SidebarHeader>
 
       <SidebarContent>
