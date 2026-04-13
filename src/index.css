@@ -273,6 +273,27 @@ input, textarea, select {
               transform var(--transition-fast);
 }
 
+/* Animation fill mode utilities */
+.fill-mode-both {
+  animation-fill-mode: both;
+}
+
+/* Streaming content animations */
+@keyframes streamFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stream-fade-in {
+  animation: streamFadeIn 200ms ease-out both;
+}
+
 /* Smooth scroll */
 html {
   scroll-behavior: smooth;

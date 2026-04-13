@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import {
@@ -30,11 +30,12 @@ const ADJUSTMENT_OPTIONS: AdjustmentOption[] = [
   { type: 'alternative', labelKey: 'results.alternative', emoji: '💬' },
 ]
 
-// Animated entry wrapper for streaming parts
-function AnimatedEntry({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+// Animated entry wrapper - animates on mount with key-based remounting
+function AnimatedEntry({ children, delay = 0, itemKey }: { children: React.ReactNode; delay?: number; itemKey?: string }) {
   return (
     <div
-      className="animate-in fade-in slide-in-from-bottom-1 duration-200"
+      key={itemKey}
+      className="animate-in fade-in slide-in-from-bottom-1 duration-200 fill-mode-both"
       style={{ animationDelay: `${delay}ms` }}
     >
       {children}
@@ -42,39 +43,68 @@ function AnimatedEntry({ children, delay = 0 }: { children: React.ReactNode; del
   )
 }
 
+// Streaming text that animates each new character/word appearance
+function StreamingText({ text, className }: { text: string; className?: string }) {
+  const [displayText, setDisplayText] = useState('')
+  const [isAnimating, setIsAnimating] = useState(false)
+
+  useEffect(() => {
+    if (text !== displayText) {
+      setIsAnimating(true)
+      setDisplayText(text)
+      const timer = setTimeout(() => setIsAnimating(false), 150)
+      return () => clearTimeout(timer)
+    }
+  }, [text, displayText])
+
+  return (
+    <p className={`transition-opacity duration-150 ${isAnimating ? 'opacity-90' : 'opacity-100'} ${className || ''}`}>
+      {displayText}
+    </p>
+  )
+}
+
 // Streaming variant card - shows partial results as they arrive
 function StreamingVariantCard({ variant, isAdjustment }: { variant: PartialVariant; isAdjustment?: boolean }) {
+  // Track previous explanation count to animate new items
+  const [prevExpCount, setPrevExpCount] = useState(0)
+  const expCount = variant.explanation?.length || 0
+
+  useEffect(() => {
+    if (expCount > prevExpCount) {
+      setPrevExpCount(expCount)
+    }
+  }, [expCount, prevExpCount])
+
   return (
-    <Card className={`mb-4 animate-in fade-in slide-in-from-bottom-2 duration-200 ${isAdjustment ? 'border-dashed border-primary/50' : ''}`}>
+    <Card className={`mb-4 animate-in fade-in slide-in-from-bottom-2 duration-300 fill-mode-both ${isAdjustment ? 'border-dashed border-primary/50' : ''}`}>
       <CardContent className="pt-4">
         {/* Style Label */}
-        <AnimatedEntry delay={0}>
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-lg">{variant.emoji || '📝'}</span>
-            <span className="text-sm font-medium bg-muted px-2 py-0.5 rounded">
-              {variant.style || 'Translation'}
-            </span>
-            <Loader2 className="h-3 w-3 animate-spin text-muted-foreground ml-auto" />
-          </div>
-        </AnimatedEntry>
+        <div className="flex items-center gap-2 mb-3 animate-in fade-in duration-200 fill-mode-both">
+          <span className="text-lg">{variant.emoji || '📝'}</span>
+          <span className="text-sm font-medium bg-muted px-2 py-0.5 rounded">
+            {variant.style || 'Translation'}
+          </span>
+          <Loader2 className="h-3 w-3 animate-spin text-muted-foreground ml-auto" />
+        </div>
 
-        {/* Translation Text */}
+        {/* Translation Text - smoothly updates */}
         {variant.text && (
-          <AnimatedEntry delay={30}>
-            <p className="text-lg mb-4">{variant.text}</p>
-          </AnimatedEntry>
+          <StreamingText text={variant.text} className="text-lg mb-4" />
         )}
 
-        {/* Explanations (streaming) */}
+        {/* Explanations (streaming) - each new item fades in */}
         {variant.explanation && variant.explanation.length > 0 && (
           <ul className="space-y-1 mb-4">
             {variant.explanation.map((exp, i) => (
-              <AnimatedEntry key={i} delay={60 + i * 30}>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-primary mt-1.5">•</span>
-                  <span>{exp}</span>
-                </li>
-              </AnimatedEntry>
+              <li
+                key={`exp-${i}-${exp.slice(0, 20)}`}
+                className="flex items-start gap-2 text-sm text-muted-foreground animate-in fade-in slide-in-from-bottom-1 duration-200 fill-mode-both"
+                style={{ animationDelay: `${i >= prevExpCount ? 0 : 0}ms` }}
+              >
+                <span className="text-primary mt-1.5">•</span>
+                <span>{exp}</span>
+              </li>
             ))}
           </ul>
         )}
@@ -133,7 +163,7 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
   }
 
   return (
-    <Card className="mb-4 animate-in fade-in slide-in-from-bottom-2 duration-200">
+    <Card className="mb-4 stream-fade-in">
       <CardContent className="pt-4">
         {/* Style Label */}
         <div className="flex items-center gap-2 mb-3">
@@ -209,30 +239,33 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
         {variant.explanation && variant.explanation.length > 0 && (
           <ul className="space-y-1 mb-4">
             {variant.explanation.map((exp, i) => (
-              <AnimatedEntry key={i} delay={100 + i * 30}>
-                <li className="flex items-start gap-2 text-sm text-muted-foreground">
-                  <span className="text-primary mt-1.5">•</span>
-                  <span>{exp}</span>
-                </li>
-              </AnimatedEntry>
+              <li
+                key={`${i}-${exp.slice(0, 10)}`}
+                className="flex items-start gap-2 text-sm text-muted-foreground stream-fade-in"
+                style={{ animationDelay: `${100 + i * 50}ms` }}
+              >
+                <span className="text-primary mt-1.5">•</span>
+                <span>{exp}</span>
+              </li>
             ))}
           </ul>
         )}
 
         {/* Example */}
         {variant.example && (
-          <AnimatedEntry delay={200}>
-            <div className="bg-muted/20 rounded-lg p-3 text-sm">
-              <div className="text-xs text-muted-foreground mb-2">{t('results.example')}</div>
-              <div className="flex items-start gap-2 mb-1">
-                <p>{variant.example.original}</p>
-                <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0">
-                  <Volume2 className="h-3 w-3" />
-                </Button>
-              </div>
-              <p className="text-muted-foreground">{variant.example.translated}</p>
+          <div
+            className="bg-muted/20 rounded-lg p-3 text-sm stream-fade-in"
+            style={{ animationDelay: '200ms' }}
+          >
+            <div className="text-xs text-muted-foreground mb-2">{t('results.example')}</div>
+            <div className="flex items-start gap-2 mb-1">
+              <p>{variant.example.original}</p>
+              <Button variant="ghost" size="icon" className="h-6 w-6 shrink-0">
+                <Volume2 className="h-3 w-3" />
+              </Button>
             </div>
-          </AnimatedEntry>
+            <p className="text-muted-foreground">{variant.example.translated}</p>
+          </div>
         )}
       </CardContent>
     </Card>
