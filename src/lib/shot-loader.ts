@@ -16,6 +16,7 @@ export interface Shot {
 export interface AdjustmentSample {
   formal: string
   adjusted: string
+  explanation?: string[]  // Style adjustment explanation
 }
 
 export interface TranslationSample {
@@ -129,7 +130,7 @@ function synthesizeAdjustmentShots(
           style: style.charAt(0).toUpperCase() + style.slice(1),
           emoji: styleEmojis[style] || '✨',
           text: sample.adjusted,
-          explanation: []
+          explanation: sample.explanation || []
         }]
       })
     }))

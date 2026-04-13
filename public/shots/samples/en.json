@@ -147,9 +147,9 @@
   ],
   "adjustment": {
     "casual": [
-      { "formal": "Please wait.", "adjusted": "Hang on a sec!" },
-      { "formal": "I would appreciate it if you could confirm.", "adjusted": "Check it out~" },
-      { "formal": "Understood. I will handle it.", "adjusted": "Got it, I'm on it" },
+      { "formal": "Please wait.", "adjusted": "Hang on a sec!", "explanation": ["Replaced formal request with casual phrase", "Added exclamation for friendly tone"] },
+      { "formal": "I would appreciate it if you could confirm.", "adjusted": "Check it out~", "explanation": ["Removed formal language entirely", "Used colloquial phrase with tilde for softness"] },
+      { "formal": "Understood. I will handle it.", "adjusted": "Got it, I'm on it", "explanation": ["Shortened to everyday speech pattern", "Shows casual acknowledgment and action"] },
       { "formal": "I apologize for taking your time when you are busy, but could I have a moment?", "adjusted": "Got a minute?" },
       { "formal": "I apologize for the inconvenience.", "adjusted": "Sorry for the hassle" },
       { "formal": "I would appreciate your consideration.", "adjusted": "Think about it~" },
@@ -165,9 +165,9 @@
       { "formal": "I am deeply grateful.", "adjusted": "Thanks a ton!" }
     ],
     "polite": [
-      { "formal": "Check this out", "adjusted": "Would you mind taking a look at this?" },
-      { "formal": "Do this", "adjusted": "I would greatly appreciate if you could handle this matter." },
-      { "formal": "I don't get it", "adjusted": "I'm afraid I don't quite understand." },
+      { "formal": "Check this out", "adjusted": "Would you mind taking a look at this?", "explanation": ["Added polite modal 'would you mind'", "Phrased as considerate request"] },
+      { "formal": "Do this", "adjusted": "I would greatly appreciate if you could handle this matter.", "explanation": ["Converted command to appreciative request", "Added formal vocabulary 'matter'"] },
+      { "formal": "I don't get it", "adjusted": "I'm afraid I don't quite understand.", "explanation": ["Added softening phrase 'I'm afraid'", "'Quite' adds humility to the statement"] },
       { "formal": "Can't do it", "adjusted": "I regret to inform you that this would not be possible." },
       { "formal": "I'll do it later", "adjusted": "I shall attend to this matter shortly." },
       { "formal": "Who's this?", "adjusted": "May I ask who I have the pleasure of speaking with?" },
@@ -183,9 +183,9 @@
       { "formal": "Sorry", "adjusted": "Please accept my sincerest apologies." }
     ],
     "neutral": [
-      { "formal": "This is seriously messed up!!! What do I do!?", "adjusted": "There's an issue. Please advise on the solution." },
-      { "formal": "Amazing! Perfect! Genius!!!", "adjusted": "This is good." },
-      { "formal": "I literally can't even lol", "adjusted": "I don't understand." },
+      { "formal": "This is seriously messed up!!! What do I do!?", "adjusted": "There's an issue. Please advise on the solution.", "explanation": ["Removed emotional language and slang", "Converted to factual, professional tone"] },
+      { "formal": "Amazing! Perfect! Genius!!!", "adjusted": "This is good.", "explanation": ["Toned down excessive enthusiasm", "Simple, balanced assessment"] },
+      { "formal": "I literally can't even lol", "adjusted": "I don't understand.", "explanation": ["Removed internet slang and emoticons", "Clear, direct communication"] },
       { "formal": "Dear Sir/Madam, I hope this letter finds you in excellent health and spirits.", "adjusted": "Hello." },
       { "formal": "lmaooo", "adjusted": "That's amusing." },
       { "formal": "Crazy busy", "adjusted": "Currently very busy." },
@@ -201,9 +201,9 @@
       { "formal": "Lowkey the best", "adjusted": "This is very good." }
     ],
     "concise": [
-      { "formal": "I apologize for bothering you when you're busy, but I would appreciate if you could confirm.", "adjusted": "Please confirm." },
-      { "formal": "If you have any questions, please feel free to contact us.", "adjusted": "Questions? Contact us." },
-      { "formal": "Thank you very much for your consideration.", "adjusted": "Thanks." },
+      { "formal": "I apologize for bothering you when you're busy, but I would appreciate if you could confirm.", "adjusted": "Please confirm.", "explanation": ["Removed all preamble and apologies", "Direct action request only"] },
+      { "formal": "If you have any questions, please feel free to contact us.", "adjusted": "Questions? Contact us.", "explanation": ["Condensed to essential elements", "Question format saves words"] },
+      { "formal": "Thank you very much for your consideration.", "adjusted": "Thanks.", "explanation": ["Minimized pleasantry to single word", "Still polite but efficient"] },
       { "formal": "Accordingly, I report as follows.", "adjusted": "Report:" },
       { "formal": "I would appreciate your consideration.", "adjusted": "Please consider." },
       { "formal": "I apologize for the urgency, but could you please handle this immediately?", "adjusted": "Urgent. Please handle." },
@@ -219,9 +219,9 @@
       { "formal": "I will contact you again regarding the details.", "adjusted": "Details later." }
     ],
     "detailed": [
-      { "formal": "Please confirm.", "adjusted": "Please review the attached document for accuracy, currency of information, and format consistency. Flag any issues you find." },
-      { "formal": "Please fix this.", "adjusted": "Please correct the flagged items. After corrections, document the changes with before/after comparisons and submit for re-review." },
-      { "formal": "Please report.", "adjusted": "Please provide a report including: current status, completed items, pending items and reasons, upcoming schedule, risks or issues, and support needed." },
+      { "formal": "Please confirm.", "adjusted": "Please review the attached document for accuracy, currency of information, and format consistency. Flag any issues you find.", "explanation": ["Specified exact confirmation criteria", "Clear action items for reviewer"] },
+      { "formal": "Please fix this.", "adjusted": "Please correct the flagged items. After corrections, document the changes with before/after comparisons and submit for re-review.", "explanation": ["Outlined complete correction process", "Included documentation requirements"] },
+      { "formal": "Please report.", "adjusted": "Please provide a report including: current status, completed items, pending items and reasons, upcoming schedule, risks or issues, and support needed.", "explanation": ["Enumerated all required report elements", "Comprehensive reporting template"] },
       { "formal": "Please explain.", "adjusted": "Please explain in this order: background, objective, methodology, results, and discussion. Add supplementary notes for technical terms and reference figures where applicable." },
       { "formal": "Please send.", "adjusted": "Please send following these guidelines: verify recipients, include project name in subject, add summary in body, attach files in PDF format, request read receipt after sending." },
       { "formal": "Please investigate.", "adjusted": "Please investigate covering: current state assessment, problem identification, root cause analysis, similar case research, solution exploration, and feasibility evaluation. Compile findings in a report." },
@@ -237,9 +237,9 @@
       { "formal": "Done.", "adjusted": "Completion report: work performed, completion date/time, deliverable location, points to verify, notes, and any follow-up items or next steps." }
     ],
     "catchy": [
-      { "formal": "New product launch", "adjusted": "The wait is OVER - Introducing our game-changer!" },
-      { "formal": "Campaign running", "adjusted": "Limited time only! Don't miss this epic deal" },
-      { "formal": "Announcement", "adjusted": "BREAKING: News you can't afford to miss" },
+      { "formal": "New product launch", "adjusted": "The wait is OVER - Introducing our game-changer!", "explanation": ["CAPS for emphasis creates excitement", "Hyperbolic language ('game-changer') builds anticipation"] },
+      { "formal": "Campaign running", "adjusted": "Limited time only! Don't miss this epic deal", "explanation": ["Creates urgency with 'limited time'", "FOMO language ('don't miss') drives action"] },
+      { "formal": "Announcement", "adjusted": "BREAKING: News you can't afford to miss", "explanation": ["News-style urgency with 'BREAKING'", "Stakes raised with 'can't afford to miss'"] },
       { "formal": "Notice", "adjusted": "Exclusive intel for those in the know" },
       { "formal": "Now hiring", "adjusted": "We NEED you! Join the dream team" },
       { "formal": "Updated", "adjusted": "Level up! Fresh update just dropped" },
@@ -255,9 +255,9 @@
       { "formal": "Sold out", "adjusted": "THANK YOU! You made this happen - SOLD OUT" }
     ],
     "natural": [
-      { "formal": "I am very pleased to have the opportunity to meet you.", "adjusted": "Nice to meet you." },
-      { "formal": "I would be most grateful if you could consider this matter.", "adjusted": "I'd appreciate if you could think about it." },
-      { "formal": "I thank you for the time you have given me.", "adjusted": "Thanks for your time." },
+      { "formal": "I am very pleased to have the opportunity to meet you.", "adjusted": "Nice to meet you.", "explanation": ["Standard greeting used in real conversations", "Removed overly formal phrasing"] },
+      { "formal": "I would be most grateful if you could consider this matter.", "adjusted": "I'd appreciate if you could think about it.", "explanation": ["Contractions make it more conversational", "Simpler vocabulary sounds more human"] },
+      { "formal": "I thank you for the time you have given me.", "adjusted": "Thanks for your time.", "explanation": ["Short, common expression people actually use", "Warm but not stiff"] },
       { "formal": "I deeply apologize for any inconvenience caused.", "adjusted": "Sorry for the trouble." },
       { "formal": "Should you have any inquiries, please do not hesitate to contact us.", "adjusted": "Feel free to ask if you have questions." },
       { "formal": "I am not in possession of information regarding that matter.", "adjusted": "I don't know about that." },
@@ -273,9 +273,9 @@
       { "formal": "Please review at your convenience.", "adjusted": "Take a look when you can." }
     ],
     "less-ai": [
-      { "formal": "Do you have any questions?", "adjusted": "Any questions?" },
-      { "formal": "Should you have any inquiries, please do not hesitate to reach out.", "adjusted": "Just ask if you're confused." },
-      { "formal": "Understood. Acknowledged.", "adjusted": "Got it." },
+      { "formal": "Do you have any questions?", "adjusted": "Any questions?", "explanation": ["Removed robotic formality", "How people actually speak"] },
+      { "formal": "Should you have any inquiries, please do not hesitate to reach out.", "adjusted": "Just ask if you're confused.", "explanation": ["Eliminated AI-typical verbose phrasing", "Direct and human-sounding"] },
+      { "formal": "Understood. Acknowledged.", "adjusted": "Got it.", "explanation": ["One word instead of redundant confirmation", "Natural casual response"] },
       { "formal": "Please let me know if there's anything I can assist you with.", "adjusted": "Need help with anything?" },
       { "formal": "I appreciate your understanding.", "adjusted": "Thanks for getting it." },
       { "formal": "I shall verify the details.", "adjusted": "Let me check." },
@@ -291,9 +291,9 @@
       { "formal": "Please inform me if anything arises.", "adjusted": "Let me know if anything comes up." }
     ],
     "alternative": [
-      { "formal": "Thank you", "adjusted": "I appreciate it" },
-      { "formal": "Sorry", "adjusted": "My apologies" },
-      { "formal": "I understand", "adjusted": "Makes sense" },
+      { "formal": "Thank you", "adjusted": "I appreciate it", "explanation": ["Same meaning, different phrasing", "Adds variety to expressions of gratitude"] },
+      { "formal": "Sorry", "adjusted": "My apologies", "explanation": ["More formal alternative to casual 'sorry'", "Appropriate for professional contexts"] },
+      { "formal": "I understand", "adjusted": "Makes sense", "explanation": ["Casual alternative phrase", "Shows comprehension without being formal"] },
       { "formal": "Please", "adjusted": "If you could" },
       { "formal": "That's good", "adjusted": "I like that" },
       { "formal": "It's OK", "adjusted": "No worries" },

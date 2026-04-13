@@ -147,9 +147,9 @@
   ],
   "adjustment": {
     "casual": [
-      { "formal": "Por favor, espere un momento.", "adjusted": "¡Un momento!" },
-      { "formal": "Le agradecería que lo revisara.", "adjusted": "Échale un vistazo, ¿va?" },
-      { "formal": "Entendido. Me encargaré de ello.", "adjusted": "Vale, me pongo con ello." },
+      { "formal": "Por favor, espere un momento.", "adjusted": "¡Un momento!", "explanation": ["Eliminada la fórmula formal", "Tono directo y amigable"] },
+      { "formal": "Le agradecería que lo revisara.", "adjusted": "Échale un vistazo, ¿va?", "explanation": ["Tuteo en lugar de usted", "Expresión coloquial española"] },
+      { "formal": "Entendido. Me encargaré de ello.", "adjusted": "Vale, me pongo con ello.", "explanation": ["'Vale' es expresión casual típica", "Lenguaje cotidiano informal"] },
       { "formal": "Disculpe las molestias, ¿tendría un momento?", "adjusted": "Oye, ¿tienes un rato?" },
       { "formal": "Lamento las molestias ocasionadas.", "adjusted": "Perdona el lío." },
       { "formal": "Le ruego que lo considere.", "adjusted": "Piénsatelo, ¿vale?" },
@@ -165,9 +165,9 @@
       { "formal": "Le estoy muy agradecido.", "adjusted": "¡Mil gracias!" }
     ],
     "polite": [
-      { "formal": "Míralo", "adjusted": "¿Sería tan amable de revisarlo?" },
-      { "formal": "Haz esto", "adjusted": "¿Le importaría encargarse de este asunto?" },
-      { "formal": "No entiendo", "adjusted": "Disculpe, no termino de comprender." },
+      { "formal": "Míralo", "adjusted": "¿Sería tan amable de revisarlo?", "explanation": ["Fórmula de cortesía con condicional", "Tratamiento formal con 'usted'"] },
+      { "formal": "Haz esto", "adjusted": "¿Le importaría encargarse de este asunto?", "explanation": ["Imperativo a petición cortés", "Vocabulario más formal"] },
+      { "formal": "No entiendo", "adjusted": "Disculpe, no termino de comprender.", "explanation": ["Añade disculpa inicial", "Suaviza la afirmación directa"] },
       { "formal": "No puedo", "adjusted": "Lamentablemente, no me es posible." },
       { "formal": "Luego lo hago", "adjusted": "Lo atenderé más tarde." },
       { "formal": "¿Quién eres?", "adjusted": "Disculpe, ¿con quién tengo el gusto?" },
@@ -183,9 +183,9 @@
       { "formal": "Perdón", "adjusted": "Le pido disculpas." }
     ],
     "neutral": [
-      { "formal": "¡¡Es una locura!! ¿¿Qué hago??", "adjusted": "Ha surgido un problema. Necesito orientación." },
-      { "formal": "¡¡Genial!! ¡¡Eres el mejor!!", "adjusted": "Me parece adecuado." },
-      { "formal": "No entiendo nada jajaja", "adjusted": "No lo he comprendido." },
+      { "formal": "¡¡Es una locura!! ¿¿Qué hago??", "adjusted": "Ha surgido un problema. Necesito orientación.", "explanation": ["Elimina emocionalidad excesiva", "Descripción objetiva de la situación"] },
+      { "formal": "¡¡Genial!! ¡¡Eres el mejor!!", "adjusted": "Me parece adecuado.", "explanation": ["Modera el entusiasmo exagerado", "Evaluación equilibrada"] },
+      { "formal": "No entiendo nada jajaja", "adjusted": "No lo he comprendido.", "explanation": ["Sin jerga ni expresiones informales", "Comunicación clara y directa"] },
       { "formal": "Distinguido señor, me dirijo a usted con el mayor respeto...", "adjusted": "Hola." },
       { "formal": "JAJAJA", "adjusted": "Es gracioso." },
       { "formal": "Estoy hasta arriba de trabajo", "adjusted": "Tengo mucha carga de trabajo." },
@@ -201,9 +201,9 @@
       { "formal": "Es increíble de verdad", "adjusted": "Es muy bueno." }
     ],
     "concise": [
-      { "formal": "Disculpe las molestias, ¿podría revisarlo cuando tenga un momento?", "adjusted": "Por favor, revíselo." },
-      { "formal": "Si tiene alguna duda, no dude en ponerse en contacto con nosotros.", "adjusted": "Dudas: contáctenos." },
-      { "formal": "Quedo a su entera disposición.", "adjusted": "A su servicio." },
+      { "formal": "Disculpe las molestias, ¿podría revisarlo cuando tenga un momento?", "adjusted": "Por favor, revíselo.", "explanation": ["Elimina preámbulos y disculpas", "Solo la petición directa"] },
+      { "formal": "Si tiene alguna duda, no dude en ponerse en contacto con nosotros.", "adjusted": "Dudas: contáctenos.", "explanation": ["Condensa a lo esencial", "Formato telegráfico eficiente"] },
+      { "formal": "Quedo a su entera disposición.", "adjusted": "A su servicio.", "explanation": ["Fórmula de cortesía abreviada", "Mantiene profesionalidad"] },
       { "formal": "A continuación le detallamos la información.", "adjusted": "Informe:" },
       { "formal": "Le ruego que lo tenga en consideración.", "adjusted": "Por favor, considérelo." },
       { "formal": "Disculpe, necesito una respuesta urgente.", "adjusted": "Urgente." },
@@ -219,9 +219,9 @@
       { "formal": "Le comunicaré los detalles próximamente.", "adjusted": "Detalles: próximamente." }
     ],
     "detailed": [
-      { "formal": "Revísalo", "adjusted": "Por favor, revise el documento adjunto verificando que no haya errores, que la información esté actualizada y que el formato sea consistente. Indique cualquier problema que encuentre." },
-      { "formal": "Corrígelo", "adjusted": "Realice las correcciones indicadas. Tras la modificación, documente los cambios realizados y permita comparar el antes y después. Una vez terminado, envíelo para una nueva revisión." },
-      { "formal": "Infórmame", "adjusted": "Incluya en su informe: estado actual, tareas completadas, tareas pendientes y motivos, próximos pasos, riesgos identificados y apoyo necesario." },
+      { "formal": "Revísalo", "adjusted": "Por favor, revise el documento adjunto verificando que no haya errores, que la información esté actualizada y que el formato sea consistente. Indique cualquier problema que encuentre.", "explanation": ["Criterios de revisión específicos", "Instrucciones claras sobre feedback esperado"] },
+      { "formal": "Corrígelo", "adjusted": "Realice las correcciones indicadas. Tras la modificación, documente los cambios realizados y permita comparar el antes y después. Una vez terminado, envíelo para una nueva revisión.", "explanation": ["Proceso de corrección detallado", "Incluye requisitos de documentación"] },
+      { "formal": "Infórmame", "adjusted": "Incluya en su informe: estado actual, tareas completadas, tareas pendientes y motivos, próximos pasos, riesgos identificados y apoyo necesario.", "explanation": ["Lista completa de elementos del informe", "Estructura clara para información"] },
       { "formal": "Explícamelo", "adjusted": "Explique siguiendo esta estructura: contexto, objetivo, metodología, resultados y conclusiones. Añada aclaraciones para términos técnicos y referencias visuales si las hay." },
       { "formal": "Envíalo", "adjusted": "Envíe cumpliendo estos requisitos: verificar destinatario, incluir referencia en el asunto, resumen en el cuerpo, adjuntos en PDF, y solicitar confirmación de recepción." },
       { "formal": "Investígalo", "adjusted": "Investigue considerando: situación actual, identificación del problema, análisis de causas, casos similares, posibles soluciones y viabilidad. Presente los resultados en un informe." },
@@ -237,9 +237,9 @@
       { "formal": "Ya está hecho", "adjusted": "Informe de finalización: tarea realizada, fecha de conclusión, ubicación del entregable, puntos a verificar, observaciones importantes y seguimiento necesario." }
     ],
     "catchy": [
-      { "formal": "Nuevo producto", "adjusted": "【¡Por fin!】¡El producto más esperado ha llegado!" },
-      { "formal": "Campaña activa", "adjusted": "¡Solo ahora! La oferta que no puedes dejar pasar" },
-      { "formal": "Aviso", "adjusted": "【ÚLTIMA HORA】Noticia que no puedes ignorar" },
+      { "formal": "Nuevo producto", "adjusted": "【¡Por fin!】¡El producto más esperado ha llegado!", "explanation": ["Corchetes para impacto visual", "Lenguaje que genera expectativa"] },
+      { "formal": "Campaña activa", "adjusted": "¡Solo ahora! La oferta que no puedes dejar pasar", "explanation": ["Crea urgencia con 'solo ahora'", "Apela al miedo a perdérselo"] },
+      { "formal": "Aviso", "adjusted": "【ÚLTIMA HORA】Noticia que no puedes ignorar", "explanation": ["Estilo de breaking news", "Lenguaje de exclusividad"] },
       { "formal": "Información", "adjusted": "Solo para los que leen esto: info exclusiva" },
       { "formal": "Buscamos candidatos", "adjusted": "【URGENTE】¡Te necesitamos!" },
       { "formal": "Actualizado", "adjusted": "¡Imparable! Nueva actualización disponible" },
@@ -255,9 +255,9 @@
       { "formal": "Sold out", "adjusted": "¡Gracias! Agotado por su increíble acogida" }
     ],
     "natural": [
-      { "formal": "Me produce una gran alegría conocerle.", "adjusted": "Encantado de conocerte." },
-      { "formal": "Le quedaría muy agradecido si pudiera considerarlo.", "adjusted": "Me haría ilusión que lo consideraras." },
-      { "formal": "Agradezco sinceramente el tiempo que me ha dedicado.", "adjusted": "Gracias por tu tiempo." },
+      { "formal": "Me produce una gran alegría conocerle.", "adjusted": "Encantado de conocerte.", "explanation": ["Saludo natural y cotidiano", "Tuteo más cercano y real"] },
+      { "formal": "Le quedaría muy agradecido si pudiera considerarlo.", "adjusted": "Me haría ilusión que lo consideraras.", "explanation": ["'Ilusión' es expresión más humana", "Más coloquial y cercano"] },
+      { "formal": "Agradezco sinceramente el tiempo que me ha dedicado.", "adjusted": "Gracias por tu tiempo.", "explanation": ["Expresión simple y directa", "Como se habla en la vida real"] },
       { "formal": "Lamento profundamente las molestias ocasionadas.", "adjusted": "Siento mucho las molestias." },
       { "formal": "Quedo a su disposición para cualquier consulta.", "adjusted": "Pregunta cuando quieras." },
       { "formal": "Desconozco dicha información.", "adjusted": "No lo sé." },
@@ -273,9 +273,9 @@
       { "formal": "Sírvase revisar la documentación adjunta.", "adjusted": "Mira el archivo adjunto." }
     ],
     "less-ai": [
-      { "formal": "¿Tiene alguna pregunta?", "adjusted": "¿Alguna duda?" },
-      { "formal": "No dude en consultarnos si tiene alguna duda.", "adjusted": "Si no te queda claro, pregunta." },
-      { "formal": "Entendido. Comprendido.", "adjusted": "Ok." },
+      { "formal": "¿Tiene alguna pregunta?", "adjusted": "¿Alguna duda?", "explanation": ["Elimina formalidad excesiva de IA", "Como pregunta una persona real"] },
+      { "formal": "No dude en consultarnos si tiene alguna duda.", "adjusted": "Si no te queda claro, pregunta.", "explanation": ["Sin frases robóticas típicas", "Lenguaje directo y humano"] },
+      { "formal": "Entendido. Comprendido.", "adjusted": "Ok.", "explanation": ["Una palabra en vez de redundancia", "Respuesta natural y rápida"] },
       { "formal": "Estoy aquí para ayudarle en lo que necesite.", "adjusted": "¿Te echo una mano?" },
       { "formal": "Agradezco su comprensión.", "adjusted": "Gracias por entenderlo." },
       { "formal": "Permítame verificarlo.", "adjusted": "Deja que lo mire." },
@@ -291,9 +291,9 @@
       { "formal": "No dude en comunicárnoslo.", "adjusted": "Avísame si pasa algo." }
     ],
     "alternative": [
-      { "formal": "Gracias", "adjusted": "Te lo agradezco" },
-      { "formal": "Perdón", "adjusted": "Disculpa" },
-      { "formal": "Entendido", "adjusted": "De acuerdo" },
+      { "formal": "Gracias", "adjusted": "Te lo agradezco", "explanation": ["Sinónimo con mismo significado", "Variedad en expresión de gratitud"] },
+      { "formal": "Perdón", "adjusted": "Disculpa", "explanation": ["Alternativa igualmente válida", "Ligeramente más formal"] },
+      { "formal": "Entendido", "adjusted": "De acuerdo", "explanation": ["Confirma comprensión de otra forma", "Implica también conformidad"] },
       { "formal": "Por favor", "adjusted": "Si fueras tan amable" },
       { "formal": "Está bien", "adjusted": "Me parece correcto" },
       { "formal": "No hay problema", "adjusted": "Sin inconvenientes" },
