@@ -211,7 +211,59 @@ input, textarea, select {
   }
 }
 
-/* Dialog uses built-in Radix animations, no custom animations needed */
+/* Dialog keyframe animations - Radix detects animation duration for unmount timing */
+@keyframes dialogContentShow {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) translateY(0);
+  }
+}
+
+@keyframes dialogContentHide {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.96) translateY(-8px);
+  }
+}
+
+@keyframes dialogOverlayShow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes dialogOverlayHide {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+[data-slot="dialog-content"] {
+  transform: translate(-50%, -50%);
+}
+
+[data-slot="dialog-content"][data-state="open"] {
+  animation: dialogContentShow 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-slot="dialog-content"][data-state="closed"] {
+  animation: dialogContentHide 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Dialog overlay animation */
+[data-slot="dialog-overlay"][data-state="open"] {
+  animation: dialogOverlayShow 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-slot="dialog-overlay"][data-state="closed"] {
+  animation: dialogOverlayHide 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
 
 /* Writing style tags transition */
 .writing-style-tag {
