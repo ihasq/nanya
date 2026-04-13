@@ -28,3 +28,4 @@ dev
 *.sln
 *.sw?
 screenshots/
+test-output/
