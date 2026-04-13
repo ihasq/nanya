@@ -1,6 +1,7 @@
 import { useAuthStore } from '@/stores/auth-store'
 import { useSettingsStore, DEFAULT_MODEL } from '@/stores/settings-store'
 import { SUPPORTED_LANGUAGES, type LanguageCode } from '@/lib/i18n'
+import { loadShots, selectTranslationShots, selectAdjustmentShots, type ShotLibrary, type Shot } from '@/lib/shot-loader'
 
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
@@ -29,67 +30,56 @@ function getLanguageName(code: LanguageCode): string {
   return SUPPORTED_LANGUAGES[code]?.englishName || code
 }
 
+/**
+ * Detect if text is primarily Japanese (contains Japanese characters).
+ */
+function isJapaneseText(text: string): boolean {
+  return /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/.test(text)
+}
+
+/**
+ * Determine source and target languages based on input text and settings.
+ */
+function detectTranslationDirection(
+  text: string,
+  systemLanguage: LanguageCode,
+  defaultTargetLanguage: LanguageCode
+): { sourceLang: LanguageCode; targetLang: LanguageCode } {
+  const isJapanese = isJapaneseText(text)
+
+  // If text is in system language, translate to target; otherwise translate to system language
+  if (systemLanguage === 'ja') {
+    return isJapanese
+      ? { sourceLang: 'ja', targetLang: defaultTargetLanguage }
+      : { sourceLang: 'en', targetLang: 'ja' }
+  } else {
+    return isJapanese
+      ? { sourceLang: 'ja', targetLang: systemLanguage }
+      : { sourceLang: 'en', targetLang: 'ja' }
+  }
+}
+
 function buildTranslationMessages(
   text: string,
   modelId: string,
   systemLanguage: LanguageCode,
-  defaultTargetLanguage: LanguageCode,
+  sourceLang: LanguageCode,
+  targetLang: LanguageCode,
+  shots: Shot[],
   attachments?: AttachmentContext[]
 ): Array<{ role: 'system' | 'user' | 'assistant'; content: string }> {
   const systemLangName = getLanguageName(systemLanguage)
-  const defaultTargetLangName = getLanguageName(defaultTargetLanguage)
+  const sourceLangName = getLanguageName(sourceLang)
+  const targetLangName = getLanguageName(targetLang)
 
-  // Concise system prompt - details are learned from conversation examples
+  // Concise system prompt - patterns learned from multi-shot examples
   let systemPrompt = `Translation engine. Translate <translate> content.
-Direction: ${systemLangName} text → ${defaultTargetLangName}, otherwise → ${systemLangName}.
-Output: Raw JSON only. "style"/"explanation" fields always in ${systemLangName}.`
+Direction: ${sourceLangName} → ${targetLangName}.
+Output: Raw JSON only. "explanation" field MUST be in ${systemLangName}.`
 
   if (isQwenModel(modelId)) {
     systemPrompt = `\\no_think\n${systemPrompt}`
   }
-
-  // Multi-shot conversation examples - LLM learns format and quality through pattern recognition
-  // These examples teach: raw JSON output, specific explanations, correct language usage
-  const shots = systemLanguage === 'ja' ? [
-    // Shot 1: Japanese → English (casual expression)
-    {
-      user: '<translate>ちょっと気になるんだけど、あの件どうなった？</translate>',
-      assistant: '{"variants":[{"style":"翻訳","emoji":"📝","text":"I was just wondering, what happened with that thing?","explanation":["「ちょっと気になる」は直訳の\'slightly curious\'ではなく、英語で自然な\'just wondering\'を採用","「あの件」は具体的な指示対象が不明なため、汎用的な\'that thing\'で訳出"]}]}'
-    },
-    // Shot 2: English → Japanese (idiom handling)
-    {
-      user: '<translate>I can\'t wrap my head around this concept.</translate>',
-      assistant: '{"variants":[{"style":"翻訳","emoji":"📝","text":"この概念がどうしても理解できない。","explanation":["\'wrap my head around\'は「頭で理解する」のイディオムで、「理解できない」と訳出","\'can\'t\'の強調ニュアンスを「どうしても〜ない」で表現"]}]}'
-    },
-    // Shot 3: Technical content with code (demonstrates preserving special chars)
-    {
-      user: '<translate>The `async/await` syntax makes asynchronous code easier to read.</translate>',
-      assistant: '{"variants":[{"style":"翻訳","emoji":"📝","text":"`async/await`構文により、非同期コードが読みやすくなります。","explanation":["\'makes...easier to read\'を「読みやすくなる」と自然な日本語の結果表現に変換","バッククォートで囲まれた技術用語はそのまま保持"]}]}'
-    },
-    // Shot 4: Long sentence (demonstrates handling complex input)
-    {
-      user: '<translate>Despite the initial setbacks, the team managed to deliver the project on time, which exceeded everyone\'s expectations.</translate>',
-      assistant: '{"variants":[{"style":"翻訳","emoji":"📝","text":"当初の困難にもかかわらず、チームはプロジェクトを期限通りに納品し、全員の期待を上回る結果となった。","explanation":["\'setbacks\'は文脈から「困難」と訳出（「後退」より自然）","\'exceeded expectations\'を「期待を上回る結果となった」と意訳し、日本語として自然な締めくくりに"]}]}'
-    }
-  ] : [
-    // English system language shots
-    {
-      user: '<translate>I was just wondering, what happened with that thing?</translate>',
-      assistant: '{"variants":[{"style":"Translation","emoji":"📝","text":"ちょっと気になるんだけど、あの件どうなった？","explanation":["\'just wondering\' is casual inquiry, translated as 「ちょっと気になる」 to match the informal tone","\'that thing\' kept vague as 「あの件」 since the specific subject isn\'t specified"]}]}'
-    },
-    {
-      user: '<translate>頭では分かっているんだけど、腑に落ちない。</translate>',
-      assistant: '{"variants":[{"style":"Translation","emoji":"📝","text":"I understand it logically, but it doesn\'t sit right with me.","explanation":["「頭では分かっている」= understand intellectually, translated as \'understand it logically\'","「腑に落ちない」= doesn\'t feel convincing, rendered as \'doesn\'t sit right\' (idiom)"]}]}'
-    },
-    {
-      user: '<translate>`async/await`構文により、非同期コードが読みやすくなります。</translate>',
-      assistant: '{"variants":[{"style":"Translation","emoji":"📝","text":"The `async/await` syntax makes asynchronous code easier to read.","explanation":["Preserved backtick-wrapped technical terms as-is","「読みやすくなる」converted to \'makes...easier to read\' pattern natural in English"]}]}'
-    },
-    {
-      user: '<translate>当初の困難にもかかわらず、チームはプロジェクトを期限通りに納品し、全員の期待を上回る結果となった。</translate>',
-      assistant: '{"variants":[{"style":"Translation","emoji":"📝","text":"Despite the initial setbacks, the team managed to deliver the project on time, which exceeded everyone\'s expectations.","explanation":["「困難」rendered as \'setbacks\' (more natural than \'difficulties\' in this context)","Added \'managed to\' to convey the effort implied by the Japanese structure"]}]}'
-    }
-  ]
 
   // Build the final user message with optional attachment context
   let userMessage = `<translate>${text}</translate>`
@@ -120,27 +110,13 @@ Output: Raw JSON only. "style"/"explanation" fields always in ${systemLangName}.
 }
 
 function buildAdjustmentMessages(
-  originalText: string,
   currentTranslation: string,
   adjustmentType: string,
   modelId: string,
-  systemLanguage: LanguageCode
+  systemLanguage: LanguageCode,
+  shots: Shot[]
 ): Array<{ role: 'system' | 'user' | 'assistant'; content: string }> {
   const systemLangName = getLanguageName(systemLanguage)
-
-  const adjustmentInstructions: Record<string, string> = {
-    'casual': 'casual',
-    'polite': 'polite',
-    'neutral': 'neutral',
-    'concise': 'concise',
-    'detailed': 'detailed',
-    'catchy': 'catchy',
-    'natural': 'natural',
-    'less-ai': 'less-ai',
-    'alternative': 'alternative',
-  }
-
-  const styleType = adjustmentInstructions[adjustmentType] || 'alternative'
 
   // Detect translation language
   const isTranslationJapanese = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FFF]/.test(currentTranslation)
@@ -148,56 +124,13 @@ function buildAdjustmentMessages(
 
   // Concise system prompt - behavior learned from multi-shot examples
   let systemPrompt = `Style adjuster. Adjust text to requested style.
-Output: Raw JSON. "style"/"explanation" in ${systemLangName}. "text" in ${translationLang}.`
+Output: Raw JSON. "explanation" field MUST be in ${systemLangName}. "text" in ${translationLang}.`
 
   if (isQwenModel(modelId)) {
     systemPrompt = `\\no_think\n${systemPrompt}`
   }
 
-  // Multi-shot examples demonstrating various adjustment types
-  // LLM learns the pattern: input format, output format, explanation specificity
-  const shots = systemLanguage === 'ja' ? [
-    // Casual adjustment (Japanese text)
-    {
-      user: 'Original: Please wait a moment.\nText: お待ちください。\nStyle: casual',
-      assistant: '{"variants":[{"style":"カジュアル","emoji":"😎","text":"ちょっと待ってね！","explanation":["「お待ちください」→「ちょっと待ってね」に変更し、敬語を省略","文末に「！」を追加して軽快さを演出"]}]}'
-    },
-    // Polite adjustment (Japanese text)
-    {
-      user: 'Original: Can you help me?\nText: 手伝ってくれる？\nStyle: polite',
-      assistant: '{"variants":[{"style":"丁寧","emoji":"🤓","text":"お手伝いいただけますでしょうか？","explanation":["「手伝ってくれる」→「お手伝いいただけますでしょうか」に敬語化","疑問形を丁寧な依頼表現に変更"]}]}'
-    },
-    // Concise adjustment (English text)
-    {
-      user: 'Original: この機能について詳しく説明してください。\nText: Please provide a detailed explanation about this feature.\nStyle: concise',
-      assistant: '{"variants":[{"style":"簡潔","emoji":"✂️","text":"Explain this feature.","explanation":["\'Please provide a detailed explanation about\'→\'Explain\'に短縮","不要な丁寧表現と修飾語を削除"]}]}'
-    },
-    // Natural adjustment
-    {
-      user: 'Original: I am very happy to meet you.\nText: あなたに会えてとても幸せです。\nStyle: natural',
-      assistant: '{"variants":[{"style":"自然","emoji":"🗣️","text":"お会いできて嬉しいです。","explanation":["「あなたに」を省略（日本語では主語を明示しないほうが自然）","「とても幸せです」→「嬉しいです」に変更し、日常的な表現に"]}]}'
-    }
-  ] : [
-    // English system language shots
-    {
-      user: 'Original: Please wait a moment.\nText: お待ちください。\nStyle: casual',
-      assistant: '{"variants":[{"style":"Casual","emoji":"😎","text":"ちょっと待ってね！","explanation":["Changed 「お待ちください」→「ちょっと待ってね」, removing keigo","Added 「！」 for lighter tone"]}]}'
-    },
-    {
-      user: 'Original: Can you help me?\nText: 手伝ってくれる？\nStyle: polite',
-      assistant: '{"variants":[{"style":"Polite","emoji":"🤓","text":"お手伝いいただけますでしょうか？","explanation":["Upgraded 「手伝ってくれる」 to formal keigo expression","Changed question form to polite request pattern"]}]}'
-    },
-    {
-      user: 'Original: この機能について詳しく説明してください。\nText: Please provide a detailed explanation about this feature.\nStyle: concise',
-      assistant: '{"variants":[{"style":"Concise","emoji":"✂️","text":"Explain this feature.","explanation":["Shortened \'Please provide a detailed explanation about\' to \'Explain\'","Removed unnecessary politeness markers and modifiers"]}]}'
-    },
-    {
-      user: 'Original: I am very happy to meet you.\nText: あなたに会えてとても幸せです。\nStyle: natural',
-      assistant: '{"variants":[{"style":"Natural","emoji":"🗣️","text":"お会いできて嬉しいです。","explanation":["Dropped 「あなたに」 (Japanese prefers implicit subjects)","Changed 「とても幸せです」→「嬉しいです」 for everyday naturalness"]}]}'
-    }
-  ]
-
-  // Build messages with multi-shot examples
+  // Build messages with selected multi-shot examples
   const messages: Array<{ role: 'system' | 'user' | 'assistant'; content: string }> = [
     { role: 'system', content: systemPrompt }
   ]
@@ -210,7 +143,7 @@ Output: Raw JSON. "style"/"explanation" in ${systemLangName}. "text" in ${transl
   // Final user message with actual content
   messages.push({
     role: 'user',
-    content: `Original: ${originalText}\nText: ${currentTranslation}\nStyle: ${styleType}`
+    content: `Text: ${currentTranslation}\nStyle: ${adjustmentType}`
   })
 
   return messages
@@ -555,11 +488,25 @@ export async function translate(options: TranslateOptions): Promise<TranslationR
   }
 
   const model = settings.selectedModel || DEFAULT_MODEL
+
+  // Detect translation direction from input text
+  const { sourceLang, targetLang } = detectTranslationDirection(
+    options.text,
+    settings.systemLanguage,
+    settings.defaultTargetLanguage
+  )
+
+  // Load shots for this language pair (CPU-synthesized from samples)
+  const shotLibrary = await loadShots(sourceLang, targetLang)
+  const shots = selectTranslationShots(shotLibrary)
+
   const messages = buildTranslationMessages(
     options.text,
     model,
     settings.systemLanguage,
-    settings.defaultTargetLanguage,
+    sourceLang,
+    targetLang,
+    shots,
     options.attachments
   )
 
@@ -582,12 +529,20 @@ export async function adjustTranslation(options: AdjustOptions): Promise<Transla
   }
 
   const model = settings.selectedModel || DEFAULT_MODEL
+
+  // Detect translation language for loading appropriate adjustment samples
+  const translationLang: LanguageCode = isJapaneseText(options.currentTranslation) ? 'ja' : 'en'
+
+  // Load shots for the translation's language (adjustments are within same language)
+  const shotLibrary = await loadShots(translationLang, translationLang)
+  const shots = selectAdjustmentShots(shotLibrary, options.adjustmentType)
+
   const messages = buildAdjustmentMessages(
-    options.originalText,
     options.currentTranslation,
     options.adjustmentType,
     model,
-    settings.systemLanguage
+    settings.systemLanguage,
+    shots
   )
 
   // Use streaming if callback provided
