@@ -30,19 +30,6 @@ const ADJUSTMENT_OPTIONS: AdjustmentOption[] = [
   { type: 'alternative', labelKey: 'results.alternative', emoji: '💬' },
 ]
 
-// Animated entry wrapper - animates on mount with key-based remounting
-function AnimatedEntry({ children, delay = 0, itemKey }: { children: React.ReactNode; delay?: number; itemKey?: string }) {
-  return (
-    <div
-      key={itemKey}
-      className="animate-in fade-in slide-in-from-bottom-1 duration-200 fill-mode-both"
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      {children}
-    </div>
-  )
-}
-
 // Streaming text that animates each new character/word appearance
 function StreamingText({ text, className }: { text: string; className?: string }) {
   const [displayText, setDisplayText] = useState('')
