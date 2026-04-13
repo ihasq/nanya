@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/stores/auth-store'
 import { useSettingsStore, DEFAULT_MODEL } from '@/stores/settings-store'
 import { SUPPORTED_LANGUAGES, type LanguageCode } from '@/lib/i18n'
-import { loadShots, selectTranslationShots, selectAdjustmentShots, type ShotLibrary, type Shot } from '@/lib/shot-loader'
+import { loadShots, selectTranslationShots, selectAdjustmentShots, type Shot } from '@/lib/shot-loader'
 
 const OPENROUTER_API_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
