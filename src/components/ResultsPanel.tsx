@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import {
@@ -153,15 +153,28 @@ interface VariantCardProps {
   variant: TranslationVariant
   onAdjust: (type: string, currentText: string) => void
   isAdjusting: boolean
-  skipAnimation?: boolean
 }
 
-function VariantCard({ variant, onAdjust, isAdjusting, skipAnimation }: VariantCardProps) {
+function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
   const [copied, setCopied] = useState(false)
   const [isSpeaking, setIsSpeaking] = useState(false)
   const [backTranslation, setBackTranslation] = useState<string | null>(null)
   const [isBackTranslating, setIsBackTranslating] = useState(false)
   const t = useT()
+
+  // Track animation state with ref - only animate on first mount
+  const hasAnimatedRef = useRef(false)
+  const shouldAnimate = !hasAnimatedRef.current
+
+  // Mark as animated after mount (animation duration + buffer)
+  useEffect(() => {
+    if (!hasAnimatedRef.current) {
+      const timer = setTimeout(() => {
+        hasAnimatedRef.current = true
+      }, 250)
+      return () => clearTimeout(timer)
+    }
+  }, [])
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(variant.text)
@@ -200,7 +213,7 @@ function VariantCard({ variant, onAdjust, isAdjusting, skipAnimation }: VariantC
   }
 
   return (
-    <Card className={`mb-4 ${skipAnimation ? '' : 'stream-fade-in'}`}>
+    <Card className={`mb-4 ${shouldAnimate ? 'stream-fade-in' : ''}`}>
       <CardContent className="pt-4">
         {/* Style Label */}
         <div className="flex items-center gap-2 mb-3">
@@ -278,8 +291,8 @@ function VariantCard({ variant, onAdjust, isAdjusting, skipAnimation }: VariantC
             {variant.explanation.map((exp, i) => (
               <li
                 key={`${i}-${exp.slice(0, 10)}`}
-                className={`flex items-start gap-2 text-sm text-muted-foreground ${skipAnimation ? '' : 'stream-fade-in'}`}
-                style={skipAnimation ? undefined : { animationDelay: `${100 + i * 50}ms` }}
+                className={`flex items-start gap-2 text-sm text-muted-foreground ${shouldAnimate ? 'stream-fade-in' : ''}`}
+                style={shouldAnimate ? { animationDelay: `${100 + i * 50}ms` } : undefined}
               >
                 <span className="text-primary mt-1.5">•</span>
                 <span>{exp}</span>
@@ -291,8 +304,8 @@ function VariantCard({ variant, onAdjust, isAdjusting, skipAnimation }: VariantC
         {/* Example */}
         {variant.example && (
           <div
-            className={`bg-muted/20 rounded-lg p-3 text-sm ${skipAnimation ? '' : 'stream-fade-in'}`}
-            style={skipAnimation ? undefined : { animationDelay: '200ms' }}
+            className={`bg-muted/20 rounded-lg p-3 text-sm ${shouldAnimate ? 'stream-fade-in' : ''}`}
+            style={shouldAnimate ? { animationDelay: '200ms' } : undefined}
           >
             <div className="text-xs text-muted-foreground mb-2">{t('results.example')}</div>
             <div className="flex items-start gap-2 mb-1">
@@ -313,6 +326,9 @@ interface ResultsPanelProps {
   onRetranslate: () => void
 }
 
+// Stable ID counter for variants
+let variantIdCounter = 0
+
 export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProps) {
   const {
     inputText,
@@ -329,16 +345,16 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
   const [showAllOptions, setShowAllOptions] = useState(false)
   const t = useT()
 
-  // Skip animation on first variant if it matches the streamed content
-  // This comparison works because streamingVariant is preserved until next translation
-  const shouldSkipFirstAnimation = variants.length > 0 &&
-    streamingVariant?.text &&
-    variants[0]?.text === streamingVariant.text
+  // WeakMap for stable variant IDs - persists across re-renders
+  // Each variant object gets a unique ID that never changes
+  const variantIdMapRef = useRef(new WeakMap<TranslationVariant, string>())
 
-  // Skip animation on last variant if it matches streaming adjustment (prevents double fade-in)
-  const shouldSkipLastAnimation = variants.length > 1 &&
-    streamingAdjustment?.text &&
-    variants[variants.length - 1]?.text === streamingAdjustment.text
+  const getStableId = (variant: TranslationVariant): string => {
+    if (!variantIdMapRef.current.has(variant)) {
+      variantIdMapRef.current.set(variant, `variant-${++variantIdCounter}`)
+    }
+    return variantIdMapRef.current.get(variant)!
+  }
 
   const handleAdjust = async (type: string, currentText: string) => {
     setIsAdjusting(true)
@@ -357,8 +373,6 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
       console.error('Adjustment failed:', err)
     } finally {
       setIsAdjusting(false)
-      // Don't clear streamingAdjustment here - it's used for skipAnimation comparison
-      // It will be cleared at the start of the next adjustment (line 345)
     }
   }
 
@@ -432,16 +446,12 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
       )}
 
       {/* Variant Cards */}
-      {variants.map((variant, index) => (
+      {variants.map((variant) => (
         <VariantCard
-          key={`${variant.style}-${index}`}
+          key={getStableId(variant)}
           variant={variant}
           onAdjust={handleAdjust}
           isAdjusting={isAdjusting}
-          skipAnimation={
-            (index === 0 && !!shouldSkipFirstAnimation) ||
-            (index === variants.length - 1 && !!shouldSkipLastAnimation)
-          }
         />
       ))}
 
