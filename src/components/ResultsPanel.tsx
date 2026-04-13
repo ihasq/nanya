@@ -30,44 +30,89 @@ const ADJUSTMENT_OPTIONS: AdjustmentOption[] = [
   { type: 'alternative', labelKey: 'results.alternative', emoji: '💬' },
 ]
 
-// Streaming text that animates each new character/word appearance
+// Streaming text that animates new text appearing
 function StreamingText({ text, className }: { text: string; className?: string }) {
-  const [displayText, setDisplayText] = useState('')
-  const [isAnimating, setIsAnimating] = useState(false)
+  const [prevText, setPrevText] = useState('')
+  const [newPart, setNewPart] = useState('')
+  const [showNewPart, setShowNewPart] = useState(false)
 
   useEffect(() => {
-    if (text !== displayText) {
-      setIsAnimating(true)
-      setDisplayText(text)
-      const timer = setTimeout(() => setIsAnimating(false), 150)
-      return () => clearTimeout(timer)
+    if (text !== prevText) {
+      // Find the new part that was added
+      if (text.startsWith(prevText)) {
+        const added = text.slice(prevText.length)
+        if (added) {
+          setNewPart(added)
+          setShowNewPart(false)
+          // Trigger animation on next frame
+          requestAnimationFrame(() => {
+            setShowNewPart(true)
+          })
+        }
+      } else {
+        // Text changed completely, no animation
+        setNewPart('')
+        setShowNewPart(true)
+      }
+      setPrevText(text)
     }
-  }, [text, displayText])
+  }, [text, prevText])
+
+  // Split text into stable part and new animated part
+  const stableText = text.slice(0, text.length - newPart.length)
 
   return (
-    <p className={`transition-opacity duration-150 ${isAnimating ? 'opacity-90' : 'opacity-100'} ${className || ''}`}>
-      {displayText}
+    <p className={className || ''}>
+      <span>{stableText}</span>
+      <span
+        className={`inline transition-all duration-200 ${
+          showNewPart ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-1'
+        }`}
+      >
+        {newPart}
+      </span>
     </p>
   )
 }
 
 // Streaming variant card - shows partial results as they arrive
 function StreamingVariantCard({ variant, isAdjustment }: { variant: PartialVariant; isAdjustment?: boolean }) {
-  // Track previous explanation count to animate new items
-  const [prevExpCount, setPrevExpCount] = useState(0)
-  const expCount = variant.explanation?.length || 0
+  // Track when content first arrives to trigger fade-in
+  const [hasContent, setHasContent] = useState(false)
+  const [seenExplanations, setSeenExplanations] = useState<Set<string>>(new Set())
 
+  // Trigger animation when content first arrives
   useEffect(() => {
-    if (expCount > prevExpCount) {
-      setPrevExpCount(expCount)
+    if (variant.text && !hasContent) {
+      // Small delay to ensure CSS transition triggers
+      requestAnimationFrame(() => {
+        setHasContent(true)
+      })
     }
-  }, [expCount, prevExpCount])
+  }, [variant.text, hasContent])
+
+  // Track which explanations we've seen
+  useEffect(() => {
+    if (variant.explanation) {
+      const newSeen = new Set(seenExplanations)
+      variant.explanation.forEach(exp => newSeen.add(exp))
+      if (newSeen.size !== seenExplanations.size) {
+        setSeenExplanations(newSeen)
+      }
+    }
+  }, [variant.explanation, seenExplanations])
 
   return (
-    <Card className={`mb-4 animate-in fade-in slide-in-from-bottom-2 duration-300 fill-mode-both ${isAdjustment ? 'border-dashed border-primary/50' : ''}`}>
+    <Card
+      className={`mb-4 transition-all duration-300 ${
+        hasContent
+          ? 'opacity-100 translate-y-0'
+          : 'opacity-0 translate-y-2'
+      } ${isAdjustment ? 'border-dashed border-primary/50' : ''}`}
+    >
       <CardContent className="pt-4">
         {/* Style Label */}
-        <div className="flex items-center gap-2 mb-3 animate-in fade-in duration-200 fill-mode-both">
+        <div className="flex items-center gap-2 mb-3">
           <span className="text-lg">{variant.emoji || '📝'}</span>
           <span className="text-sm font-medium bg-muted px-2 py-0.5 rounded">
             {variant.style || 'Translation'}
@@ -83,16 +128,20 @@ function StreamingVariantCard({ variant, isAdjustment }: { variant: PartialVaria
         {/* Explanations (streaming) - each new item fades in */}
         {variant.explanation && variant.explanation.length > 0 && (
           <ul className="space-y-1 mb-4">
-            {variant.explanation.map((exp, i) => (
-              <li
-                key={`exp-${i}-${exp.slice(0, 20)}`}
-                className="flex items-start gap-2 text-sm text-muted-foreground animate-in fade-in slide-in-from-bottom-1 duration-200 fill-mode-both"
-                style={{ animationDelay: `${i >= prevExpCount ? 0 : 0}ms` }}
-              >
-                <span className="text-primary mt-1.5">•</span>
-                <span>{exp}</span>
-              </li>
-            ))}
+            {variant.explanation.map((exp) => {
+              const isNew = !seenExplanations.has(exp)
+              return (
+                <li
+                  key={`exp-${exp.slice(0, 30)}`}
+                  className={`flex items-start gap-2 text-sm text-muted-foreground transition-all duration-200 ${
+                    isNew ? 'animate-in fade-in slide-in-from-bottom-1 fill-mode-both' : ''
+                  }`}
+                >
+                  <span className="text-primary mt-1.5">•</span>
+                  <span>{exp}</span>
+                </li>
+              )
+            })}
           </ul>
         )}
       </CardContent>

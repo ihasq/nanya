@@ -14,8 +14,6 @@ import { saveHistoryEntry } from '@/lib/history-storage'
 // Lazy load test pages (dev only)
 const StreamingTestPage = lazy(() => import('@/test-streaming'))
 const StreamingDemo = lazy(() => import('@/streaming-demo'))
-const StreamingDebug = lazy(() => import('@/streaming-debug'))
-const StreamingDebugReal = lazy(() => import('@/streaming-debug-real'))
 
 function HomePage() {
   const {
@@ -156,17 +154,7 @@ function App() {
             <StreamingDemo />
           </Suspense>
         } />
-        <Route path="/test/streaming-debug" element={
-          <Suspense fallback={<div className="p-6">Loading debug page...</div>}>
-            <StreamingDebug />
-          </Suspense>
-        } />
-        <Route path="/test/streaming-debug-real" element={
-          <Suspense fallback={<div className="p-6">Loading debug page...</div>}>
-            <StreamingDebugReal />
-          </Suspense>
-        } />
-      </Routes>
+              </Routes>
     </BrowserRouter>
   )
 }
