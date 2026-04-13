@@ -1,21 +1,149 @@
 {
   "translation": [
-    "It's raining outside. It rained like this that day too. The last day you smiled. Even though I know I'll never see you again, sometimes I think I hear your voice. They say time heals. That's a lie. You just get used to the pain.",
-    "Pour 500ml of water into a pot and heat over medium flame. Once boiling, add 1 teaspoon of salt and cook pasta for 1 minute less than package directions. Meanwhile, sauté garlic in olive oil in a pan, then add red pepper flakes once fragrant.",
-    "Descartes' \"I think, therefore I am\" represents the foundational certainty arrived at through radical skepticism. However, this proposition has faced persistent criticism for presupposing the existence of a thinking subject, thus falling into circular reasoning.",
-    "Under no circumstances shall the Company be liable for any damages arising from the use of this service. This limitation shall not apply in cases of willful misconduct or gross negligence on the part of the Company.",
-    "I've had a dull pain in my lower right abdomen for three days. It was bearable at first, but since yesterday it hurts when I walk. Temperature is 99°F. No appetite. Could this be appendicitis?",
-    "Hey, why is the sky blue? Well, sunlight actually has lots of colors mixed in. You've seen a rainbow, right? All those colors. The tiny particles in the air scatter just the blue light everywhere, so the sky looks blue.",
-    "The proposed pricing does not allow us to maintain profitability, making it difficult to continue our business relationship. Would you consider a 15% price increase? We hope you understand this is necessary to maintain quality.",
-    "Grandma, congratulations on leaving the hospital! We were so worried. But I'm so happy you're better now. We're all coming to celebrate next week. I'll bring your favorite chestnut sweets, so wait for us!",
-    "Please don't make me explain the same thing three times. Frankly, I'm tired of being asked things that are clearly in the manual. I have other work too. Please make some effort to look things up yourself.",
-    "I have no words for this sudden loss. Your father was so kind to me since my student days. His stern yet warm character is the foundation of who I am today. My deepest condolences.",
-    "My cat steps on my face every morning at 5am to wake me up, then goes right back to sleep after I feed her. So basically I'm a high-performance automatic feeder? I'm starting to think I'm employed by my cat. Payment is in paw pad touches.",
-    "Through the alley, there was an old shopping street where time seemed to have stopped. Faded signs, laundry hanging from eaves, children playing in front of a candy store. The true face of this town, unlisted in any guidebook, was right there.",
-    "I couldn't say this for so long, but I like you. Being just friends has become painful. I'm sorry if this bothers you. But I couldn't keep hiding my feelings anymore. Take your time to respond.",
-    "Three minutes of stoppage time! Racing up the left side! Cross! Header! GOOOAAAL! Equalizer! Unbelievable! Applause for the players who never gave up! The whole stadium is shaking! This is football!",
-    "Individual efforts alone have limits in reducing plastic. Companies must stop excessive packaging, governments must build infrastructure, and consumers must show intent through choices. Without all three working together, a sustainable society remains a pipe dream.",
-    ">be me >finally update the DB after procrastinating for 3 weeks >accidentally nuke prod >backup? never heard of her >boss walks in >\"why is everything on fire\" >fired.jpg lmao"
+    {
+      "text": "It's raining outside. It rained like this that day too. The last day you smiled. Even though I know I'll never see you again, sometimes I think I hear your voice. They say time heals. That's a lie. You just get used to the pain.",
+      "explanations": {
+        "ja": ["詩的・感傷的なトーンを日本語でも維持", "二人称は文脈に応じて「君」「あなた」を選択", "短文の連続でリズムを再現"],
+        "zh": ["保持诗意和感伤的语调", "用中文文学表达重现情感"],
+        "ko": ["시적이고 감상적인 톤 유지", "짧은 문장의 리듬 재현"],
+        "es": ["Mantener tono poético y melancólico", "Reproducir el ritmo de frases cortas"]
+      }
+    },
+    {
+      "text": "Pour 500ml of water into a pot and heat over medium flame. Once boiling, add 1 teaspoon of salt and cook pasta for 1 minute less than package directions. Meanwhile, sauté garlic in olive oil in a pan, then add red pepper flakes once fragrant.",
+      "explanations": {
+        "ja": ["料理用語は正確に（medium flame=中火）", "計量単位は日本の一般的な表現に", "手順の並行性を明確に"],
+        "zh": ["烹饪术语准确翻译", "计量单位适当转换"],
+        "ko": ["요리 용어 정확히 번역", "계량 단위 한국식으로"],
+        "es": ["Términos culinarios precisos", "Unidades de medida apropiadas"]
+      }
+    },
+    {
+      "text": "Descartes' \"I think, therefore I am\" represents the foundational certainty arrived at through radical skepticism. However, this proposition has faced persistent criticism for presupposing the existence of a thinking subject, thus falling into circular reasoning.",
+      "explanations": {
+        "ja": ["「我思う、ゆえに我あり」の標準訳を使用", "哲学的議論の構造を維持", "批判的視点も正確に"],
+        "zh": ["使用「我思故我在」标准译法", "保持哲学论述结构"],
+        "ko": ["'나는 생각한다, 고로 나는 존재한다' 표준 번역", "철학적 논의 구조 유지"],
+        "es": ["Usar traducción estándar 'pienso, luego existo'", "Mantener estructura argumentativa"]
+      }
+    },
+    {
+      "text": "Under no circumstances shall the Company be liable for any damages arising from the use of this service. This limitation shall not apply in cases of willful misconduct or gross negligence on the part of the Company.",
+      "explanations": {
+        "ja": ["法律文書の定型表現に変換", "「いかなる場合においても」等の法律用語", "例外規定も正確に"],
+        "zh": ["转换为中文法律文书用语", "免责条款标准表达"],
+        "ko": ["법률 문서 표준 표현으로 변환", "면책 조항 정확히"],
+        "es": ["Convertir a lenguaje jurídico español", "Cláusulas de exención precisas"]
+      }
+    },
+    {
+      "text": "I've had a dull pain in my lower right abdomen for three days. It was bearable at first, but since yesterday it hurts when I walk. Temperature is 99°F. No appetite. Could this be appendicitis?",
+      "explanations": {
+        "ja": ["医療用語を正確に（lower right abdomen=右下腹部）", "温度はセルシウスに変換（37.2度）", "症状の時系列を維持"],
+        "zh": ["医学术语准确翻译", "温度转换为摄氏度"],
+        "ko": ["의학 용어 정확히 번역", "온도는 섭씨로 변환"],
+        "es": ["Terminología médica precisa", "Convertir temperatura a Celsius"]
+      }
+    },
+    {
+      "text": "Hey, why is the sky blue? Well, sunlight actually has lots of colors mixed in. You've seen a rainbow, right? All those colors. The tiny particles in the air scatter just the blue light everywhere, so the sky looks blue.",
+      "explanations": {
+        "ja": ["子供向けの優しい語り口を再現", "「ねえ」「〜だよ」等の親しみやすい表現", "科学的正確さを保ちつつ分かりやすく"],
+        "zh": ["保持儿童友好的解释方式", "口语化但科学准确"],
+        "ko": ["어린이 눈높이 설명 방식 유지", "친근한 대화체"],
+        "es": ["Mantener explicación amigable para niños", "Conversacional pero preciso"]
+      }
+    },
+    {
+      "text": "The proposed pricing does not allow us to maintain profitability, making it difficult to continue our business relationship. Would you consider a 15% price increase? We hope you understand this is necessary to maintain quality.",
+      "explanations": {
+        "ja": ["ビジネス文書として適切な敬語レベルに", "交渉のニュアンス（丁寧だが明確な要求）", "「ご理解いただければ幸いです」等の表現"],
+        "zh": ["商务用语适当礼貌程度", "保持谈判语气"],
+        "ko": ["비즈니스 문서로서 적절한 경어", "협상 뉘앙스 유지"],
+        "es": ["Nivel de formalidad empresarial apropiado", "Tono de negociación"]
+      }
+    },
+    {
+      "text": "Grandma, congratulations on leaving the hospital! We were so worried. But I'm so happy you're better now. We're all coming to celebrate next week. I'll bring your favorite chestnut sweets, so wait for us!",
+      "explanations": {
+        "ja": ["家族への温かい語り口", "「おばあちゃん」と親しみを込めて", "chestnut sweets=栗きんとんまたは栗を使ったお菓子"],
+        "zh": ["家庭温馨语气", "「奶奶」亲切称呼"],
+        "ko": ["가족에 대한 따뜻한 어조", "할머니에 대한 친밀한 호칭"],
+        "es": ["Tono cálido familiar", "Tratamiento cariñoso para abuela"]
+      }
+    },
+    {
+      "text": "Please don't make me explain the same thing three times. Frankly, I'm tired of being asked things that are clearly in the manual. I have other work too. Please make some effort to look things up yourself.",
+      "explanations": {
+        "ja": ["不満・苛立ちの度合いを適切に", "直接的だが罵倒ではない", "職場での正当な不満という文脈"],
+        "zh": ["适度表达不满", "直接但不粗鲁"],
+        "ko": ["불만의 정도를 적절히 표현", "직접적이지만 무례하지 않게"],
+        "es": ["Expresar frustración apropiadamente", "Directo pero no grosero"]
+      }
+    },
+    {
+      "text": "I have no words for this sudden loss. Your father was so kind to me since my student days. His stern yet warm character is the foundation of who I am today. My deepest condolences.",
+      "explanations": {
+        "ja": ["弔意の表現を日本語の慣習に", "「ご冥福をお祈り申し上げます」等の定型表現", "故人への敬意と感謝"],
+        "zh": ["吊唁表达符合中文习惯", "对逝者的敬意"],
+        "ko": ["조의 표현을 한국어 관습에 맞게", "고인에 대한 경의"],
+        "es": ["Expresiones de condolencia apropiadas", "Respeto hacia el fallecido"]
+      }
+    },
+    {
+      "text": "My cat steps on my face every morning at 5am to wake me up, then goes right back to sleep after I feed her. So basically I'm a high-performance automatic feeder? I'm starting to think I'm employed by my cat. Payment is in paw pad touches.",
+      "explanations": {
+        "ja": ["ユーモア・自虐ネタを維持", "猫飼い主あるあるの共感", "「肉球」は日本語で通じる表現"],
+        "zh": ["保持幽默自嘲语气", "猫奴共鸣点"],
+        "ko": ["유머와 자조적 농담 유지", "고양이 집사 공감"],
+        "es": ["Mantener humor autoirónico", "Experiencia común de dueños de gatos"]
+      }
+    },
+    {
+      "text": "Through the alley, there was an old shopping street where time seemed to have stopped. Faded signs, laundry hanging from eaves, children playing in front of a candy store. The true face of this town, unlisted in any guidebook, was right there.",
+      "explanations": {
+        "ja": ["文学的・描写的な文体を維持", "日本の「下町」的イメージに変換可能", "視覚的情景を大切に"],
+        "zh": ["保持文学描写风格", "老街氛围的传达"],
+        "ko": ["문학적·묘사적 문체 유지", "옛 상점가 분위기"],
+        "es": ["Mantener estilo literario descriptivo", "Transmitir atmósfera de barrio antiguo"]
+      }
+    },
+    {
+      "text": "I couldn't say this for so long, but I like you. Being just friends has become painful. I'm sorry if this bothers you. But I couldn't keep hiding my feelings anymore. Take your time to respond.",
+      "explanations": {
+        "ja": ["告白の緊張感と誠実さ", "「好きです」の直接的な告白", "相手への配慮も表現"],
+        "zh": ["告白的紧张与真诚", "对对方的体贴"],
+        "ko": ["고백의 긴장감과 진심", "상대방에 대한 배려"],
+        "es": ["Tensión y sinceridad de confesión", "Consideración hacia el otro"]
+      }
+    },
+    {
+      "text": "Three minutes of stoppage time! Racing up the left side! Cross! Header! GOOOAAAL! Equalizer! Unbelievable! Applause for the players who never gave up! The whole stadium is shaking! This is football!",
+      "explanations": {
+        "ja": ["スポーツ実況の興奮を再現", "短文・感嘆符で臨場感", "「これがサッカーだ！」の定型表現"],
+        "zh": ["体育解说的兴奋感", "短句感叹号营造现场感"],
+        "ko": ["스포츠 중계의 흥분 재현", "짧은 문장과 감탄사"],
+        "es": ["Emoción de narración deportiva", "Frases cortas y exclamaciones"]
+      }
+    },
+    {
+      "text": "Individual efforts alone have limits in reducing plastic. Companies must stop excessive packaging, governments must build infrastructure, and consumers must show intent through choices. Without all three working together, a sustainable society remains a pipe dream.",
+      "explanations": {
+        "ja": ["社会問題への論理的な意見", "「絵に描いた餅」に相当する表現", "三者の役割を明確に"],
+        "zh": ["社会问题的逻辑论述", "「画饼充饥」类似表达"],
+        "ko": ["사회 문제에 대한 논리적 의견", "「그림의 떡」으로 표현 가능"],
+        "es": ["Opinión lógica sobre problema social", "Adaptar expresión idiomática"]
+      }
+    },
+    {
+      "text": ">be me >finally update the DB after procrastinating for 3 weeks >accidentally nuke prod >backup? never heard of her >boss walks in >\"why is everything on fire\" >fired.jpg lmao",
+      "explanations": {
+        "ja": ["4chan greentext形式を2ch風に変換", "「>俺氏」「草」等のネットスラング", "IT失敗談あるある"],
+        "zh": ["转换为中文网络文化风格", "保持网络幽默感"],
+        "ko": ["한국 인터넷 문화 스타일로", "ㅋㅋㅋ 등 사용"],
+        "es": ["Adaptar a cultura de internet hispanohablante", "Mantener humor de internet"]
+      }
+    }
   ],
   "adjustment": {
     "casual": [

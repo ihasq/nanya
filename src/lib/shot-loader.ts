@@ -1,9 +1,9 @@
 /**
  * Multi-shot example loader with CPU-side shot synthesis.
  *
- * Each language file contains only sample texts (16 items, index-aligned).
- * Shots are synthesized by combining source[i] + target[i] at runtime.
- * This reduces data duplication and enables any language pair combination.
+ * Each language file contains sample texts (16 items, index-aligned).
+ * Major 5 languages (ja, en, zh, ko, es) include mutual explanations.
+ * Shots are synthesized by combining source[i] + target[i] + explanations at runtime.
  */
 
 import type { LanguageCode } from '@/lib/i18n'
@@ -18,8 +18,13 @@ export interface AdjustmentSample {
   adjusted: string
 }
 
+export interface TranslationSample {
+  text: string
+  explanations?: Record<string, string[]>  // targetLang -> explanation array
+}
+
 export interface LanguageSamples {
-  translation: string[]
+  translation: TranslationSample[]
   adjustment: Record<string, AdjustmentSample[]>
 }
 
@@ -31,8 +36,13 @@ export interface ShotLibrary {
 // Cache for loaded language samples
 const samplesCache = new Map<string, LanguageSamples>()
 
-// Major languages with dedicated sample files
-const SUPPORTED_LANGUAGES = ['ja', 'en'] as const
+// Major languages with full samples + explanations
+const MAJOR_LANGUAGES = ['ja', 'en', 'zh', 'ko', 'es'] as const
+type MajorLanguage = typeof MAJOR_LANGUAGES[number]
+
+function isMajorLanguage(lang: string): lang is MajorLanguage {
+  return MAJOR_LANGUAGES.includes(lang as MajorLanguage)
+}
 
 /**
  * Load raw samples for a language.
@@ -43,9 +53,7 @@ async function loadLanguageSamples(lang: string): Promise<LanguageSamples> {
   }
 
   // Fallback to English for unsupported languages
-  const langToLoad = SUPPORTED_LANGUAGES.includes(lang as typeof SUPPORTED_LANGUAGES[number])
-    ? lang
-    : 'en'
+  const langToLoad = isMajorLanguage(lang) ? lang : 'en'
 
   if (langToLoad !== lang && samplesCache.has(langToLoad)) {
     const samples = samplesCache.get(langToLoad)!
@@ -72,23 +80,30 @@ async function loadLanguageSamples(lang: string): Promise<LanguageSamples> {
 
 /**
  * Synthesize translation shots from source and target language samples.
+ * Includes explanations if available for the source→target direction.
  */
 function synthesizeTranslationShots(
-  sourceSamples: string[],
-  targetSamples: string[]
+  sourceSamples: TranslationSample[],
+  targetSamples: TranslationSample[],
+  targetLang: string
 ): Shot[] {
   const shots: Shot[] = []
   const count = Math.min(sourceSamples.length, targetSamples.length)
 
   for (let i = 0; i < count; i++) {
+    const sourceText = sourceSamples[i].text
+    const targetText = targetSamples[i].text
+    // Get explanations from source language's perspective to target language
+    const explanations = sourceSamples[i].explanations?.[targetLang] || []
+
     shots.push({
-      user: `<translate>${sourceSamples[i]}</translate>`,
+      user: `<translate>${sourceText}</translate>`,
       assistant: JSON.stringify({
         variants: [{
           style: 'Translation',
           emoji: '📝',
-          text: targetSamples[i],
-          explanation: []
+          text: targetText,
+          explanation: explanations
         }]
       })
     })
@@ -153,7 +168,8 @@ export async function loadShots(
   return {
     translation: synthesizeTranslationShots(
       sourceSamples.translation,
-      targetSamples.translation
+      targetSamples.translation,
+      targetLang
     ),
     adjustment: synthesizeAdjustmentShots(
       targetSamples.adjustment,
@@ -171,12 +187,12 @@ export async function preloadSamples(...langs: LanguageCode[]): Promise<void> {
 
 /**
  * Select translation shots (returns 3 diverse examples).
+ * Indices chosen for maximum diversity: poetic(0), child(5), humor(10), social(14)
  */
 export function selectTranslationShots(library: ShotLibrary): Shot[] {
   const shots = library.translation
   if (shots.length <= 3) return shots
 
-  // Select diverse indices: 0 (poetic), 5 (child), 10 (humor), 14 (social)
   const diverseIndices = [0, 5, 10, 14].filter(i => i < shots.length)
   return diverseIndices.slice(0, 3).map(i => shots[i])
 }
@@ -199,8 +215,8 @@ export function selectAdjustmentShots(
 function getInlineFallbackSamples(): LanguageSamples {
   return {
     translation: [
-      'Hello, how are you?',
-      'Thank you for your help.'
+      { text: 'Hello, how are you?', explanations: { ja: ['標準的な挨拶'] } },
+      { text: 'Thank you for your help.', explanations: { ja: ['感謝の表現'] } }
     ],
     adjustment: {
       casual: [

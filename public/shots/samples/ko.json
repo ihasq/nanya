@@ -1,0 +1,312 @@
+{
+  "translation": [
+    {
+      "text": "창밖에 비가 내리고 있다. 그날도 이런 비였다. 네가 마지막으로 웃던 날. 다시는 만날 수 없다는 걸 알면서도, 문득 네 목소리가 들리는 것 같다. 시간이 치유해준다는 건 거짓말이다. 그저 아픔에 익숙해질 뿐.",
+      "explanations": {
+        "ja": ["詩的・感傷的な文体を維持", "「너」は親しい二人称として「君」に", "諦観を表現"],
+        "en": ["Maintain poetic, melancholic tone", "Short sentences for rhythm", "Express resignation"],
+        "zh": ["保持诗意感伤的语调", "短句营造节奏感"],
+        "es": ["Mantener tono poético y melancólico", "Frases cortas para ritmo"]
+      }
+    },
+    {
+      "text": "냄비에 물 500ml를 넣고 중불로 가열한다. 물이 끓으면 소금 1작은술을 넣고, 파스타를 포장지 표시보다 1분 짧게 삶는다. 그 사이에 프라이팬에서 마늘을 올리브오일로 볶다가 향이 나면 고춧가루를 넣는다.",
+      "explanations": {
+        "ja": ["料理用語を正確に", "計量単位は日本式に", "手順の並行性を明確に"],
+        "en": ["Accurate culinary terminology", "Convert measurements appropriately", "Clear parallel steps"],
+        "zh": ["烹饪术语准确翻译", "计量单位适当转换"],
+        "es": ["Términos culinarios precisos", "Unidades de medida apropiadas"]
+      }
+    },
+    {
+      "text": "데카르트의 「나는 생각한다, 고로 나는 존재한다」는 철저한 회의론 끝에 도달한 확실한 지식의 기반이다. 그러나 이 명제는 생각하는 주체의 존재를 전제하고 있어 순환논법에 빠졌다는 비판도 뿌리 깊다.",
+      "explanations": {
+        "ja": ["「我思う、ゆえに我あり」の標準訳使用", "哲学用語を正確に", "批判的視点も伝える"],
+        "en": ["Use standard translation 'I think, therefore I am'", "Academic register", "Critical perspective"],
+        "zh": ["使用「我思故我在」标准译法", "保持学术文体"],
+        "es": ["Usar 'pienso, luego existo'", "Registro académico"]
+      }
+    },
+    {
+      "text": "본 서비스 이용으로 발생한 어떠한 손해에 대해서도 당사는 일체의 책임을 지지 않습니다. 단, 당사의 고의 또는 중대한 과실로 인한 경우는 예외로 합니다.",
+      "explanations": {
+        "ja": ["法律文書の定型表現に変換", "免責条項の標準的表現", "例外規定も正確に"],
+        "en": ["Convert to standard legal English", "Proper disclaimer", "Exception clause accurate"],
+        "zh": ["转换为中文法律文书用语", "免责条款标准表达"],
+        "es": ["Lenguaje jurídico estándar", "Cláusula de exención correcta"]
+      }
+    },
+    {
+      "text": "3일 전부터 오른쪽 아랫배에 둔한 통증이 있습니다. 처음에는 참을 만했는데 어제부터 걸으면 찌르는 듯한 통증이 있습니다. 열은 37.2도이고 식욕이 없습니다. 맹장염일 수 있나요?",
+      "explanations": {
+        "ja": ["医療用語を正確に", "温度はそのまま", "患者の不安を表現"],
+        "en": ["Accurate medical terms", "Convert to Fahrenheit (99°F)", "Patient concern"],
+        "zh": ["医学术语准确翻译", "温度单位保持"],
+        "es": ["Terminología médica precisa", "Unidades de temperatura"]
+      }
+    },
+    {
+      "text": "있잖아, 왜 하늘은 파란색이야? 사실 햇빛에는 여러 가지 색이 섞여 있어. 무지개 본 적 있지? 그 색들 전부. 그래서 공기 중의 작은 입자들이 파란 빛만 여기저기 흩뿌리거든. 그래서 하늘이 파랗게 보이는 거야.",
+      "explanations": {
+        "ja": ["子供向けの優しい語り口", "「ねえ」「〜だよ」等の表現", "科学的正確さを保ちつつ"],
+        "en": ["Maintain child-friendly tone", "Simple explanation", "Conversational"],
+        "zh": ["保持儿童友好的语气", "口语化但科学准确"],
+        "es": ["Tono amigable para niños", "Explicación simple"]
+      }
+    },
+    {
+      "text": "제안해 주신 금액으로는 수익을 맞출 수 없어 이대로는 거래를 계속하기 어렵습니다. 15% 인상을 검토해 주실 수 있을까요? 품질 유지를 위해서도 이해해 주시면 감사하겠습니다.",
+      "explanations": {
+        "ja": ["ビジネス敬語を適切に変換", "交渉のニュアンス維持", "丁寧だが明確な要求"],
+        "en": ["Convert to business English", "Maintain negotiation tone", "Polite but clear"],
+        "zh": ["商务用语适当转换", "保持谈判语气"],
+        "es": ["Formalidad empresarial apropiada", "Tono de negociación"]
+      }
+    },
+    {
+      "text": "할머니, 퇴원 축하드려요! 정말 걱정했어요. 건강해지셔서 너무 기뻐요. 다음 주에 다 같이 축하하러 갈게요. 할머니가 좋아하시는 밤과자 사 갈 테니 기다려 주세요!",
+      "explanations": {
+        "ja": ["家族への温かい語り口", "「おばあちゃん」と親しみを込めて", "栗を使ったお菓子として"],
+        "en": ["Warm family tone", "Affectionate address", "Explain chestnut sweets"],
+        "zh": ["家庭温馨语气", "亲切称呼"],
+        "es": ["Tono cálido familiar", "Tratamiento cariñoso"]
+      }
+    },
+    {
+      "text": "같은 설명을 세 번이나 시키지 마세요. 솔직히 매뉴얼에 있는 걸 매번 물어보는 건 정말 지칩니다. 저도 다른 일이 있어요. 좀 직접 찾아보려고 노력해 주세요.",
+      "explanations": {
+        "ja": ["フラストレーションの度合いを適切に", "直接的だが攻撃的すぎない", "職場での不満"],
+        "en": ["Express frustration appropriately", "Direct but not hostile", "Workplace context"],
+        "zh": ["适度表达不满", "直接但不过分"],
+        "es": ["Expresar frustración apropiadamente", "Directo pero no agresivo"]
+      }
+    },
+    {
+      "text": "너무 갑작스러워서 무슨 말을 해야 할지 모르겠습니다. 아버님께서는 제 학창 시절부터 정말 잘 챙겨 주셨습니다. 엄하면서도 따뜻한 성품은 지금 제가 있게 된 밑거름입니다. 삼가 고인의 명복을 빕니다.",
+      "explanations": {
+        "ja": ["弔意の定型表現を日本語慣習に", "「ご冥福をお祈りします」等", "故人への敬意"],
+        "en": ["Appropriate condolence expressions", "Respectful tone", "Gratitude"],
+        "zh": ["吊唁表达符合中文习惯", "对逝者的敬意"],
+        "es": ["Expresiones de condolencia apropiadas", "Tono respetuoso"]
+      }
+    },
+    {
+      "text": "우리 집 고양이가 매일 아침 5시에 얼굴 밟고 깨우는데, 밥 주면 만족해서 자더라고. 그러니까 나는 고성능 자동 급식기인 건가? 고양이한테 고용된 기분이야. 월급은 젤리 발바닥 촉감으로 받음.",
+      "explanations": {
+        "ja": ["ユーモアを維持", "自虐ネタの面白さ", "猫飼い主あるある"],
+        "en": ["Maintain humor", "Self-deprecating joke", "Cat owner relatability"],
+        "zh": ["保持幽默语气", "自嘲式笑话"],
+        "es": ["Mantener humor", "Estilo autoirónico"]
+      }
+    },
+    {
+      "text": "골목을 지나니 시간이 멈춘 듯한 오래된 상점가가 있었다. 바랜 간판, 처마에 널린 빨래, 과자 가게 앞에서 노는 아이들. 관광 가이드에는 없는, 이 마을의 진짜 모습이 거기 있었다.",
+      "explanations": {
+        "ja": ["文学的描写を維持", "下町の雰囲気", "視覚的イメージ"],
+        "en": ["Maintain literary style", "Old neighborhood atmosphere", "Visual imagery"],
+        "zh": ["保持文学描写风格", "老街氛围"],
+        "es": ["Estilo literario descriptivo", "Atmósfera de barrio antiguo"]
+      }
+    },
+    {
+      "text": "계속 말 못 했는데, 너를 좋아해. 친구로만 있는 게 힘들어졌어. 부담이면 미안해. 그런데 더 이상 내 마음을 숨기는 건 무리야. 답은 언제든 괜찮아.",
+      "explanations": {
+        "ja": ["告白の緊張感と誠実さ", "相手への配慮", "「好きです」の直接表現"],
+        "en": ["Tension and sincerity", "Consideration for the other", "Direct confession"],
+        "zh": ["告白的紧张与真诚", "对对方的体贴"],
+        "es": ["Tensión y sinceridad", "Consideración hacia el otro"]
+      }
+    },
+    {
+      "text": "추가 시간 3분! 왼쪽 측면을 돌파한다! 크로스! 헤딩! 들어갔다아아아! 동점! 믿을 수 없어! 포기하지 않은 선수들에게 박수를! 경기장 전체가 흔들린다! 이게 축구다!",
+      "explanations": {
+        "ja": ["スポーツ実況の興奮", "短文で臨場感", "感嘆符でテンション"],
+        "en": ["Sports commentary excitement", "Short sentences", "Exclamations"],
+        "zh": ["体育解说的兴奋感", "短句营造现场感"],
+        "es": ["Emoción de narración deportiva", "Frases cortas y exclamaciones"]
+      }
+    },
+    {
+      "text": "플라스틱 감소는 개인의 노력만으로는 한계가 있다. 기업이 과대 포장을 그만두고, 정부가 인프라를 정비하고, 소비자가 선택으로 의사를 표현해야 한다. 이 셋이 맞물리지 않으면 지속 가능한 사회는 그림의 떡에 불과하다.",
+      "explanations": {
+        "ja": ["論理的な社会問題への意見", "「絵に描いた餅」相当", "三者の構造を維持"],
+        "en": ["Logical opinion on social issue", "'Pipe dream' equivalent", "Three-party structure"],
+        "zh": ["社会问题的逻辑论述", "「画饼」类似表达"],
+        "es": ["Opinión lógica sobre tema social", "Expresión idiomática equivalente"]
+      }
+    },
+    {
+      "text": "왔다아아아!! 신급 업데이트 드디어 왔다 ㅋㅋㅋㅋ 너희도 빨리 해봐 개웃김ㅋㅋㅋ",
+      "explanations": {
+        "ja": ["韓国ネット文化を日本のネットスラングに", "「ㅋㅋㅋ」は「www」「草」に", "カジュアルなトーン"],
+        "en": ["Convert to English internet culture", "ㅋㅋㅋ = lol/lmao", "Casual excited tone"],
+        "zh": ["转换为中文网络用语", "保持网络语言轻松感"],
+        "es": ["Adaptar a cultura de internet", "Tono casual de emoción"]
+      }
+    }
+  ],
+  "adjustment": {
+    "casual": [
+      { "formal": "잠시만 기다려 주세요.", "adjusted": "잠깐만!" },
+      { "formal": "확인해 주시면 감사하겠습니다.", "adjusted": "확인 좀 해줘~" },
+      { "formal": "알겠습니다. 처리하겠습니다.", "adjusted": "알겠어, 내가 할게" },
+      { "formal": "바쁘신 중에 죄송합니다만, 잠시 시간 좀 내주실 수 있을까요?", "adjusted": "시간 좀 있어?" },
+      { "formal": "불편을 끼쳐 드려 죄송합니다.", "adjusted": "미안, 귀찮게 해서" },
+      { "formal": "검토해 주시면 감사하겠습니다.", "adjusted": "생각해 봐~" },
+      { "formal": "번거로우시겠지만 처리 부탁드립니다.", "adjusted": "미안한데 부탁해!" },
+      { "formal": "질문이 있으시면 언제든 연락 주세요.", "adjusted": "모르는 거 있으면 물어봐" },
+      { "formal": "다시 연락드리겠습니다.", "adjusted": "나중에 연락할게" },
+      { "formal": "오늘 와 주셔서 감사합니다.", "adjusted": "오늘 와줘서 고마워!" },
+      { "formal": "오랜만입니다. 잘 지내셨나요?", "adjusted": "오랜만! 잘 지냈어?" },
+      { "formal": "양해 부탁드립니다.", "adjusted": "이해해 줬으면 좋겠어" },
+      { "formal": "아래와 같이 안내드립니다.", "adjusted": "이런 느낌이야↓" },
+      { "formal": "바쁘신 중에 죄송합니다만 확인 부탁드립니다.", "adjusted": "바쁘겠지만 확인 좀!" },
+      { "formal": "앞으로도 잘 부탁드립니다.", "adjusted": "앞으로도 잘 부탁해~" },
+      { "formal": "진심으로 감사드립니다.", "adjusted": "진짜 고마워!" }
+    ],
+    "polite": [
+      { "formal": "이것 좀 봐", "adjusted": "확인 부탁드려도 될까요?" },
+      { "formal": "이것 좀 해", "adjusted": "이 건에 대해 처리 부탁드립니다." },
+      { "formal": "모르겠어", "adjusted": "죄송합니다, 이해하기 어렵습니다." },
+      { "formal": "안 돼", "adjusted": "죄송합니다만 어려울 것 같습니다." },
+      { "formal": "나중에 할게", "adjusted": "추후에 처리하겠습니다." },
+      { "formal": "누구야?", "adjusted": "실례지만 어느 분이신가요?" },
+      { "formal": "뭐?", "adjusted": "죄송합니다, 용건을 여쭤봐도 될까요?" },
+      { "formal": "응", "adjusted": "알겠습니다." },
+      { "formal": "안 돼", "adjusted": "죄송합니다만 삼가야 할 것 같습니다." },
+      { "formal": "잠깐만", "adjusted": "잠시만 기다려 주시겠습니까?" },
+      { "formal": "이거 괜찮아?", "adjusted": "이것으로 괜찮으시겠습니까?" },
+      { "formal": "몰라", "adjusted": "잘 모르겠습니다." },
+      { "formal": "다시 말해", "adjusted": "죄송합니다만 다시 한번 말씀해 주시겠습니까?" },
+      { "formal": "빨리", "adjusted": "급한 상황이라 신속히 처리해 주시면 감사하겠습니다." },
+      { "formal": "고마워", "adjusted": "감사합니다." },
+      { "formal": "미안", "adjusted": "대단히 죄송합니다." }
+    ],
+    "neutral": [
+      { "formal": "이거 진짜 큰일이야!!! 어떡해!?", "adjusted": "문제가 발생했습니다. 해결 방법을 알려주세요." },
+      { "formal": "대박! 최고! 천재!!!", "adjusted": "좋습니다." },
+      { "formal": "뭔 소린지 모르겠어 ㅋㅋ", "adjusted": "이해하지 못했습니다." },
+      { "formal": "귀하께, 평안하시기를 바랍니다...", "adjusted": "안녕하세요." },
+      { "formal": "ㅋㅋㅋㅋ", "adjusted": "재미있네요." },
+      { "formal": "미친 듯이 바빠", "adjusted": "매우 바쁜 상황입니다." },
+      { "formal": "진짜 심각해", "adjusted": "심각한 상황입니다." },
+      { "formal": "될 수도 있어", "adjusted": "가능성이 있습니다." },
+      { "formal": "인정", "adjusted": "동의합니다." },
+      { "formal": "감성 터지네", "adjusted": "감회가 깊습니다." },
+      { "formal": "이건 밀어야 해", "adjusted": "지지합니다." },
+      { "formal": "존귀", "adjusted": "훌륭합니다." },
+      { "formal": "힘들어", "adjusted": "어렵습니다." },
+      { "formal": "불가능해", "adjusted": "매우 어렵습니다." },
+      { "formal": "금방 끝나", "adjusted": "곧 완료됩니다." },
+      { "formal": "최고 중의 최고야", "adjusted": "매우 좋습니다." }
+    ],
+    "concise": [
+      { "formal": "바쁘신 중에 죄송합니다만 확인 부탁드립니다.", "adjusted": "확인 부탁드립니다." },
+      { "formal": "질문이 있으시면 언제든 연락 주세요.", "adjusted": "질문 있으면 연락 주세요." },
+      { "formal": "검토해 주시면 감사하겠습니다.", "adjusted": "감사합니다." },
+      { "formal": "아래와 같이 보고드립니다.", "adjusted": "보고:" },
+      { "formal": "검토 부탁드립니다.", "adjusted": "검토 바랍니다." },
+      { "formal": "죄송합니다만 급히 처리 부탁드립니다.", "adjusted": "급합니다. 처리 바랍니다." },
+      { "formal": "번거롭게 해서 죄송합니다.", "adjusted": "죄송합니다." },
+      { "formal": "불명확한 점이 있으시면 알려주세요.", "adjusted": "질문 있으면 물어보세요." },
+      { "formal": "앞으로도 잘 부탁드립니다.", "adjusted": "감사합니다." },
+      { "formal": "바쁘신 중에 시간 내 주셔서 감사합니다.", "adjusted": "시간 감사합니다." },
+      { "formal": "첨부 자료를 참고해 주세요.", "adjusted": "첨부 참조." },
+      { "formal": "편하신 시간을 알려주시겠습니까?", "adjusted": "언제 괜찮으세요?" },
+      { "formal": "위 내용 확인 부탁드립니다.", "adjusted": "위 내용 확인 바랍니다." },
+      { "formal": "궁금한 점이 있으시면 언제든 물어보세요.", "adjusted": "질문 있으면 물어보세요." },
+      { "formal": "바쁘신 중에 죄송합니다만 회신 부탁드립니다.", "adjusted": "회신 바랍니다." },
+      { "formal": "자세한 내용은 추후 연락드리겠습니다.", "adjusted": "상세 내용은 추후." }
+    ],
+    "detailed": [
+      { "formal": "확인해 주세요", "adjusted": "첨부 자료의 내용이 정확한지, 정보가 최신인지, 형식이 통일되어 있는지 확인해 주세요. 문제가 있으면 지적해 주세요." },
+      { "formal": "수정해 주세요", "adjusted": "지적된 부분을 수정해 주세요. 수정 후에는 변경 사항을 명기하고 수정 전후 비교가 가능하게 해 주세요. 완료 후 다시 검토에 제출해 주세요." },
+      { "formal": "보고해 주세요", "adjusted": "다음 내용을 포함해서 보고해 주세요: 현재 진행 상황, 완료된 항목, 미완료 항목과 이유, 향후 일정, 문제점이나 리스크, 필요한 지원." },
+      { "formal": "설명해 주세요", "adjusted": "배경, 목적, 방법, 결과, 고찰 순서로 설명해 주세요. 전문 용어에는 보충 설명을 추가하고, 도표가 있으면 적절히 참조해 주세요." },
+      { "formal": "보내 주세요", "adjusted": "다음 조건으로 보내 주세요: 수신자 확인, 제목에 건명 포함, 본문에 개요 기재, 첨부파일은 PDF 형식, 발송 후 수신 확인 요청." },
+      { "formal": "조사해 주세요", "adjusted": "다음 관점에서 조사해 주세요: 현황 파악, 문제점 식별, 원인 분석, 유사 사례 조사, 해결책 검토, 실현 가능성 평가. 조사 결과는 보고서로 정리해 주세요." },
+      { "formal": "정리해 주세요", "adjusted": "다음 구성으로 정리해 주세요: 1.개요 2.배경 3.목적 4.방법 5.결과 6.고찰 7.결론 8.향후 과제. 각 섹션은 간결하게, 요점을 명확히 해 주세요." },
+      { "formal": "상담하고 싶어요", "adjusted": "상담 내용에 대해 배경 정보, 현재 상황, 검토한 선택지, 각각의 장단점, 의견을 구하고 싶은 점을 정리해서 공유해 주세요." },
+      { "formal": "알려 주세요", "adjusted": "다음에 대해 알려 주세요: 기본 개념, 구체적인 절차, 주의점이나 자주 하는 실수, 참고 자료나 링크, 실용적인 조언이 있으면 함께 부탁드립니다." },
+      { "formal": "도와 주세요", "adjusted": "다음 작업에 대해 지원 부탁드립니다: 작업 내용 상세, 예상 결과물, 기한, 사용 도구와 환경. 불명확한 점이 있으면 질문해 주세요." },
+      { "formal": "일정 알려 주세요", "adjusted": "일정을 알려 주세요: 날짜/시간(여러 후보), 소요 시간, 장소 또는 온라인 회의 링크, 참석자, 안건, 준비해야 할 것." },
+      { "formal": "견적 내 주세요", "adjusted": "다음 항목을 포함한 견적을 작성해 주세요: 작업 내용 내역, 각 항목 단가와 수량, 소계, 세금, 총액, 유효기간, 결제 조건, 비고." },
+      { "formal": "문제가 있어요", "adjusted": "문제 상세 보고: 발생 시간, 발생 상황, 영향 범위, 현재 대응 상황, 원인 가설, 해결 계획, 필요한 지원." },
+      { "formal": "제안이 있어요", "adjusted": "다음과 같이 제안드립니다: 제안 배경, 현재 과제, 제안 내용 상세, 기대 효과, 필요 리소스와 비용, 실시 일정, 리스크와 대책." },
+      { "formal": "피드백 주세요", "adjusted": "다음 관점에서 피드백 부탁드립니다: 좋았던 점, 개선이 필요한 점, 구체적인 개선안, 우선순위 높은 항목, 기타 눈에 띄는 점." },
+      { "formal": "완료했어요", "adjusted": "작업 완료 보고: 작업 내용, 완료 시간, 결과물 위치, 확인 부탁드리는 점, 주의사항, 향후 일정이나 후속 작업이 필요한 항목." }
+    ],
+    "catchy": [
+      { "formal": "신상품 출시", "adjusted": "【드디어 해금】기다리고 기다리던 신상품 등장!" },
+      { "formal": "캠페인 진행 중", "adjusted": "지금 아니면 없다! 놓치면 손해 보는 신규 캠페인" },
+      { "formal": "공지", "adjusted": "【속보】모르면 손해 보는 중대 뉴스" },
+      { "formal": "안내", "adjusted": "이걸 본 사람만 득 보는 특별 안내" },
+      { "formal": "모집 중", "adjusted": "【급구】당신의 힘이 필요합니다!" },
+      { "formal": "업데이트", "adjusted": "진화는 계속된다! 최신 업데이트 배포 시작" },
+      { "formal": "완료", "adjusted": "미션 컴플리트!" },
+      { "formal": "개최 예정", "adjusted": "전설의 막이 오른다──역대급 이벤트 시작" },
+      { "formal": "가격 인하", "adjusted": "【비보】너무 싸서 떨리는 가격 변경" },
+      { "formal": "재고 얼마 안 남음", "adjusted": "【긴급】곧 품절! 쟁탈전 예감..." },
+      { "formal": "기간 한정", "adjusted": "지금 아니면 다신 없다──기간 한정의 기적" },
+      { "formal": "신기능 추가", "adjusted": "「이거 원했어」를 실현! 신기능 강림" },
+      { "formal": "중요 공지", "adjusted": "【전원 필독】무시 금지 초중요 공지" },
+      { "formal": "리뉴얼", "adjusted": "새롭게 태어난 모습을 확인하세요──완전 리뉴얼" },
+      { "formal": "선물", "adjusted": "【공짜】지금만 대방출 선물" },
+      { "formal": "매진", "adjusted": "감사합니다...! 덕분에 매진" }
+    ],
+    "natural": [
+      { "formal": "당신을 만나게 되어 매우 기쁩니다.", "adjusted": "만나서 반가워요." },
+      { "formal": "이 건에 대해 검토해 주시면 감사하겠습니다.", "adjusted": "검토해 주시면 좋겠어요." },
+      { "formal": "시간을 내 주셔서 감사합니다.", "adjusted": "시간 내 주셔서 감사해요." },
+      { "formal": "불편을 끼쳐 드려 깊이 사과드립니다.", "adjusted": "불편 끼쳐서 죄송해요." },
+      { "formal": "질문이 있으시면 언제든 연락 주십시오.", "adjusted": "질문 있으면 언제든 물어보세요." },
+      { "formal": "해당 사항에 대해서는 파악하고 있지 않습니다.", "adjusted": "그 건은 잘 모르겠어요." },
+      { "formal": "편하실 때 방문해 주십시오.", "adjusted": "편할 때 오세요." },
+      { "formal": "오늘 날씨가 정말 좋네요.", "adjusted": "오늘 날씨 좋네요." },
+      { "formal": "의견을 들려주시면 감사하겠습니다.", "adjusted": "의견 들려주실 수 있나요?" },
+      { "formal": "번거로우시겠지만 잘 부탁드립니다.", "adjusted": "번거롭겠지만 잘 부탁드려요." },
+      { "formal": "저희는 긍정적으로 검토하겠습니다.", "adjusted": "긍정적으로 검토할게요." },
+      { "formal": "앞으로도 변함없는 성원 부탁드립니다.", "adjusted": "앞으로도 잘 부탁드려요." },
+      { "formal": "양해해 주시기 바랍니다.", "adjusted": "양해 부탁드려요." },
+      { "formal": "바쁘신 줄 알지만 감사합니다.", "adjusted": "바쁘실 텐데 감사해요." },
+      { "formal": "항상 격려해 주셔서 감사합니다.", "adjusted": "항상 감사해요." },
+      { "formal": "확인 부탁드립니다.", "adjusted": "확인해 주세요." }
+    ],
+    "less-ai": [
+      { "formal": "질문 있으신가요?", "adjusted": "질문 있어?" },
+      { "formal": "궁금한 점이 있으시면 언제든 연락 주세요.", "adjusted": "모르면 물어봐." },
+      { "formal": "알겠습니다. 확인했습니다.", "adjusted": "알겠어." },
+      { "formal": "도움이 필요하시면 말씀해 주세요.", "adjusted": "뭐 도와줄까?" },
+      { "formal": "이해해 주셔서 감사합니다.", "adjusted": "이해해 줘서 고마워." },
+      { "formal": "확인해 보겠습니다.", "adjusted": "확인해 볼게." },
+      { "formal": "참고가 되시면 좋겠습니다.", "adjusted": "참고 됐으면." },
+      { "formal": "기다리시게 해서 죄송합니다.", "adjusted": "기다리게 해서 미안." },
+      { "formal": "연락 주셔서 감사합니다.", "adjusted": "연락 고마워." },
+      { "formal": "확인해 주시면 감사하겠습니다.", "adjusted": "확인 좀 해줘." },
+      { "formal": "훌륭하네요!", "adjusted": "좋아!" },
+      { "formal": "의견을 들려주시겠어요?", "adjusted": "어떻게 생각해?" },
+      { "formal": "문제없습니다.", "adjusted": "괜찮아." },
+      { "formal": "검토하겠습니다.", "adjusted": "생각해 볼게." },
+      { "formal": "도움이 됐으면 좋겠습니다.", "adjusted": "도움이 됐으면 좋겠다." },
+      { "formal": "무슨 일 있으면 알려 주세요.", "adjusted": "뭐 있으면 말해." }
+    ],
+    "alternative": [
+      { "formal": "감사합니다", "adjusted": "고맙습니다" },
+      { "formal": "죄송합니다", "adjusted": "미안합니다" },
+      { "formal": "알겠습니다", "adjusted": "이해했습니다" },
+      { "formal": "부탁드립니다", "adjusted": "부탁합니다" },
+      { "formal": "좋네요", "adjusted": "괜찮습니다" },
+      { "formal": "괜찮습니다", "adjusted": "문제없습니다" },
+      { "formal": "네", "adjusted": "그렇습니다" },
+      { "formal": "잠깐만요", "adjusted": "잠시만요" },
+      { "formal": "화이팅", "adjusted": "응원합니다" },
+      { "formal": "수고하셨습니다", "adjusted": "고생하셨습니다" },
+      { "formal": "오랜만이에요", "adjusted": "오래간만입니다" },
+      { "formal": "먼저 하세요", "adjusted": "어서요" },
+      { "formal": "아쉽네요", "adjusted": "유감입니다" },
+      { "formal": "기쁩니다", "adjusted": "영광입니다" },
+      { "formal": "모릅니다", "adjusted": "잘 모르겠습니다" },
+      { "formal": "안 됩니다", "adjusted": "어렵습니다" }
+    ]
+  }
+}

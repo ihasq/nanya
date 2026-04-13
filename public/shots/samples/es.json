@@ -1,0 +1,312 @@
+{
+  "translation": [
+    {
+      "text": "La lluvia golpea la ventana. También llovía así aquel día. El día en que sonreíste por última vez. Aunque sé que no volveremos a vernos, a veces creo escuchar tu voz. Dicen que el tiempo lo cura todo. Mentira. Solo aprendes a convivir con el dolor.",
+      "explanations": {
+        "ja": ["詩的・感傷的な文体を維持", "スペイン語の直接的な感情表現を日本語の余韻ある表現に", "最後の二文は諦観を表現"],
+        "en": ["Maintain poetic, melancholic tone", "Preserve the philosophical reflection on grief", "Keep intimate second-person address"],
+        "zh": ["保持诗意忧郁的语调", "西班牙语的直接情感转换为中文含蓄表达"],
+        "ko": ["시적·감상적 문체 유지", "스페인어의 직접적 감정을 한국어의 여운 있는 표현으로"]
+      }
+    },
+    {
+      "text": "Calentar el aceite de oliva en una sartén a fuego medio. Añadir el ajo picado y saltear hasta que esté dorado. Agregar los tomates triturados, sal al gusto y una pizca de azúcar para cortar la acidez. Dejar cocinar 15 minutos removiendo ocasionalmente.",
+      "explanations": {
+        "ja": ["料理用語を正確に訳す（fuego medio=中火）", "計量表現はそのまま維持", "手順の時系列を明確に"],
+        "en": ["Translate culinary terms accurately", "Preserve measurement expressions", "Keep chronological clarity"],
+        "zh": ["烹饪术语准确翻译", "保持步骤清晰"],
+        "ko": ["요리 용어 정확히 번역", "계량 표현 유지"]
+      }
+    },
+    {
+      "text": "La fenomenología de Husserl propone un retorno a las cosas mismas, suspendiendo los prejuicios del sentido común mediante la epoché. Sin embargo, esta reducción fenomenológica ha sido criticada por presuponer ya una conciencia trascendental que ejecuta dicha suspensión.",
+      "explanations": {
+        "ja": ["哲学用語は標準訳を使用（epoché=エポケー）", "学術的な文体を維持", "批判的視点も正確に伝える"],
+        "en": ["Use standard philosophical terminology", "Maintain academic register", "Preserve critical perspective"],
+        "zh": ["使用标准哲学术语", "保持学术文体"],
+        "ko": ["철학 용어는 표준 번역 사용", "학술적 문체 유지"]
+      }
+    },
+    {
+      "text": "El usuario acepta que la empresa no será responsable por daños directos, indirectos o consecuentes derivados del uso de este servicio. No obstante, esta limitación no aplicará en casos de negligencia grave o dolo por parte de la empresa.",
+      "explanations": {
+        "ja": ["法律文書の定型表現を使用", "免責条項の標準的な日本語表現に変換", "例外規定も正確に訳出"],
+        "en": ["Use standard legal boilerplate", "Convert to appropriate legal English", "Preserve exception clauses"],
+        "zh": ["使用法律文书标准用语", "免责条款的规范表达"],
+        "ko": ["법률 문서 표준 표현 사용", "면책 조항 정확히 번역"]
+      }
+    },
+    {
+      "text": "Hace tres días que tengo un dolor sordo en la parte inferior derecha del abdomen. Al principio era soportable, pero desde ayer me duele al caminar. Tengo 37.2 de fiebre y poco apetito. ¿Podría ser apendicitis?",
+      "explanations": {
+        "ja": ["医療用語を正確に（inferior derecha del abdomen=右下腹部）", "症状の時系列を明確に", "患者視点の不安も伝える"],
+        "en": ["Translate medical terms accurately", "Preserve symptom timeline clearly", "Convey patient's concern"],
+        "zh": ["医学术语准确翻译", "症状描述清晰"],
+        "ko": ["의학 용어 정확히 번역", "증상 시간순 명확히"]
+      }
+    },
+    {
+      "text": "¿Sabes por qué el cielo es azul? La luz del sol tiene muchos colores mezclados, como los del arcoíris. Las pequeñas partículas del aire hacen que la luz azul rebote por todos lados, y por eso vemos el cielo azul. ¡Es como magia de la naturaleza!",
+      "explanations": {
+        "ja": ["子供向けの優しい語り口を維持", "科学的正確さと分かりやすさのバランス", "対話形式を保持"],
+        "en": ["Maintain child-friendly tone", "Balance scientific accuracy with simplicity", "Keep conversational style"],
+        "zh": ["保持儿童友好的语气", "科学准确但易懂"],
+        "ko": ["어린이 눈높이에 맞춘 설명 유지", "대화체 유지"]
+      }
+    },
+    {
+      "text": "El precio que nos proponen no nos permite cubrir costos. Lamentablemente, sin un ajuste del 15% nos resultará imposible continuar la relación comercial. Confiamos en su comprensión, ya que buscamos mantener la calidad que ustedes esperan.",
+      "explanations": {
+        "ja": ["ビジネスの丁寧さを適切な日本語敬語に変換", "交渉のニュアンスを維持", "丁寧だが明確な要求"],
+        "en": ["Convert to appropriate business English formality", "Maintain negotiation nuance", "Polite but clear demand"],
+        "zh": ["商务用语转换为中文商务表达", "保持谈判语气"],
+        "ko": ["비즈니스 표현을 적절히 변환", "협상 뉘앙스 유지"]
+      }
+    },
+    {
+      "text": "¡Abuela, felicidades por salir del hospital! Nos tenías muy preocupados. Qué alegría verte bien de nuevo. La semana que viene iremos todos a celebrar. Te llevaré turrón, que sé que te encanta. ¡Esperanos!",
+      "explanations": {
+        "ja": ["家族間の温かい語り口を維持", "「Abuela」は親しみを込めた呼称", "スペインの食文化（turrón）は説明的に訳すか注釈"],
+        "en": ["Maintain warm family tone", "'Abuela' as affectionate term", "Explain turrón if needed"],
+        "zh": ["保持家庭温馨语气", "「Abuela」→「奶奶」亲切称呼"],
+        "ko": ["가족 간의 따뜻한 어조 유지", "스페인 음식 문화 적절히 설명"]
+      }
+    },
+    {
+      "text": "Es la tercera vez que te explico lo mismo. Está en el manual, solo tienes que leerlo. Francamente, estoy harto. Yo también tengo mi propio trabajo. Haz el esfuerzo de buscar la información por ti mismo.",
+      "explanations": {
+        "ja": ["フラストレーションの度合いを適切に表現", "直接的だが攻撃的すぎない", "職場での不満という文脈"],
+        "en": ["Express frustration appropriately", "Direct but not aggressive", "Workplace context"],
+        "zh": ["适度表达不满情绪", "直接但不过分攻击性"],
+        "ko": ["불만의 정도를 적절히 표현", "직접적이지만 공격적이지 않게"]
+      }
+    },
+    {
+      "text": "No tengo palabras ante esta noticia tan repentina. Tu padre fue muy importante en mi vida desde la universidad. Su carácter, exigente pero cálido, forjó quien soy hoy. Mi más sentido pésame. Descanse en paz.",
+      "explanations": {
+        "ja": ["弔意の定型表現を日本語の慣習に合わせる", "故人への敬意と感謝を表現", "フォーマルだが心のこもった文体"],
+        "en": ["Adapt condolence expressions to English conventions", "Express respect and gratitude for the deceased", "Formal yet heartfelt"],
+        "zh": ["吊唁用语符合中文习惯", "表达对逝者的敬意"],
+        "ko": ["조의 표현을 한국어 관습에 맞게", "고인에 대한 경의 표현"]
+      }
+    },
+    {
+      "text": "Mi gato me despierta todos los días a las 5 pisándome la cara. Le doy de comer y se va a dormir satisfecho. O sea, ¿soy básicamente un dispensador de comida con funciones avanzadas? Creo que trabajo para él. Me paga en ronroneos.",
+      "explanations": {
+        "ja": ["ユーモアのトーンを維持", "自虐的なジョークの面白さを伝える", "猫と飼い主の関係性あるある"],
+        "en": ["Maintain humorous tone", "Convey self-deprecating joke", "Relatable cat-owner dynamic"],
+        "zh": ["保持幽默语气", "自嘲式笑话的趣味"],
+        "ko": ["유머 톤 유지", "자조적 농담의 재미 전달"]
+      }
+    },
+    {
+      "text": "Al cruzar el callejón, apareció un mercado antiguo donde el tiempo parecía haberse detenido. Carteles descoloridos, ropa tendida en los balcones, niños jugando frente a la tienda de dulces. Allí estaba la verdadera cara del pueblo, invisible para las guías turísticas.",
+      "explanations": {
+        "ja": ["描写的・文学的な文体を維持", "スペインの古い市場の雰囲気を伝える", "視覚的イメージを大切に"],
+        "en": ["Maintain descriptive literary style", "Convey old Spanish market atmosphere", "Preserve visual imagery"],
+        "zh": ["保持描写性文学风格", "传达西班牙老街氛围"],
+        "ko": ["묘사적·문학적 문체 유지", "스페인 옛 시장 분위기 전달"]
+      }
+    },
+    {
+      "text": "Nunca pude decírtelo, pero me gustas. Ya no puedo seguir siendo solo tu amigo. Perdona si esto te incomoda. Pero ya no podía seguir ocultando lo que siento. Puedes tomarte el tiempo que necesites para responder.",
+      "explanations": {
+        "ja": ["告白の緊張感と誠実さを表現", "相手への配慮も伝える", "感情的だが押し付けがましくない"],
+        "en": ["Express tension and sincerity of confession", "Show consideration for the other person", "Emotional but not pushy"],
+        "zh": ["表达告白的紧张与真诚", "体现对对方的体贴"],
+        "ko": ["고백의 긴장감과 진심 표현", "상대방에 대한 배려도 전달"]
+      }
+    },
+    {
+      "text": "¡Minuto 93! ¡Sube por la banda izquierda! ¡Centro! ¡Cabezazo! ¡¡GOOOL!! ¡Empate! ¡Increíble! ¡Aplauso para estos jugadores que nunca se rinden! ¡El estadio tiembla! ¡Esto es fútbol!",
+      "explanations": {
+        "ja": ["スポーツ実況の興奮を表現", "短い文でスピード感を出す", "感嘆符で臨場感を維持"],
+        "en": ["Express sports commentary excitement", "Short sentences for pace", "Exclamation marks for immediacy"],
+        "zh": ["体育解说的兴奋感", "短句表现速度感"],
+        "ko": ["스포츠 중계의 흥분 표현", "짧은 문장으로 속도감"]
+      }
+    },
+    {
+      "text": "Reducir el plástico solo con esfuerzos individuales tiene límites. Las empresas deben eliminar el empaquetado excesivo, los gobiernos mejorar la infraestructura, y los consumidores votar con sus elecciones. Sin la coordinación de estos tres actores, la sostenibilidad será solo un sueño.",
+      "explanations": {
+        "ja": ["社会問題への論理的な意見を表現", "「solo un sueño」は「絵に描いた餅」に相当", "構造的な議論を維持"],
+        "en": ["Express logical opinion on social issue", "'Just a dream' equivalent idiom", "Maintain structural argument"],
+        "zh": ["社会问题的逻辑性论述", "「只是梦想」对应中文成语"],
+        "ko": ["사회 문제에 대한 논리적 의견", "「꿈에 불과하다」로 번역 가능"]
+      }
+    },
+    {
+      "text": "JAJAJAJA no me lo puedo creer tío!! q locura la nueva actu, probadla ya!! literalmente flipando 🔥🔥 esto es oro puro xD",
+      "explanations": {
+        "ja": ["スペイン語のネットスラングを日本語ネット文化に変換", "「tío」はカジュアルな呼びかけ、「xD」は笑い", "カジュアルなネット語を維持"],
+        "en": ["Convert Spanish internet slang to English internet culture", "'tío'=casual address, 'xD'=laughing", "Maintain casual internet tone"],
+        "zh": ["西班牙网络文化转换为中文网络用语", "保持网络语言的轻松感"],
+        "ko": ["스페인 인터넷 문화를 한국 인터넷 문화로", "ㅋㅋㅋ 등으로 변환"]
+      }
+    }
+  ],
+  "adjustment": {
+    "casual": [
+      { "formal": "Por favor, espere un momento.", "adjusted": "¡Un momento!" },
+      { "formal": "Le agradecería que lo revisara.", "adjusted": "Échale un vistazo, ¿va?" },
+      { "formal": "Entendido. Me encargaré de ello.", "adjusted": "Vale, me pongo con ello." },
+      { "formal": "Disculpe las molestias, ¿tendría un momento?", "adjusted": "Oye, ¿tienes un rato?" },
+      { "formal": "Lamento las molestias ocasionadas.", "adjusted": "Perdona el lío." },
+      { "formal": "Le ruego que lo considere.", "adjusted": "Piénsatelo, ¿vale?" },
+      { "formal": "Disculpe, ¿podría encargarse de esto?", "adjusted": "¿Te importa hacerlo? ¡Gracias!" },
+      { "formal": "Si tiene alguna pregunta, no dude en consultarnos.", "adjusted": "Si no pillas algo, pregunta." },
+      { "formal": "Me pondré en contacto de nuevo.", "adjusted": "Ya te cuento." },
+      { "formal": "Gracias por venir hoy.", "adjusted": "¡Gracias por pasarte!" },
+      { "formal": "Ha pasado mucho tiempo. ¿Cómo está?", "adjusted": "¡Cuánto tiempo! ¿Qué tal todo?" },
+      { "formal": "Le ruego que lo entienda.", "adjusted": "Espero que lo entiendas." },
+      { "formal": "A continuación le informamos.", "adjusted": "Pues mira, es así:" },
+      { "formal": "Disculpe la molestia, ¿podría revisarlo?", "adjusted": "Sé que estás liado, pero ¿le echas un ojo?" },
+      { "formal": "Quedamos a su disposición.", "adjusted": "Aquí estamos para lo que haga falta." },
+      { "formal": "Le estoy muy agradecido.", "adjusted": "¡Mil gracias!" }
+    ],
+    "polite": [
+      { "formal": "Míralo", "adjusted": "¿Sería tan amable de revisarlo?" },
+      { "formal": "Haz esto", "adjusted": "¿Le importaría encargarse de este asunto?" },
+      { "formal": "No entiendo", "adjusted": "Disculpe, no termino de comprender." },
+      { "formal": "No puedo", "adjusted": "Lamentablemente, no me es posible." },
+      { "formal": "Luego lo hago", "adjusted": "Lo atenderé más tarde." },
+      { "formal": "¿Quién eres?", "adjusted": "Disculpe, ¿con quién tengo el gusto?" },
+      { "formal": "¿Qué quieres?", "adjusted": "¿En qué puedo ayudarle?" },
+      { "formal": "Vale", "adjusted": "Por supuesto." },
+      { "formal": "No", "adjusted": "Me temo que no será posible." },
+      { "formal": "Espera", "adjusted": "¿Podría aguardar un momento, por favor?" },
+      { "formal": "¿Está bien así?", "adjusted": "¿Le parece correcto?" },
+      { "formal": "No sé", "adjusted": "Lo desconozco." },
+      { "formal": "Repite", "adjusted": "¿Podría repetirlo, por favor?" },
+      { "formal": "Date prisa", "adjusted": "Le agradecería una respuesta a la brevedad." },
+      { "formal": "Gracias", "adjusted": "Se lo agradezco sinceramente." },
+      { "formal": "Perdón", "adjusted": "Le pido disculpas." }
+    ],
+    "neutral": [
+      { "formal": "¡¡Es una locura!! ¿¿Qué hago??", "adjusted": "Ha surgido un problema. Necesito orientación." },
+      { "formal": "¡¡Genial!! ¡¡Eres el mejor!!", "adjusted": "Me parece adecuado." },
+      { "formal": "No entiendo nada jajaja", "adjusted": "No lo he comprendido." },
+      { "formal": "Distinguido señor, me dirijo a usted con el mayor respeto...", "adjusted": "Hola." },
+      { "formal": "JAJAJA", "adjusted": "Es gracioso." },
+      { "formal": "Estoy hasta arriba de trabajo", "adjusted": "Tengo mucha carga de trabajo." },
+      { "formal": "Esto es gravísimo", "adjusted": "La situación es seria." },
+      { "formal": "A lo mejor sale", "adjusted": "Existe la posibilidad." },
+      { "formal": "Totalmente", "adjusted": "Estoy de acuerdo." },
+      { "formal": "Qué bonito", "adjusted": "Es conmovedor." },
+      { "formal": "Me encanta", "adjusted": "Lo apoyo." },
+      { "formal": "Qué maravilla", "adjusted": "Es excelente." },
+      { "formal": "Estoy agotado", "adjusted": "Es difícil." },
+      { "formal": "Imposible", "adjusted": "Es muy complicado." },
+      { "formal": "En un momento", "adjusted": "Estará listo pronto." },
+      { "formal": "Es increíble de verdad", "adjusted": "Es muy bueno." }
+    ],
+    "concise": [
+      { "formal": "Disculpe las molestias, ¿podría revisarlo cuando tenga un momento?", "adjusted": "Por favor, revíselo." },
+      { "formal": "Si tiene alguna duda, no dude en ponerse en contacto con nosotros.", "adjusted": "Dudas: contáctenos." },
+      { "formal": "Quedo a su entera disposición.", "adjusted": "A su servicio." },
+      { "formal": "A continuación le detallamos la información.", "adjusted": "Informe:" },
+      { "formal": "Le ruego que lo tenga en consideración.", "adjusted": "Por favor, considérelo." },
+      { "formal": "Disculpe, necesito una respuesta urgente.", "adjusted": "Urgente." },
+      { "formal": "Lamento mucho las molestias causadas.", "adjusted": "Disculpe." },
+      { "formal": "Si necesita más información, estaré encantado de ayudarle.", "adjusted": "Más info: pregunte." },
+      { "formal": "Esperamos seguir contando con su confianza.", "adjusted": "Gracias por su confianza." },
+      { "formal": "Gracias por dedicarme su tiempo.", "adjusted": "Gracias por su tiempo." },
+      { "formal": "Adjunto encontrará la documentación.", "adjusted": "Ver adjunto." },
+      { "formal": "¿Podría indicarme su disponibilidad?", "adjusted": "¿Disponibilidad?" },
+      { "formal": "Por favor, confirme la información anterior.", "adjusted": "Confirme lo anterior." },
+      { "formal": "No dude en preguntar si tiene alguna duda.", "adjusted": "Pregunte si hay dudas." },
+      { "formal": "Le agradecería una respuesta a la mayor brevedad.", "adjusted": "Responda pronto." },
+      { "formal": "Le comunicaré los detalles próximamente.", "adjusted": "Detalles: próximamente." }
+    ],
+    "detailed": [
+      { "formal": "Revísalo", "adjusted": "Por favor, revise el documento adjunto verificando que no haya errores, que la información esté actualizada y que el formato sea consistente. Indique cualquier problema que encuentre." },
+      { "formal": "Corrígelo", "adjusted": "Realice las correcciones indicadas. Tras la modificación, documente los cambios realizados y permita comparar el antes y después. Una vez terminado, envíelo para una nueva revisión." },
+      { "formal": "Infórmame", "adjusted": "Incluya en su informe: estado actual, tareas completadas, tareas pendientes y motivos, próximos pasos, riesgos identificados y apoyo necesario." },
+      { "formal": "Explícamelo", "adjusted": "Explique siguiendo esta estructura: contexto, objetivo, metodología, resultados y conclusiones. Añada aclaraciones para términos técnicos y referencias visuales si las hay." },
+      { "formal": "Envíalo", "adjusted": "Envíe cumpliendo estos requisitos: verificar destinatario, incluir referencia en el asunto, resumen en el cuerpo, adjuntos en PDF, y solicitar confirmación de recepción." },
+      { "formal": "Investígalo", "adjusted": "Investigue considerando: situación actual, identificación del problema, análisis de causas, casos similares, posibles soluciones y viabilidad. Presente los resultados en un informe." },
+      { "formal": "Resúmelo", "adjusted": "Estructure el resumen así: 1.Resumen ejecutivo, 2.Contexto, 3.Objetivo, 4.Método, 5.Resultados, 6.Análisis, 7.Conclusiones, 8.Próximos pasos. Sea conciso y claro." },
+      { "formal": "Quiero consultarte", "adjusted": "Para la consulta, compartiré: contexto, situación actual, opciones consideradas con pros y contras de cada una, y los puntos específicos donde necesito su opinión." },
+      { "formal": "Enséñame", "adjusted": "Por favor, explique: conceptos básicos, procedimiento paso a paso, errores comunes a evitar, recursos de referencia, y consejos prácticos si los tiene." },
+      { "formal": "Ayúdame", "adjusted": "Necesito apoyo con lo siguiente: descripción de la tarea, resultado esperado, plazo, herramientas a utilizar. Pregunte si algo no está claro." },
+      { "formal": "Dime tu agenda", "adjusted": "Indique su disponibilidad incluyendo: fechas y horas (varias opciones), duración estimada, ubicación o enlace si es virtual, participantes, temas a tratar y preparación necesaria." },
+      { "formal": "Dame un presupuesto", "adjusted": "Prepare un presupuesto que incluya: desglose de conceptos, precio unitario y cantidad, subtotales, impuestos, total, validez, condiciones de pago y observaciones." },
+      { "formal": "Hay un problema", "adjusted": "Informe del problema: fecha y hora de detección, descripción de lo ocurrido, alcance del impacto, acciones tomadas, hipótesis de la causa, plan de resolución y apoyo requerido." },
+      { "formal": "Tengo una propuesta", "adjusted": "Presento la siguiente propuesta: antecedentes, problema actual, solución propuesta en detalle, beneficios esperados, recursos necesarios, cronograma, riesgos y mitigaciones." },
+      { "formal": "Dame feedback", "adjusted": "Proporcione retroalimentación sobre: aspectos positivos, áreas de mejora, sugerencias concretas, prioridades, y cualquier otra observación relevante." },
+      { "formal": "Ya está hecho", "adjusted": "Informe de finalización: tarea realizada, fecha de conclusión, ubicación del entregable, puntos a verificar, observaciones importantes y seguimiento necesario." }
+    ],
+    "catchy": [
+      { "formal": "Nuevo producto", "adjusted": "【¡Por fin!】¡El producto más esperado ha llegado!" },
+      { "formal": "Campaña activa", "adjusted": "¡Solo ahora! La oferta que no puedes dejar pasar" },
+      { "formal": "Aviso", "adjusted": "【ÚLTIMA HORA】Noticia que no puedes ignorar" },
+      { "formal": "Información", "adjusted": "Solo para los que leen esto: info exclusiva" },
+      { "formal": "Buscamos candidatos", "adjusted": "【URGENTE】¡Te necesitamos!" },
+      { "formal": "Actualizado", "adjusted": "¡Imparable! Nueva actualización disponible" },
+      { "formal": "Completado", "adjusted": "¡Misión cumplida!" },
+      { "formal": "Evento próximo", "adjusted": "Comienza la leyenda — El evento más grande, arranca." },
+      { "formal": "Precio rebajado", "adjusted": "【Increíble】Precio tan bajo que asusta" },
+      { "formal": "Pocas unidades", "adjusted": "【ALERTA】¡Últimas unidades! La cuenta atrás ha comenzado..." },
+      { "formal": "Por tiempo limitado", "adjusted": "Ahora o nunca — Oportunidad única e irrepetible" },
+      { "formal": "Nueva función", "adjusted": "\"Esto era lo que faltaba\" — ¡Función estrella disponible!" },
+      { "formal": "Aviso importante", "adjusted": "【LECTURA OBLIGATORIA】Anuncio que no puedes saltarte" },
+      { "formal": "Renovación", "adjusted": "Renacido de sus cenizas — Renovación total" },
+      { "formal": "Regalo", "adjusted": "【GRATIS】¡Regalamos sin límites!" },
+      { "formal": "Sold out", "adjusted": "¡Gracias! Agotado por su increíble acogida" }
+    ],
+    "natural": [
+      { "formal": "Me produce una gran alegría conocerle.", "adjusted": "Encantado de conocerte." },
+      { "formal": "Le quedaría muy agradecido si pudiera considerarlo.", "adjusted": "Me haría ilusión que lo consideraras." },
+      { "formal": "Agradezco sinceramente el tiempo que me ha dedicado.", "adjusted": "Gracias por tu tiempo." },
+      { "formal": "Lamento profundamente las molestias ocasionadas.", "adjusted": "Siento mucho las molestias." },
+      { "formal": "Quedo a su disposición para cualquier consulta.", "adjusted": "Pregunta cuando quieras." },
+      { "formal": "Desconozco dicha información.", "adjusted": "No lo sé." },
+      { "formal": "Puede visitarnos cuando le sea conveniente.", "adjusted": "Ven cuando puedas." },
+      { "formal": "El día de hoy presenta condiciones meteorológicas favorables.", "adjusted": "Hace buen día hoy." },
+      { "formal": "Me gustaría conocer su opinión.", "adjusted": "¿Qué opinas?" },
+      { "formal": "Le ruego que me disculpe, pero necesito su ayuda.", "adjusted": "Perdona, pero necesito tu ayuda." },
+      { "formal": "Nuestra posición es favorable a la propuesta.", "adjusted": "Nos parece bien." },
+      { "formal": "Esperamos poder seguir contando con su preferencia.", "adjusted": "Esperamos verte pronto." },
+      { "formal": "Le ruego que disculpe cualquier inconveniente.", "adjusted": "Perdona si hay algún problema." },
+      { "formal": "Entiendo que está muy ocupado, pero le agradecería su atención.", "adjusted": "Sé que estás ocupado, pero te agradecería que me ayudaras." },
+      { "formal": "Aprecio enormemente su colaboración.", "adjusted": "Gracias por la ayuda." },
+      { "formal": "Sírvase revisar la documentación adjunta.", "adjusted": "Mira el archivo adjunto." }
+    ],
+    "less-ai": [
+      { "formal": "¿Tiene alguna pregunta?", "adjusted": "¿Alguna duda?" },
+      { "formal": "No dude en consultarnos si tiene alguna duda.", "adjusted": "Si no te queda claro, pregunta." },
+      { "formal": "Entendido. Comprendido.", "adjusted": "Ok." },
+      { "formal": "Estoy aquí para ayudarle en lo que necesite.", "adjusted": "¿Te echo una mano?" },
+      { "formal": "Agradezco su comprensión.", "adjusted": "Gracias por entenderlo." },
+      { "formal": "Permítame verificarlo.", "adjusted": "Deja que lo mire." },
+      { "formal": "Espero que le sea de utilidad.", "adjusted": "Espero que sirva." },
+      { "formal": "Disculpe la demora.", "adjusted": "Perdona la tardanza." },
+      { "formal": "Gracias por ponerse en contacto.", "adjusted": "Gracias por escribir." },
+      { "formal": "Le agradecería que lo revisara.", "adjusted": "¿Le echas un ojo?" },
+      { "formal": "¡Excelente!", "adjusted": "¡Bien!" },
+      { "formal": "¿Podría darme su opinión?", "adjusted": "¿Qué te parece?" },
+      { "formal": "No hay problema.", "adjusted": "Todo bien." },
+      { "formal": "Lo tendré en consideración.", "adjusted": "Me lo pienso." },
+      { "formal": "Espero poder serle de ayuda.", "adjusted": "Ojalá te sirva." },
+      { "formal": "No dude en comunicárnoslo.", "adjusted": "Avísame si pasa algo." }
+    ],
+    "alternative": [
+      { "formal": "Gracias", "adjusted": "Te lo agradezco" },
+      { "formal": "Perdón", "adjusted": "Disculpa" },
+      { "formal": "Entendido", "adjusted": "De acuerdo" },
+      { "formal": "Por favor", "adjusted": "Si fueras tan amable" },
+      { "formal": "Está bien", "adjusted": "Me parece correcto" },
+      { "formal": "No hay problema", "adjusted": "Sin inconvenientes" },
+      { "formal": "Vale", "adjusted": "Perfecto" },
+      { "formal": "Claro", "adjusted": "Por supuesto" },
+      { "formal": "No", "adjusted": "Preferiría que no" },
+      { "formal": "Sí", "adjusted": "Efectivamente" },
+      { "formal": "Bueno", "adjusted": "Bien" },
+      { "formal": "Oye", "adjusted": "Disculpa" },
+      { "formal": "Espera", "adjusted": "Un momento" },
+      { "formal": "Genial", "adjusted": "Estupendo" },
+      { "formal": "Fatal", "adjusted": "Lamentable" },
+      { "formal": "Qué pena", "adjusted": "Es una lástima" }
+    ]
+  }
+}

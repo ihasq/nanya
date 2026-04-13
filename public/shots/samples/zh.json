@@ -1,0 +1,312 @@
+{
+  "translation": [
+    {
+      "text": "窗外下着雨。那天也是这样的雨。你最后微笑的那一天。明明知道再也见不到你了，却还是会在某个瞬间觉得能听到你的声音。都说时间会治愈一切，那是骗人的。只不过是习惯了疼痛而已。",
+      "explanations": {
+        "ja": ["詩的・感傷的な文体を日本語でも維持", "「你」は親しい二人称として「君」に", "最後の文は諦観を表現"],
+        "en": ["Maintain poetic, melancholic tone", "Short sentences for rhythm", "Final line expresses resignation"],
+        "ko": ["시적이고 감상적인 톤 유지", "짧은 문장으로 리듬감"],
+        "es": ["Mantener tono poético y melancólico", "Frases cortas para ritmo"]
+      }
+    },
+    {
+      "text": "锅里倒入500毫升水，中火加热。水开后加一小勺盐，把意面煮到比包装说明少一分钟。同时在平底锅里用橄榄油炒蒜，香味出来后加入辣椒碎。",
+      "explanations": {
+        "ja": ["料理用語を正確に訳す", "計量単位は日本の一般的表現に", "手順の並行性を明確に"],
+        "en": ["Accurate culinary terminology", "Convert measurements appropriately", "Clear parallel cooking steps"],
+        "ko": ["요리 용어 정확히 번역", "계량 단위 적절히 변환"],
+        "es": ["Términos culinarios precisos", "Unidades de medida apropiadas"]
+      }
+    },
+    {
+      "text": "笛卡尔的「我思故我在」是通过彻底的怀疑论所达到的确定知识的基础。然而这个命题因为预设了思考主体的存在，而被批评为陷入了循环论证。",
+      "explanations": {
+        "ja": ["「我思う、ゆえに我あり」の標準訳使用", "哲学用語は正確に", "批判的視点も伝える"],
+        "en": ["Use 'cogito ergo sum' or standard translation", "Maintain academic register", "Include critical perspective"],
+        "ko": ["철학 용어 표준 번역 사용", "학술적 문체 유지"],
+        "es": ["Usar 'pienso, luego existo'", "Mantener registro académico"]
+      }
+    },
+    {
+      "text": "因使用本服务而产生的任何损失，本公司概不负责。但因本公司故意或重大过失造成的情况除外。",
+      "explanations": {
+        "ja": ["法律文書の定型表現に変換", "免責条項の標準的表現", "例外規定も正確に"],
+        "en": ["Convert to standard legal English", "Proper disclaimer phrasing", "Exception clause accurate"],
+        "ko": ["법률 문서 표준 표현으로", "면책 조항 정확히"],
+        "es": ["Lenguaje jurídico estándar", "Cláusula de exención correcta"]
+      }
+    },
+    {
+      "text": "三天前开始右下腹有隐隐的疼痛。一开始还能忍受，但从昨天开始走路时会感到刺痛。体温37.2度，没什么食欲。请问这会是阑尾炎吗？",
+      "explanations": {
+        "ja": ["医療用語を正確に", "温度表記はそのまま", "患者視点の不安を表現"],
+        "en": ["Accurate medical terminology", "Convert temperature to Fahrenheit (99°F)", "Patient's concern conveyed"],
+        "ko": ["의학 용어 정확히", "온도 단위 유지"],
+        "es": ["Terminología médica precisa", "Mantener unidades de temperatura"]
+      }
+    },
+    {
+      "text": "诶，为什么天空是蓝色的呀？其实呢，太阳光里面有好多颜色混在一起哦。你见过彩虹吧？就是那些颜色。然后呢，空气里的小颗粒会把蓝色的光到处散开，所以天空看起来就是蓝色的啦。",
+      "explanations": {
+        "ja": ["子供向けの優しい語り口を維持", "「ねえ」「〜だよ」等の表現", "科学的正確さを保ちつつ"],
+        "en": ["Maintain child-friendly tone", "Simple explanations", "Conversational style"],
+        "ko": ["어린이 눈높이 설명 유지", "친근한 대화체"],
+        "es": ["Tono amigable para niños", "Explicación simple y conversacional"]
+      }
+    },
+    {
+      "text": "按照您提出的价格，我们无法维持盈利，这样下去很难继续合作。请问能否考虑上调15%的价格？为了保证品质，还请您理解。",
+      "explanations": {
+        "ja": ["ビジネス敬語を適切に変換", "交渉のニュアンス維持", "丁寧だが明確な要求"],
+        "en": ["Convert to appropriate business English", "Maintain negotiation tone", "Polite but clear request"],
+        "ko": ["비즈니스 경어 적절히 변환", "협상 뉘앙스 유지"],
+        "es": ["Formalidad empresarial apropiada", "Tono de negociación"]
+      }
+    },
+    {
+      "text": "奶奶，恭喜你出院！我们都好担心你。看到你康复了真的太高兴了。下周我们全家都去看你，会给你带你最爱吃的栗子糕，等着我们哦！",
+      "explanations": {
+        "ja": ["家族への温かい語り口", "「おばあちゃん」と親しみを込めて", "栗子糕は栗を使った和菓子として"],
+        "en": ["Warm family tone", "Affectionate address for grandmother", "Explain chestnut cake contextually"],
+        "ko": ["가족에 대한 따뜻한 어조", "할머니에 대한 친밀한 호칭"],
+        "es": ["Tono cálido familiar", "Tratamiento cariñoso"]
+      }
+    },
+    {
+      "text": "请不要让我解释三遍同样的事情。说实话，每次被问手册里写得清清楚楚的问题，我真的很烦。我也有别的工作要做。请你自己查一下好吗。",
+      "explanations": {
+        "ja": ["フラストレーションの度合いを適切に", "直接的だが攻撃的すぎない", "職場での不満"],
+        "en": ["Express frustration appropriately", "Direct but not hostile", "Workplace context"],
+        "ko": ["불만의 정도를 적절히 표현", "직접적이지만 공격적이지 않게"],
+        "es": ["Expresar frustración apropiadamente", "Directo pero no agresivo"]
+      }
+    },
+    {
+      "text": "事情来得太突然，我不知道该说什么。您父亲从我学生时代起就对我非常照顾。他严厉又温暖的品格，是今天的我的基石。愿他安息。",
+      "explanations": {
+        "ja": ["弔意の定型表現を日本語慣習に", "「ご冥福をお祈りします」等", "故人への敬意"],
+        "en": ["Appropriate condolence expressions", "Respectful tone", "Gratitude for the deceased"],
+        "ko": ["조의 표현을 한국어 관습에 맞게", "고인에 대한 경의"],
+        "es": ["Expresiones de condolencia apropiadas", "Tono respetuoso"]
+      }
+    },
+    {
+      "text": "我家猫每天早上五点踩着我的脸把我叫醒，喂完饭就心满意足地睡了。所以我其实是一台高性能自动喂食机？我开始觉得我是被猫雇佣的了。工资是肉垫触感。",
+      "explanations": {
+        "ja": ["ユーモアを維持", "自虐ネタの面白さ", "猫飼い主あるある"],
+        "en": ["Maintain humor", "Self-deprecating joke style", "Cat owner relatability"],
+        "ko": ["유머 톤 유지", "자조적 농담"],
+        "es": ["Mantener humor", "Estilo autoirónico"]
+      }
+    },
+    {
+      "text": "穿过小巷，那里有一条仿佛时间停止的老商业街。褪色的招牌，屋檐下晾着的衣服，在杂货店前玩耍的孩子们。旅游指南上没有的，这个小镇真正的面貌就在那里。",
+      "explanations": {
+        "ja": ["文学的描写を維持", "下町の雰囲気", "視覚的イメージを大切に"],
+        "en": ["Maintain literary descriptive style", "Old neighborhood atmosphere", "Visual imagery"],
+        "ko": ["문학적 묘사 유지", "옛 상점가 분위기"],
+        "es": ["Estilo literario descriptivo", "Atmósfera de barrio antiguo"]
+      }
+    },
+    {
+      "text": "一直说不出口，但我喜欢你。只做朋友已经让我很痛苦了。如果给你添麻烦了，对不起。但我真的没办法继续隐藏自己的心情了。回复不着急。",
+      "explanations": {
+        "ja": ["告白の緊張感と誠実さ", "相手への配慮", "「好きです」の直接表現"],
+        "en": ["Tension and sincerity of confession", "Consideration for the other", "Direct expression of feelings"],
+        "ko": ["고백의 긴장감과 진심", "상대방에 대한 배려"],
+        "es": ["Tensión y sinceridad", "Consideración hacia el otro"]
+      }
+    },
+    {
+      "text": "伤停补时三分钟！左路突进！传中！头球！进了啊啊啊！扳平！难以置信！为永不放弃的球员们鼓掌！整个球场都在沸腾！这就是足球！",
+      "explanations": {
+        "ja": ["スポーツ実況の興奮", "短文で臨場感", "感嘆符でテンション"],
+        "en": ["Sports commentary excitement", "Short sentences for pace", "Exclamations for energy"],
+        "ko": ["스포츠 중계 흥분", "짧은 문장으로 속도감"],
+        "es": ["Emoción de narración deportiva", "Frases cortas y exclamaciones"]
+      }
+    },
+    {
+      "text": "仅靠个人努力来减少塑料是有限的。企业要停止过度包装，政府要完善基础设施，消费者要用选择表明态度。这三者不配合的话，可持续社会只能是纸上谈兵。",
+      "explanations": {
+        "ja": ["論理的な社会問題への意見", "「絵に描いた餅」相当", "三者の構造を維持"],
+        "en": ["Logical opinion on social issue", "'Pipe dream' equivalent", "Three-party structure clear"],
+        "ko": ["사회 문제에 대한 논리적 의견", "「그림의 떡」으로"],
+        "es": ["Opinión lógica sobre tema social", "Expresión idiomática equivalente"]
+      }
+    },
+    {
+      "text": "来了来了！神级更新终于来了 笑死www 你们也快去试试 太草了",
+      "explanations": {
+        "ja": ["中国ネット文化を日本のネットスラングに", "「草」「www」等の対応", "カジュアルなトーン"],
+        "en": ["Convert to English internet culture", "lol, lmao equivalents", "Casual excited tone"],
+        "ko": ["한국 인터넷 문화로 변환", "ㅋㅋㅋ 등 사용"],
+        "es": ["Adaptar a cultura de internet", "Tono casual de emoción"]
+      }
+    }
+  ],
+  "adjustment": {
+    "casual": [
+      { "formal": "请稍等。", "adjusted": "等一下哈！" },
+      { "formal": "如果您能确认一下，我将不胜感激。", "adjusted": "帮我看看呗~" },
+      { "formal": "收到，我会处理的。", "adjusted": "收到，我搞定" },
+      { "formal": "百忙之中打扰您，能给我一点时间吗？", "adjusted": "有空吗？" },
+      { "formal": "给您带来不便，深表歉意。", "adjusted": "不好意思啊，麻烦你了" },
+      { "formal": "请您考虑一下。", "adjusted": "你想想呗~" },
+      { "formal": "麻烦您处理一下。", "adjusted": "拜托帮个忙！" },
+      { "formal": "如有疑问，请随时联系。", "adjusted": "有问题随时问我" },
+      { "formal": "我稍后再联系您。", "adjusted": "回头联系你" },
+      { "formal": "感谢您今天的到来。", "adjusted": "今天来了谢谢哈！" },
+      { "formal": "好久不见，您还好吗？", "adjusted": "好久不见！最近咋样？" },
+      { "formal": "希望您能理解。", "adjusted": "希望你能懂" },
+      { "formal": "具体情况如下。", "adjusted": "是这样的↓" },
+      { "formal": "百忙之中打扰，请您确认。", "adjusted": "忙的话不好意思，帮我看看！" },
+      { "formal": "期待今后继续合作。", "adjusted": "以后也多关照~" },
+      { "formal": "由衷感谢。", "adjusted": "真的超感谢！" }
+    ],
+    "polite": [
+      { "formal": "看一下", "adjusted": "麻烦您过目一下。" },
+      { "formal": "这个你做", "adjusted": "此事烦请您处理。" },
+      { "formal": "不懂", "adjusted": "抱歉，我没能理解。" },
+      { "formal": "不行", "adjusted": "恐怕难以办到。" },
+      { "formal": "等会做", "adjusted": "稍后我会处理。" },
+      { "formal": "谁啊？", "adjusted": "请问您是哪位？" },
+      { "formal": "啥？", "adjusted": "请问有什么可以帮您？" },
+      { "formal": "行", "adjusted": "好的，明白了。" },
+      { "formal": "不行", "adjusted": "抱歉，恐怕不太方便。" },
+      { "formal": "等等", "adjusted": "请稍等片刻。" },
+      { "formal": "这样行吗？", "adjusted": "这样可以吗？" },
+      { "formal": "不知道", "adjusted": "这个我不太清楚。" },
+      { "formal": "再说一遍", "adjusted": "麻烦您再说一遍好吗？" },
+      { "formal": "快点", "adjusted": "如果方便的话，能否尽快处理？" },
+      { "formal": "谢了", "adjusted": "非常感谢。" },
+      { "formal": "不好意思", "adjusted": "十分抱歉。" }
+    ],
+    "neutral": [
+      { "formal": "这也太离谱了吧！！！怎么办！？", "adjusted": "出现了问题，请告知解决方案。" },
+      { "formal": "牛！绝了！天才！！！", "adjusted": "这很好。" },
+      { "formal": "完全看不懂哈哈哈", "adjusted": "我没有理解。" },
+      { "formal": "尊敬的先生/女士，见信如晤...", "adjusted": "您好。" },
+      { "formal": "笑死www", "adjusted": "这很有趣。" },
+      { "formal": "忙疯了", "adjusted": "目前非常繁忙。" },
+      { "formal": "真的要命", "adjusted": "情况很严重。" },
+      { "formal": "可能行得通", "adjusted": "有可能。" },
+      { "formal": "确实", "adjusted": "同意。" },
+      { "formal": "太有感觉了", "adjusted": "很有感触。" },
+      { "formal": "支持", "adjusted": "我支持这个。" },
+      { "formal": "太美好了", "adjusted": "这很棒。" },
+      { "formal": "累死了", "adjusted": "很辛苦。" },
+      { "formal": "太难了", "adjusted": "非常困难。" },
+      { "formal": "秒完成", "adjusted": "很快就能完成。" },
+      { "formal": "往少了说也是最棒的", "adjusted": "非常好。" }
+    ],
+    "concise": [
+      { "formal": "百忙之中打扰，如果您能确认一下，我将不胜感激。", "adjusted": "请确认。" },
+      { "formal": "如有疑问，请随时联系我们。", "adjusted": "有问题请联系。" },
+      { "formal": "衷心感谢您的考虑。", "adjusted": "谢谢。" },
+      { "formal": "具体报告如下。", "adjusted": "报告：" },
+      { "formal": "请您考虑一下。", "adjusted": "请考虑。" },
+      { "formal": "非常抱歉打扰，能否紧急处理？", "adjusted": "紧急处理。" },
+      { "formal": "给您添麻烦，深表歉意。", "adjusted": "抱歉。" },
+      { "formal": "如有不明之处，请随时告知。", "adjusted": "有问题请问。" },
+      { "formal": "期待今后继续合作。", "adjusted": "谢谢。" },
+      { "formal": "百忙之中感谢您抽出时间。", "adjusted": "感谢您的时间。" },
+      { "formal": "具体请参阅附件。", "adjusted": "见附件。" },
+      { "formal": "能否告知您方便的时间？", "adjusted": "什么时候方便？" },
+      { "formal": "以上内容请确认。", "adjusted": "请确认以上。" },
+      { "formal": "如有疑问，请随时询问。", "adjusted": "有问题请问。" },
+      { "formal": "百忙之中打扰，期待您的回复。", "adjusted": "请回复。" },
+      { "formal": "详情稍后联系。", "adjusted": "详情后告。" }
+    ],
+    "detailed": [
+      { "formal": "请确认", "adjusted": "请确认附件内容是否准确、信息是否最新、格式是否统一。如有问题请指出。" },
+      { "formal": "请修改", "adjusted": "请修正指出的地方。修改后请注明变更点，并能够对比修改前后。完成后请再次提交审核。" },
+      { "formal": "请汇报", "adjusted": "请汇报以下内容：目前进度、已完成项目、未完成项目及原因、后续计划、问题和风险、需要的支持。" },
+      { "formal": "请说明", "adjusted": "请按照背景、目的、方法、结果、讨论的顺序说明。专业术语请加注释，如有图表请适当引用。" },
+      { "formal": "请发送", "adjusted": "请按以下条件发送：确认收件人、标题含项目名、正文写概要、附件用PDF格式、发送后请求确认收到。" },
+      { "formal": "请调查", "adjusted": "请从以下角度调查：现状把握、问题点识别、原因分析、类似案例调查、解决方案探讨、可行性评估。请将调查结果整理成报告。" },
+      { "formal": "请整理", "adjusted": "请按以下结构整理：1.概要 2.背景 3.目的 4.方法 5.结果 6.讨论 7.结论 8.今后课题。各部分请简洁明了，要点清晰。" },
+      { "formal": "想咨询", "adjusted": "关于咨询内容，请整理以下信息后分享：背景情况、目前状况、考虑过的选项、各选项的优缺点、希望得到意见的点。" },
+      { "formal": "请告诉我", "adjusted": "请说明以下内容：基本概念、具体步骤、注意事项和常见错误、参考资料或链接、如有实践建议也请一并告知。" },
+      { "formal": "请帮忙", "adjusted": "请协助以下工作：作业内容详情、期望成果、截止时间、使用的工具和环境。如有不明白的地方请提问。" },
+      { "formal": "请告知日程", "adjusted": "请告知日程，包括：日期时间（请给多个候选）、所需时长、地点或线上会议链接、参加人员、议题、需要准备的事项。" },
+      { "formal": "请提供报价", "adjusted": "请制作包含以下内容的报价：作业内容明细、各项单价和数量、小计、税金、总金额、有效期限、付款条件、备注。" },
+      { "formal": "有问题", "adjusted": "问题详情报告：发生时间、发生情况、影响范围、目前应对状况、原因假设、解决计划、需要的支援。" },
+      { "formal": "有建议", "adjusted": "以下是我的建议：建议背景、现状课题、建议内容详情、预期效果、所需资源和费用、实施日程、风险和对策。" },
+      { "formal": "请给反馈", "adjusted": "请从以下角度给出反馈：做得好的地方、需要改进的地方、具体改进建议、优先级高的项目、其他注意到的点。" },
+      { "formal": "完成了", "adjusted": "作业完成报告：作业内容、完成时间、成果物位置、需要确认的点、注意事项、后续计划或需要跟进的项目。" }
+    ],
+    "catchy": [
+      { "formal": "新品上市", "adjusted": "【终于来了】万众期待的新品闪亮登场！" },
+      { "formal": "活动进行中", "adjusted": "限时特惠！错过就亏大了的神活动" },
+      { "formal": "通知", "adjusted": "【速报】不看会后悔的重大消息" },
+      { "formal": "公告", "adjusted": "只有看到这条的人才能享受的特别待遇" },
+      { "formal": "招募中", "adjusted": "【急招】需要你的力量！" },
+      { "formal": "已更新", "adjusted": "进化不止！最新版本上线" },
+      { "formal": "已完成", "adjusted": "任务完成！" },
+      { "formal": "即将举办", "adjusted": "传奇开幕——史上最大活动启动" },
+      { "formal": "已降价", "adjusted": "【震惊】便宜到颤抖的新价格" },
+      { "formal": "库存告急", "adjusted": "【紧急】所剩无几！争夺战即将开始..." },
+      { "formal": "限时", "adjusted": "错过就没有了——限时奇迹" },
+      { "formal": "新功能上线", "adjusted": "「就是想要这个」终于实现！神功能降临" },
+      { "formal": "重要通知", "adjusted": "【全员必看】不能错过的超重要公告" },
+      { "formal": "改版", "adjusted": "见证蜕变——全新改版" },
+      { "formal": "赠品", "adjusted": "【免费领取】限时大放送" },
+      { "formal": "已售罄", "adjusted": "感谢有你...！满员御礼" }
+    ],
+    "natural": [
+      { "formal": "我非常高兴能见到您。", "adjusted": "见到你很高兴。" },
+      { "formal": "如果您能考虑此事，我将不胜感激。", "adjusted": "你能考虑一下的话我很高兴。" },
+      { "formal": "感谢您抽出宝贵时间。", "adjusted": "谢谢你的时间。" },
+      { "formal": "对于给您带来的不便，深表歉意。", "adjusted": "给你添麻烦了，不好意思。" },
+      { "formal": "如有疑问，请随时联系。", "adjusted": "有问题随时问。" },
+      { "formal": "关于此事，我不太了解。", "adjusted": "这个我不太清楚。" },
+      { "formal": "请在您方便的时候过来。", "adjusted": "方便的时候过来吧。" },
+      { "formal": "今天天气真好啊。", "adjusted": "今天天气不错啊。" },
+      { "formal": "如果能听听您的意见就好了。", "adjusted": "能听听你的想法吗？" },
+      { "formal": "麻烦您了，谢谢合作。", "adjusted": "麻烦了，谢谢。" },
+      { "formal": "我们会积极考虑的。", "adjusted": "我们会认真考虑的。" },
+      { "formal": "期待您今后一如既往的支持。", "adjusted": "以后也请多关照。" },
+      { "formal": "请您谅解。", "adjusted": "请理解一下。" },
+      { "formal": "您百忙之中，谢谢您的时间。", "adjusted": "忙的时候打扰了，谢谢。" },
+      { "formal": "衷心感谢您一直以来的支持。", "adjusted": "一直以来谢谢了。" },
+      { "formal": "请查收。", "adjusted": "请看一下。" }
+    ],
+    "less-ai": [
+      { "formal": "请问您有什么问题吗？", "adjusted": "有问题吗？" },
+      { "formal": "如有疑问，请随时联系我们。", "adjusted": "不懂就问我。" },
+      { "formal": "收到。明白了。", "adjusted": "收到。" },
+      { "formal": "如果有什么能帮到您的，请告诉我。", "adjusted": "需要帮忙吗？" },
+      { "formal": "感谢您的理解。", "adjusted": "谢谢你理解。" },
+      { "formal": "我来确认一下。", "adjusted": "我看看啊。" },
+      { "formal": "希望能对您有所帮助。", "adjusted": "希望有帮助。" },
+      { "formal": "抱歉让您久等了。", "adjusted": "不好意思让你等了。" },
+      { "formal": "感谢您的联系。", "adjusted": "谢谢联系我。" },
+      { "formal": "如果您能确认一下就好了。", "adjusted": "帮我看看呗。" },
+      { "formal": "太棒了！", "adjusted": "不错！" },
+      { "formal": "能听听您的意见吗？", "adjusted": "你觉得呢？" },
+      { "formal": "没有问题。", "adjusted": "没问题。" },
+      { "formal": "我会考虑的。", "adjusted": "我想想。" },
+      { "formal": "希望能帮到您。", "adjusted": "希望能帮上忙。" },
+      { "formal": "如有任何事情请告诉我。", "adjusted": "有事说一声。" }
+    ],
+    "alternative": [
+      { "formal": "谢谢", "adjusted": "感谢" },
+      { "formal": "对不起", "adjusted": "抱歉" },
+      { "formal": "明白了", "adjusted": "了解" },
+      { "formal": "拜托了", "adjusted": "麻烦您了" },
+      { "formal": "很好", "adjusted": "不错" },
+      { "formal": "没关系", "adjusted": "没事" },
+      { "formal": "是的", "adjusted": "对" },
+      { "formal": "等一下", "adjusted": "稍等" },
+      { "formal": "加油", "adjusted": "祝你顺利" },
+      { "formal": "辛苦了", "adjusted": "您辛苦了" },
+      { "formal": "好久不见", "adjusted": "久违了" },
+      { "formal": "请", "adjusted": "请便" },
+      { "formal": "遗憾", "adjusted": "可惜" },
+      { "formal": "高兴", "adjusted": "荣幸" },
+      { "formal": "不知道", "adjusted": "不清楚" },
+      { "formal": "不行", "adjusted": "恐怕不行" }
+    ]
+  }
+}
