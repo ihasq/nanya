@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import {
@@ -104,9 +104,10 @@ interface VariantCardProps {
   variant: TranslationVariant
   onAdjust: (type: string, currentText: string) => void
   isAdjusting: boolean
+  skipAnimation?: boolean
 }
 
-function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
+function VariantCard({ variant, onAdjust, isAdjusting, skipAnimation }: VariantCardProps) {
   const [copied, setCopied] = useState(false)
   const [isSpeaking, setIsSpeaking] = useState(false)
   const [backTranslation, setBackTranslation] = useState<string | null>(null)
@@ -150,7 +151,7 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
   }
 
   return (
-    <Card className="mb-4 stream-fade-in">
+    <Card className={`mb-4 ${skipAnimation ? '' : 'stream-fade-in'}`}>
       <CardContent className="pt-4">
         {/* Style Label */}
         <div className="flex items-center gap-2 mb-3">
@@ -228,8 +229,8 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
             {variant.explanation.map((exp, i) => (
               <li
                 key={`${i}-${exp.slice(0, 10)}`}
-                className="flex items-start gap-2 text-sm text-muted-foreground stream-fade-in"
-                style={{ animationDelay: `${100 + i * 50}ms` }}
+                className={`flex items-start gap-2 text-sm text-muted-foreground ${skipAnimation ? '' : 'stream-fade-in'}`}
+                style={skipAnimation ? undefined : { animationDelay: `${100 + i * 50}ms` }}
               >
                 <span className="text-primary mt-1.5">•</span>
                 <span>{exp}</span>
@@ -241,8 +242,8 @@ function VariantCard({ variant, onAdjust, isAdjusting }: VariantCardProps) {
         {/* Example */}
         {variant.example && (
           <div
-            className="bg-muted/20 rounded-lg p-3 text-sm stream-fade-in"
-            style={{ animationDelay: '200ms' }}
+            className={`bg-muted/20 rounded-lg p-3 text-sm ${skipAnimation ? '' : 'stream-fade-in'}`}
+            style={skipAnimation ? undefined : { animationDelay: '200ms' }}
           >
             <div className="text-xs text-muted-foreground mb-2">{t('results.example')}</div>
             <div className="flex items-start gap-2 mb-1">
@@ -278,6 +279,29 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
   } = useTranslationStore()
   const [showAllOptions, setShowAllOptions] = useState(false)
   const t = useT()
+
+  // Track streaming state to skip animation on first variant after streaming
+  const wasStreamingRef = useRef(false)
+  const skipFirstAnimationRef = useRef(false)
+
+  // When streaming is active, mark it
+  useEffect(() => {
+    if (isTranslating && streamingVariant?.text) {
+      wasStreamingRef.current = true
+    }
+  }, [isTranslating, streamingVariant])
+
+  // When variants appear after streaming, skip animation for first card
+  useEffect(() => {
+    if (wasStreamingRef.current && variants.length > 0 && !isTranslating) {
+      skipFirstAnimationRef.current = true
+      wasStreamingRef.current = false
+      // Reset after a frame to allow subsequent renders to animate
+      requestAnimationFrame(() => {
+        skipFirstAnimationRef.current = false
+      })
+    }
+  }, [variants.length, isTranslating])
 
   const handleAdjust = async (type: string, currentText: string) => {
     setIsAdjusting(true)
@@ -376,6 +400,7 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
           variant={variant}
           onAdjust={handleAdjust}
           isAdjusting={isAdjusting}
+          skipAnimation={index === 0 && skipFirstAnimationRef.current}
         />
       ))}
 
