@@ -87,7 +87,8 @@ function HomePage() {
       setError(err instanceof Error ? err.message : 'Translation failed')
     } finally {
       setIsTranslating(false)
-      setStreamingVariant(null)
+      // Don't clear streamingVariant here - keep it for transition detection
+      // It will be cleared at the start of next translation
     }
   }, [inputText, attachments, systemLanguage, writingStyle, enableHistory, setVariants, setStreamingVariant, setIsTranslating, setError, refreshHistory])
 

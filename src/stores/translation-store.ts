@@ -57,7 +57,7 @@ export const useTranslationStore = create<TranslationState>((set) => ({
     attachments: state.attachments.filter((a) => a.name !== name)
   })),
   clearAttachments: () => set({ attachments: [] }),
-  setVariants: (variants) => set({ variants, backTranslation: null, streamingVariant: null }),
+  setVariants: (variants) => set({ variants, backTranslation: null }),
   addVariants: (newVariants) => set((state) => ({
     variants: [...state.variants, ...newVariants],
     streamingAdjustment: null

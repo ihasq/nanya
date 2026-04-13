@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import {
@@ -280,28 +280,11 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
   const [showAllOptions, setShowAllOptions] = useState(false)
   const t = useT()
 
-  // Track streaming state to skip animation on first variant after streaming
-  const wasStreamingRef = useRef(false)
-  const skipFirstAnimationRef = useRef(false)
-
-  // When streaming is active, mark it
-  useEffect(() => {
-    if (isTranslating && streamingVariant?.text) {
-      wasStreamingRef.current = true
-    }
-  }, [isTranslating, streamingVariant])
-
-  // When variants appear after streaming, skip animation for first card
-  useEffect(() => {
-    if (wasStreamingRef.current && variants.length > 0 && !isTranslating) {
-      skipFirstAnimationRef.current = true
-      wasStreamingRef.current = false
-      // Reset after a frame to allow subsequent renders to animate
-      requestAnimationFrame(() => {
-        skipFirstAnimationRef.current = false
-      })
-    }
-  }, [variants.length, isTranslating])
+  // Skip animation on first variant if it matches the streamed content
+  // This comparison works because streamingVariant is preserved until next translation
+  const shouldSkipFirstAnimation = variants.length > 0 &&
+    streamingVariant?.text &&
+    variants[0]?.text === streamingVariant.text
 
   const handleAdjust = async (type: string, currentText: string) => {
     setIsAdjusting(true)
@@ -400,7 +383,7 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
           variant={variant}
           onAdjust={handleAdjust}
           isAdjusting={isAdjusting}
-          skipAnimation={index === 0 && skipFirstAnimationRef.current}
+          skipAnimation={index === 0 && !!shouldSkipFirstAnimation}
         />
       ))}
 
