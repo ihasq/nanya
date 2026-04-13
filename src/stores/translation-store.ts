@@ -60,7 +60,7 @@ export const useTranslationStore = create<TranslationState>((set) => ({
   setVariants: (variants) => set({ variants, backTranslation: null }),
   addVariants: (newVariants) => set((state) => ({
     variants: [...state.variants, ...newVariants],
-    streamingAdjustment: null
+    // Don't clear streamingAdjustment here - allows skipAnimation comparison in ResultsPanel
   })),
   setStreamingVariant: (variant) => set({ streamingVariant: variant }),
   setStreamingAdjustment: (variant) => set({ streamingAdjustment: variant }),

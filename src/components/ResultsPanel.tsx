@@ -335,6 +335,11 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
     streamingVariant?.text &&
     variants[0]?.text === streamingVariant.text
 
+  // Skip animation on last variant if it matches streaming adjustment (prevents double fade-in)
+  const shouldSkipLastAnimation = variants.length > 1 &&
+    streamingAdjustment?.text &&
+    variants[variants.length - 1]?.text === streamingAdjustment.text
+
   const handleAdjust = async (type: string, currentText: string) => {
     setIsAdjusting(true)
     setStreamingAdjustment(null)
@@ -432,7 +437,10 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
           variant={variant}
           onAdjust={handleAdjust}
           isAdjusting={isAdjusting}
-          skipAnimation={index === 0 && !!shouldSkipFirstAnimation}
+          skipAnimation={
+            (index === 0 && !!shouldSkipFirstAnimation) ||
+            (index === variants.length - 1 && !!shouldSkipLastAnimation)
+          }
         />
       ))}
 
