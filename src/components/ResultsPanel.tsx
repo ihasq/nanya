@@ -357,7 +357,8 @@ export function ResultsPanel({ onRetranslate: _onRetranslate }: ResultsPanelProp
       console.error('Adjustment failed:', err)
     } finally {
       setIsAdjusting(false)
-      setStreamingAdjustment(null)
+      // Don't clear streamingAdjustment here - it's used for skipAnimation comparison
+      // It will be cleared at the start of the next adjustment (line 345)
     }
   }
 
